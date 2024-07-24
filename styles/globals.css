@@ -1,0 +1,78 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+@media (prefers-color-scheme: dark) {
+  /* html {
+    color-scheme: dark;
+  } */
+  /* body {
+     background: white;
+     color: black;
+  } */
+}
+
+html{
+  scroll-behavior: smooth;
+  font-family:'Raleway' ,sans-serif
+}
+
+.custom-img{
+  background: url('/home_back.svg') no-repeat center center / contain;
+  width: 100%
+}
+.background-image{
+  background-image: url('/bg.png')
+   
+}
+
+.flash {
+  animation-name: flash;
+   animation-duration: 1s;
+   animation-timing-function: linear;
+   animation-iteration-count: infinite;
+   animation-direction: alternate;
+   animation-play-state: running;
+   font-size: 20px;
+   font-weight: bold;
+   color: #fff;
+}
+
+@keyframes flash {
+   from {color: #fff;}
+   to {color: red;}
+}
+
+.pdfView .react-pdf__Page__canvas, .pdfView .textLayer, .pdfView .annotationLayer{width:100% !important; height: auto !important;}
+/* ------------- slider csss--------------- */
+
+
+.top-left {
+  position: absolute;
+  top: 8%;
+  left: 2%;
+  z-index: 99999;
+  border-radius: 52%;
+}
+.top-left img {
+border-radius: 52%;
+z-index: 99999;
+}
+ 
+.crouser-content{
+  top: 38%;
+transform: translateY(-50%);
+}

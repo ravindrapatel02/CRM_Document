@@ -1,0 +1,1109 @@
+body {
+    margin: 0 auto;
+    background: #fff !important;
+    font-size: 18px;
+    font-family: "Times New Roman", Times, serif;
+}
+
+a {
+    color: #091a50;
+}
+
+a:hover {
+    color: #013878;
+    text-decoration: none;
+}
+
+h1 {
+    font-size: 40px;
+    font-weight: 600;
+    color: #013776;
+}
+
+h2 {
+    font-size: 20px;
+    font-weight: 500;
+    color: #000;
+}
+
+h3 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #4e4e4e;
+}
+
+h4 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #000;
+}
+
+.btn {
+    border-radius: 20px;
+    padding: 5px 25px;
+}
+
+.btn-primary {
+    background: #023877;
+    border-color: #023877;
+    font-family: sans-serif;
+}
+
+.btn-back {
+    background: #979797;
+    border-color: #979797;
+    color: #fff;
+    font-family: sans-serif;
+}
+
+.uGuide-btn {
+    background: #fff !important;
+    padding: 2px 20px !important; 
+    margin-top: 4px !important;
+    font-size: 18px !important;
+    font-weight: 600 !important;
+    color: #fff;
+}
+
+.uGuide-btn:hover {
+    background: #ed1c24 !important;
+    border-color: #ed1c24 !important;
+    color: #fff !important;
+}
+
+.textBlock {
+    display: block;
+}
+
+.contentSpace {
+    padding: 0 25px;
+}
+
+.w-40 {
+    width: 45%;
+}
+
+.btn-border {
+    background: none;
+    border: 1px solid #000;
+    border-radius: 0;
+    font-weight: 800;
+    color: #b81f15;
+    font-size: 14px;
+}
+
+.btn-border:hover {
+    background: #d53930;
+    border: 1px solid #d53930;
+    color: #fff;
+}
+
+.text-red {
+    color: #ec1d25;
+}
+
+/*------header css start ---------*/
+header {
+    color: #000;
+    width: 100%;
+    /* background: rgb(111,22,123); */
+    /* background: linear-gradient(90deg, rgba(111,22,123,1) 0%, rgba(123,57,142,1) 26%, rgba(22,72,123,1) 50%); */
+    background: rgb(105,35,105);
+    background: linear-gradient(90deg, rgba(105,35,105,1) 0%, rgba(108,40,98,1) 26%, rgba(31,60,126,1) 50%);
+}
+
+.logo {
+    background: #fff;
+    padding: 15px;
+    display: inline-block;
+}
+
+.logo img {
+    width: 130px;
+}
+
+.hmiddleImg {
+    min-height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hmiddleImg img {
+    width: 200px;
+}
+.hmiddleImg p{
+    font-size: 20px;
+    padding: 0;
+}
+
+.hmiddleImg .Title-Heading{
+    font-size: 50px;
+}
+
+.bgGrey {
+    background: rgb(204 204 204 / 20%);
+}
+
+.form-group label {
+    font-weight: 500;
+}
+
+/*-------------------------top bar css-------------------*/
+.topHeader{
+    position: absolute;
+    top: 0;
+    left:50%;
+    transform: translateX(-50%);
+}
+
+.topBar ul.text-right {
+    margin-bottom: 0;
+    height: 100%;
+   
+    /* padding-top: 10px; */
+}
+
+.topBar ul li {
+    padding: 8px 12px;
+    margin-right: 0 !important;
+    height: 100%;
+}
+
+.topBar ul.text-right li {
+    padding: 0;
+    position: relative;
+}
+
+.topBar ul.text-right .header__extra span {
+    position: absolute;
+    top: 0;
+    min-width: 16px;
+    height: 16px;
+    background: #333;
+    color: #fff;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100%;
+    right: 0;
+    display: flex;
+}
+
+.topBar ul li a {
+    padding: 8px 12px;
+    display: block;
+}
+
+.topNavBar {
+    position: relative;
+}
+
+.topNavBar>a {
+    font-size: 21px;
+}
+
+.topNavBar ul {
+    display: none;
+    position: absolute;
+    left: 0;
+    width: 150px;
+    box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
+}
+
+.topNavBar:hover ul {
+    display: block;
+    z-index: 6;
+}
+
+.topNavBar:hover ul li {
+    border-left: none;
+    background: #fff;
+    min-width: 100px;
+    text-align: left;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.topNavBar ul li:hover {
+    background: #e9e8ed;
+}
+
+.topNavBar ul li a {
+    padding: 8px 8px;
+}
+
+/*------------nav css------*/
+#collapsibleNavbar .nav-link img {
+    width: 8px;
+    position: absolute;
+    top: 12px;
+    right: 10px;
+}
+
+#collapsibleNavbar .navbar-nav>li:hover {
+    background: #f3b543;
+    color: #000;
+}
+
+#collapsibleNavbar .navbar-nav>li:hover>a {
+    color: #fff;
+}
+
+#collapsibleNavbar .navbar-nav li:hover .gw-sidebar.subMenu {
+    display: block;
+    position: absolute;
+    top: 40px;
+}
+
+#collapsibleNavbar .navbar-nav .nav-item {
+    align-items: center;
+    display: flex;
+}
+
+#collapsibleNavbar .navbar-nav .nav-link {
+    color: #fff;
+    font-weight: 400;
+    padding: 7px 1.5em;
+    font-size: 18px;
+}
+
+.navSec .navbar {
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.navSec .navbar-dark {
+    background: none !important;
+    padding: 0;
+    position: inherit;
+}
+
+.navSec .navbar-dark .navbar-toggler {
+    background: #01a0e2;
+    padding: 5px 7px;
+}
+
+.navbar-expand-md .navbar-nav .dropdown-menu {
+    margin-top: 0;
+    border-radius: 0;
+    padding: 0;
+}
+
+.navbar-expand-md .navbar-nav .dropdown-item {
+    border-bottom: 1px solid rgba(0, 0, 0, .15);
+}
+
+.navbar-expand-md .navbar-nav .dropdown-item:last-child {
+    border-bottom: none;
+}
+
+.navbar-nav li:hover>.dropdown-menu {
+    display: block;
+}
+
+.dropdown-submenu {
+    position: relative;
+}
+
+/*------header css end -----------------------------*/
+/*------------------banner sec css start----------------*/
+.bannerBox {
+   
+    min-height: 425px;
+    background-size: cover; 
+    min-height: 81.8vh;
+
+    
+}
+
+.test-content{
+    min-height: 68.5vh;
+    margin-top: 100px;
+}
+.user-guidline{
+    min-height: 68vh;
+}
+.show-year{
+    font-size: 40px;
+    color: #023877;
+    font-weight: 600;
+    /* font-family: cursive; */
+    /* text-shadow: 2px 2px 8px #454242 */
+  } 
+
+.cntWrapper {
+    /* position: absolute; */
+    top: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    min-height: 150px;
+}
+.cntWrapper h1{
+    color: #f3b543;
+}
+.cntWrapper h2{
+    color: #000;
+    font-weight: 600;
+    font-size: calc(1.375rem + 1.5vw);
+}
+.cntWrapper span {
+    font-weight: 900;
+    color: #f3b543;
+    font-size: 24px;
+}
+
+.bannerBox .rightImg {
+    position: absolute;
+    top: 0;
+    min-height: 425px;
+    right: 0;
+    bottom: 0;
+}
+
+.bannerBox .rightImg img {
+    width: 100%;
+    max-width: 300px;
+    position: absolute;
+    bottom: 50px;
+    right: 0;
+    width: 300px;
+    height: auto;
+}
+.card{
+    height: 300px;  
+    width: 300px;
+    background-color: #59b611 !important;
+}
+.card .card-body { 
+     
+}
+
+.card-body img{
+    height: 50px;
+}
+.my-activity{
+    color: #fff;
+    /* background-color: #59b611;  */
+} 
+.my-activity:hover{
+    background-color: #428d08;
+    color: #fff;
+    transition:0.2s
+}
+.manage-master{
+    color: #fff;
+    background-color: #ee4125; 
+}
+.manage-master:hover{
+    background-color: #a51b05;
+    color: #fff;
+}
+.dashboard{
+    color: #fff;
+    background-color: #3e5be5; 
+}
+.dashboard:hover{
+    color: #fff;
+    background-color: #1937c6; 
+}
+.graphical-dashboard{
+    color: #fff;
+    background-color: #ffc726; 
+}
+.graphical-dashboard:hover{
+    color: #fff;
+    background-color: #d4a317; 
+}
+/*------------------banner sec css end----------------*/
+/*------------------quiz sec css start----------------*/
+.qTopBar {
+    padding: 60px 0;
+}
+
+.qTopBar .hTitle {
+    font-weight: 600;
+    color: #013878;
+    font-size: 28px;
+}
+
+.qTopBar .hTitle span {
+    font-weight: 400;
+    color: #000;
+    font-size: 21px;
+}
+
+.qTopBar .timeStatus {
+    font-weight: 600;
+    color: #013878;
+    font-size: 21px;
+}
+
+.qTopBar .timeStatus .timeBtn {
+    background: #f3b543;
+    color: #000;
+    font-weight: 600;
+    font-size: 21px;
+    border-radius: 20px;
+    padding: 4px 25px;
+    margin-left: 15px;
+}
+
+.quizBg {
+    min-height: 425px;
+}
+
+.quizBg .qStatus {
+    border: 1px solid #dedede;
+}
+
+.quizBg .qStatus .qTitle {
+    background: #f1f1f1;
+    padding: 10px 20px;
+    font-size: 21px;
+    border-bottom: 1px solid #dedede;
+}
+
+.quizBg .qStatus ul {
+    /* display: grid; */
+    display: flex;
+    grid-gap: 12px 8px;
+    grid-template-columns: repeat(auto-fit, minmax(30px, 1fr));
+    grid-auto-rows: 30px;
+    padding-left: 0;
+    margin-left: 0;
+    list-style: none;
+    padding: 10px 15px;
+}
+
+.quizBg .qStatus ul li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #dedede;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    margin-bottom: 5px;
+    margin-right: 5px;
+}
+
+.quizBg .qStatus ul li:hover,
+.quizBg .qStatus ul li.completed {
+    background: #013878;
+    color: #fff;
+    cursor: pointer;
+}
+
+.qFBottom { 
+    align-items: center; 
+    margin-top: 10px;
+    display: flex;
+} 
+
+.qFBottom .attempted,
+.qFBottom .nAttempted {
+    display: flex;
+    align-items: center;
+}
+
+.qFBottom .attempted span,
+.qFBottom .nAttempted span {
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    background: #013878;
+    margin-right: 10px;
+    margin-left: 10px;
+ 
+} 
+
+.qFBottom .nAttempted span {
+    background: none;
+    border: 1px solid #dedede
+}
+
+.bookingSeatmain{
+    background-color:#e7e7e7;
+    min-height: 400px;
+}
+/* ------------ Total start  ---------------- */
+.availableButtom p{
+    font-size: 12px;
+}
+.availableButtom { 
+    align-items: center;  
+}
+.availableButtom .available{
+    display: flex;
+    align-items: center;
+}
+.availableButtom .available {
+    border-radius: 5px;
+    width: 50px;
+    height: 10px;
+    border: 1px solid #60aa16;
+    margin-right: 10px;
+    margin-left: 10px;
+}  
+ 
+/* --------  End total----- */
+ 
+/* ------- start total ------- */
+.totalButton p{
+    font-size: 12px;
+}
+.totalButton { 
+    align-items: center;  
+}
+.totalButton .total{
+    display: flex;
+    align-items: center;
+}
+.totalButton .total {
+    border-radius: 5px;
+    width: 50px;
+    height: 10px;
+     
+    background: #EEEEEE;
+    margin-right: 10px;
+    margin-left: 10px;
+}  
+/* ------- end total ------ */
+
+/* ------- start Booked ------- */
+.bookedButton p{
+    font-size: 12px;
+}
+.bookedButton { 
+    align-items: center;  
+}
+.bookedButton .booked{
+    display: flex;
+    align-items: center;
+}
+.bookedButton .booked {
+    border-radius: 5px;
+    width: 50px;
+    height: 10px;
+    background:   #60A917;;
+    margin-right: 10px;
+    margin-left: 10px;
+}  
+/* ------- end Booked ------ */
+
+/* ------- start Booked ------- */
+.approvalButton p{
+    font-size: 12px;
+}
+.approvalButton { 
+    align-items: center;  
+}
+.approvalButton .approval{
+    display: flex;
+    align-items: center;
+}
+.approvalButton .approval {
+    border-radius: 5px;
+    width: 50px;
+    height: 10px;
+    background: #f3b543;
+    margin-right: 10px;
+    margin-left: 10px;
+}  
+/* ------- end Booked ------ */
+
+
+/* ------- start Booked ------- */
+.multipleButton p{
+    font-size: 12px;
+}
+.multipleButton { 
+    align-items: center;  
+}
+.multipleButton .multiple{
+    display: flex;
+    align-items: center;
+}
+.multipleButton .multiple {
+    border-radius: 5px;
+    width: 50px;
+    height: 10px;
+    background: #E51400;
+    margin-right: 10px;
+    margin-left: 10px;
+}  
+/* ------- end Booked ------ */
+ 
+
+ /* -------.available-capacity------- */
+ 
+.available-capacity .total{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color:#000;
+    font-weight: 600;
+}
+.available-capacity .total{
+    border-radius: 5px;
+    width: 50px;
+    height: 25px;
+    border: 1px solid #60aa16;
+    /* background: #60aa16;  */
+}  
+/* ------- end available -capacity ------ */
+/* ---------- pending-capacity ------ */
+
+
+.pending-capacity .total{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color:#fff;
+    font-weight: 600;
+}
+.pending-capacity .total{
+    border-radius: 5px;
+    width: 50px;
+    height: 25px;
+    background: #E3C800; 
+}  
+
+/* ------- end pending ------÷ */
+/* -------.booked-capacity------- */
+ 
+.booked-capacity .total{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color:#fff;
+    font-weight: 600;
+}
+.booked-capacity .total{
+    border-radius: 5px;
+    width: 50px;
+    height: 25px;
+    background: #60A917; 
+}  
+/* ------- end booked -capacity ------ */
+/* -------.total-capacity------- */
+ 
+.total-capacity .total{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color:#000;
+    font-weight: 600;
+}
+.total-capacity .total{
+    border-radius: 5px;
+    width: 50px;
+    height: 25px;
+    background: #EEEEEE; 
+}  
+/* ------- end total -capacity ------ */
+
+/* -------- Start seat booking------ */
+ .heatbookingTitle{ 
+    transform: rotate(270deg);
+    text-align: center;
+    font-weight:bold;
+    color: #023877;
+    display: inline-block;
+    letter-spacing: 2px;
+} 
+
+.bookingSeat ul{
+    display: flex;
+    flex-flow: row wrap;
+    gap: 7px;
+    margin: 0;
+    list-style: none;
+    padding: 10px 15px; 
+}
+.bookingSeat ul li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #60aa16;
+    border-radius: 8px;
+    width: 30px;
+    height: 30px;
+    margin-bottom: 5px;
+    margin-right: 5px;
+}
+.bookingSeat .booked{
+    background-color: #60A917;
+}
+.bookingSeat .pending{
+    background-color: #E3C800;
+}
+.bookingSeat .userSelected{
+    background-color: #488bda;
+}
+.bookingSeat .multiSelect{
+    background-color: #E51400;
+}
+
+/* ------- End seat booking ------ */
+.qBox {
+    border: 1px solid #dedede;
+    padding: 30px;
+    margin-bottom: 20px;
+}
+
+.qBox .qBox-title {
+    font-weight: 600;
+    font-size: 20px;
+    position: absolute;
+    top: -21px;
+    background: #fff;
+    padding: 0 15px;
+}
+
+.qBox .qBox-number {
+    font-size: 20px;
+    margin: 20px 0;
+}
+
+.qBox .form-check {
+    margin-bottom: 10px;
+}
+
+/*------------------quiz sec css end----------------*/
+
+/*------footer css start ---------*/
+footer {
+    background: #023877;
+    color: #fff;
+    font-size: 14px;
+    padding: 8px;
+    text-align: center; 
+}
+
+footer .copy {
+    margin-bottom: 0;
+}
+.login-message{
+    background-color: #f3b543 ;
+    padding: 20px;
+    cursor: pointer;
+}
+
+.footer-stayle {
+    
+    /* bottom: 0; */
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    /* position: fixed; */
+    scroll-behavior: smooth;
+    /* z-index: 9999; */
+}
+/*------footer css end ----------*/
+@media (min-width: 991px) {}
+
+@media (max-width: 991px) {
+    .topHeader{
+        position: inherit;
+        top: 0;
+        left:50%;
+        transform: translateX(0%);
+    }
+}
+/* rgb(221, 221, 221) */
+/* ------- Seat booking Start ----- */
+.seatBooking{
+    background-color: rgb(241, 241, 241);
+}
+.locationFilter{
+    background-color: rgb(221, 221, 221);
+    padding-bottom: 20px;
+}
+
+.locationFilter .MuiAutocomplete-root{
+    background-color:#ffffff !important;
+    border-radius: 8px !important;
+    padding: 0 !important;
+}
+.userDetails .MuiAutocomplete-root{
+    background-color:#ffffff !important;
+    border-radius: 8px !important;
+    padding: 0 !important;
+}
+  .userDetails .input-MuiOutlinedInput-input{
+    background-color:#ffffff !important;
+    border-radius: 8px !important;
+   padding: 9.5px 14px ;
+} 
+.select-yourseat .MuiOutlinedInput-input{
+    background-color:#ffffff !important;
+    border-radius: 8px !important;
+    padding: 10px !important;
+}
+/* ----seat booking end  */
+@media (max-width: 767px) {
+
+    .topHeader{
+        position: inherit;
+        top: 0;
+        left:50%;
+        transform: translateX(0%);
+    }
+
+    .navSec .navbar-dark,
+    .navSec {
+        display: block;
+        position: relative;
+    }
+.carousel-indicators{
+    display: none !important;
+}
+    /* .navSec .navbar>div{text-align:right;} */
+    .navSec .navbar-dark .navbar-toggler {
+        margin: 5px 0;
+    }
+
+    .navSec .navbar-dark .navbar-nav li {
+        border-bottom: 1px solid #fbfbfb;
+        display: block !important;
+        text-align: left;
+    }
+
+    .navSec .dropdown-toggle::after {
+        position: absolute;
+        right: 15px;
+        top: 20px;
+    }
+
+    .navSec .col-md-3 {
+        position: inherit;
+    }
+
+    header .uGuide-btn {
+        position: absolute !important;
+        top: 5px !important;
+        right: 10px !important;
+    }
+
+    .quizBg .qStatus {
+        margin-top: 20px;
+    }
+    .banner-text-heading span{
+        font-size: 20px !important;
+        color: #01a0e2 !important;
+      }
+      .banner-text-heading p{
+        font-size: 10px !important;
+      }
+      .carousel-indicators{
+        display: none;
+    }
+    .login-message{
+        background-color: #f3b543 ;
+        padding: 10px;
+    }
+
+    .hmiddleImg .Title-Heading{
+        font-size: 30px;
+    }
+
+    .show-year{
+        font-size: 30px;
+        color: #023877;
+        font-weight: 600;
+        
+        /* text-shadow: 2px 2px 8px #454242 */
+      } 
+    
+
+}
+
+@media (max-width: 578px) {
+    .tabWrapper .docTab {
+        display: block;
+    }
+    .login-message{
+        background-color: #f3b543 ;
+        padding: 10px;
+    }
+    
+    .cntWrapper,
+    .bannerBox .rightImg,
+    .bannerBox .rightImg img {
+        position: inherit;
+    }
+
+    .bannerBox .rightImg img {
+        height: auto;
+        display: block;
+        margin: auto;
+    }
+
+    .bannerBox .rightImg {
+        min-height: auto;
+        margin-top: 50px;
+    }
+
+    h1 {
+        font-size: 30px;
+    }
+
+    .mBdr {
+        border-bottom: 1px solid #ccc;
+    }
+
+    .topBar ul.text-right {
+        position: initial;
+        /* top: -135px; */
+        right: 10px;
+        margin-top: -50px;
+    }
+    .hmiddleImg .Title-Heading{
+        font-size: 25px;
+    }
+    footer {
+        position: inherit;
+    }
+    .top-left img {
+        border-radius: 50%;
+        /* z-index: 999; */
+        height: 50%;
+        width: 50%;
+        margin-left: 10%;
+        }
+
+        .show-year{
+            font-size: 20px;
+            color: #023877;
+            font-weight: 600;
+             
+          } 
+        
+}
+/* ======================================== my styl======================= */
+
+
+.logout-button{ 
+    color: #fff !important;
+    cursor: pointer;
+    outline: none;
+}
+.logout-button span{
+    margin-left: 10px;
+}
+.logout-button:hover{
+    background-color: #f3b543 ;
+}
+.app-loader {
+    height: 100%;
+    display: grid;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 99999;
+  }
+  
+  .loader-spin {
+    text-align: center;
+  }
+  
+  .crema-dot {
+    position: relative;
+    display: inline-block;
+    font-size: 20px;
+    width: 30px;
+    height: 30px;
+  }
+  
+  .crema-dot-spin {
+    transform: rotate(45deg);
+    animation: hipsterRotate 1.2s infinite linear;
+  }
+  
+  .crema-dot i {
+    width: 9px;
+    height: 9px;
+    border-radius: 100%;
+    background-color: #1890ff;
+    transform: scale(0.75);
+    display: block;
+    position: absolute;
+    opacity: 0.5;
+    animation: hipsterSpinMove 1s infinite linear alternate;
+    transform-origin: 50% 50%;
+  }
+  
+.crema-dot i:nth-child(1) {
+  left: 10px;
+  background-color: #ff7418;
+  top: 0;
+}
+
+.crema-dot i:nth-child(2) {
+  right: 0;
+  top: 8px;
+  background-color: #ff1818;
+  animation-delay: 0.4s;
+}
+
+.crema-dot i:nth-child(3) {
+  right: 4px;
+  bottom: 0;
+  background-color: #26f80a;
+  animation-delay: 0.8s;
+}
+
+.crema-dot i:nth-child(4) {
+  left: 4px;
+  bottom: 0;
+  background-color: #1890ff;
+  animation-delay: 1.2s;
+}
+
+.crema-dot i:nth-child(5) {
+  left: 0;
+  top: 8px;
+  background-color: #002344;
+  animation-delay: 1.2s;
+}
+
+  
+  @keyframes hipsterSpinMove {
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes hipsterRotate {
+    to {
+      transform: rotate(405deg);
+    }
+  }
+
+  .banner-text-heading span{
+    font-size: 45px  ;
+  }
+  .banner-text-heading p{
+    font-size: 20px ;
+  }
+
+.form-check-input{
+    border:  2px solid rgba(0,0,0,.25) !important;
+}
+
+
+/* -------------   input field component css ------------ */
+ 
+ .MuiOutlinedInput-root .MuiAutocomplete-input{
+    padding: 0.5px 0px 0.5px 0px !important;
+}
+.MuiInputBase-input-MuiOutlinedInput-input{
+    padding: 8.5px 6px;
+}
