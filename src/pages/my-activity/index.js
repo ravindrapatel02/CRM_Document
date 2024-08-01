@@ -64,11 +64,7 @@ const MyActivity = () => {
               pb: 2,
             }}
           >
-             
-            <Box>
             
-              <Button onClick={()=>router.push('/my-activity/create-activity')}>Create Activity</Button>
-            </Box>
             
             <Box mx={2}>
               <Button>Export</Button>

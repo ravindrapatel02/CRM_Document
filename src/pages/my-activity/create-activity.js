@@ -9,18 +9,19 @@ const CreateActivity = () => {
   const initialValues = {
     firstName: "",
     lastName: "",
-    requrstType: "",
-    email: "",
-    contact: "",
+    custType:'',
+    complType:'',
+    emailId:'',
+    contactNo:'',
     organization: "",
-    sector: "",
-    business: "",
-    feedback: "",
-    date: "",
-    areaOfConcern: "",
-    description: "",
+    feedbackType: "",
+    feedbackTypeDate: "",
+    areaConcern: "",
+    detailsDesc: "",
     file: "",
   };
+
+
   return (
     <AppSectionContainer>
       <Box
@@ -85,6 +86,37 @@ const CreateActivity = () => {
                   }}
                 />
               </Grid>
+              <Grid item xs={12} md={6}>
+              <TextField
+                name="custType"
+                select
+                value={values.custType}
+                fullWidth
+                error={errors.custType}
+                helperText={errors.custType}
+                onChange={(e) => {
+                  setFieldValue("custType", e.target.value);
+                }}
+                label={
+                  <span>
+                     Customer Type
+                    <span style={{ color: "#d32f2f" }}>*</span>
+                  </span>
+                }
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              >
+                <MenuItem disabled selected>
+                  Customer Type
+                </MenuItem>
+                <MenuItem value="GMR">
+                  GMR
+                </MenuItem>
+                <MenuItem value="Non-GMR">Non-GMR</MenuItem>
+               
+              </TextField>
+            </Grid>
               <Grid item xs={12} md={6}>
                 <TextField
                   name="requrstType"
@@ -171,7 +203,7 @@ const CreateActivity = () => {
                   }}
                   label={
                     <span>
-                      Organization <span style={{ color: "#d32f2f" }}>*</span>
+                      organization <span style={{ color: "#d32f2f" }}>*</span>
                     </span>
                   }
                   InputLabelProps={{
@@ -182,17 +214,17 @@ const CreateActivity = () => {
 
               <Grid item xs={12} md={6}>
                 <TextField
-                  name="feedback"
-                  value={values.feedback}
-                  error={errors.feedback}
-                  helperText={errors.feedback}
+                  name="feedbackType"
+                  value={values.feedbackType}
+                  error={errors.feedbackType}
+                  helperText={errors.feedbackType}
                   fullWidth
                   onChange={(e) => {
-                    setFieldValue("feedback", e.target.value);
+                    setFieldValue("feedbackType", e.target.value);
                   }}
                   label={
                     <span>
-                      Feedback on <span style={{ color: "#d32f2f" }}>*</span>
+                      feedbackType on <span style={{ color: "#d32f2f" }}>*</span>
                     </span>
                   }
                   InputLabelProps={{
@@ -204,17 +236,17 @@ const CreateActivity = () => {
               <Grid item xs={12} md={6}>
                 <TextField
                   type="date"
-                  name="date"
-                  value={values.date}
-                  error={errors.date}
-                  helperText={errors.date}
+                  name="feedbackTypeDate"
+                  value={values.feedbackTypeDate}
+                  error={errors.feedbackTypeDate}
+                  helperText={errors.feedbackTypeDate}
                   fullWidth
                   onChange={(e) => {
-                    setFieldValue("date", e.target.value);
+                    setFieldValue("feedbackTypeDate", e.target.value);
                   }}
                   label={
                     <span>
-                      Date <span style={{ color: "#d32f2f" }}>*</span>
+                      feedbackTypeDate <span style={{ color: "#d32f2f" }}>*</span>
                     </span>
                   }
                   InputLabelProps={{
@@ -225,13 +257,13 @@ const CreateActivity = () => {
 
               <Grid item xs={12} md={6}>
                 <TextField
-                  name="areaOfConcern"
-                  value={values.areaOfConcern}
-                  error={errors.areaOfConcern}
-                  helperText={errors.areaOfConcern}
+                  name="areaConcern"
+                  value={values.areaConcern}
+                  error={errors.areaConcern}
+                  helperText={errors.areaConcern}
                   fullWidth
                   onChange={(e) => {
-                    setFieldValue("areaOfConcern", e.target.value);
+                    setFieldValue("areaConcern", e.target.value);
                   }}
                   label={
                     <span>
@@ -247,17 +279,17 @@ const CreateActivity = () => {
 
               <Grid item xs={12} md={6}>
                 <TextField
-                  name="description"
-                  value={values.description}
+                  name="detailsDesc"
+                  value={values.detailsDesc}
                   fullWidth
-                  error={errors.description}
-                  helperText={errors.description}
+                  error={errors.detailsDesc}
+                  helperText={errors.detailsDesc}
                   onChange={(e) => {
-                    setFieldValue("description", e.target.value);
+                    setFieldValue("detailsDesc", e.target.value);
                   }}
                   label={
                     <span>
-                      Details Description{" "}
+                      Details detailsDesc{" "}
                       <span style={{ color: "#d32f2f" }}>*</span>
                     </span>
                   }

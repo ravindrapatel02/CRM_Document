@@ -14,10 +14,12 @@ import JWTAuthAuthProvider from "src/services/auth/JWTAuthProvider";
 import AppLoader from "@components/CustomLoader";
 import { store } from "@redux/store";
 const MyApp = ({ Component, pageProps }) => {
+
+  
   return (
     <>
       <Head>
-        <title>DPDP Automation</title>
+        <title>CRM</title>
         <meta name="description" content="GMR FMS SURVEY" />
         <link rel="icon" href="/favi.ico" />
       </Head>

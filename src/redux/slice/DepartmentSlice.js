@@ -3,13 +3,13 @@ import jwtAxios from "src/services/auth";
 
 const { createSlice, createAsyncThunk } = require("@reduxjs/toolkit");
 
-export const getBookedSeat = createAsyncThunk(
-  "getBookedSeat",
+export const getDepartment = createAsyncThunk(
+  "getDepartment",
   async (data, thunkApi) => {
     try {
       //open when api create in post method
 
-      const response = await jwtAxios.post(API_URL.SEAT_DATA, data);
+      const response = await jwtAxios.get(API_URL.GET_DEPARTMENT);
       const result = response.data;
       return result;
     } catch (error) {
@@ -19,31 +19,31 @@ export const getBookedSeat = createAsyncThunk(
   }
 );
 const InitialValue = {
-  data: [],
-  loading2: true,
+  deptData: [],
+  loading: true,
   error: null,
   message: "",
 };
 
-const seatSlice = createSlice({
-  name: "bookedSeat",
+const departmentSlice = createSlice({
+  name: "departmentData",
   initialState: InitialValue,
   extraReducers: (builder) => {
-    builder.addCase(getBookedSeat.pending, (state, action) => {
-      state.loading2 = true;
+    builder.addCase(getDepartment.pending, (state, action) => {
+      state.loading = true;
     });
-    builder.addCase(getBookedSeat.fulfilled, (state, action) => {
-      state.loading2 = false;
-      (state.data = action.payload.data),
+    builder.addCase(getDepartment.fulfilled, (state, action) => {
+      state.loading = false;
+      (state.deptData = action.payload.data),
         (state.message = action.payload.message);
     });
-    builder.addCase(getBookedSeat.rejected, (state, action) => {
-      state.loading2 = false;
+    builder.addCase(getDepartment.rejected, (state, action) => {
+      state.loading = false;
       state.message = action.payload;
-      state.data = [];
+      state.deptData = [];
       state.error = action.payload;
     });
   },
 });
 
-export default seatSlice.reducer;
+export default departmentSlice.reducer;

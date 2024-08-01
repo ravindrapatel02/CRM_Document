@@ -1,37 +1,142 @@
+
 import Link from "next/link";
-import React, { useEffect } from "react";
-
-import { Modal } from "react-bootstrap";
-import { ErrorMessage, Form, Formik, Field } from "formik";
-import * as yup from "yup";
+import React, { useEffect, useState } from "react";
+// import {useRouter} from 'next/'
+import { Form, Formik } from "formik";
 import { useAuthMethod, useAuthUser } from "src/hooks/AuthHooks";
-
-const validationSchema = yup.object({
-  username: yup.string().required("Please enter username"),
-  password: yup.string().required("Please enter password"),
-});
+import { useRouter } from "next/router";
+import {
+  Button,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  Grid,
+  IconButton,
+  TextField,
+} from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import { otpValidation } from "@shared/formValidation/FormValidation";
+import OTPInput from "react-otp-input";
+import TimerCount from "@components/AppUI/TimerCount";
+import AppNotification from "@components/AppNotification";
+import AppLoader from "@components/CustomLoader";
 
 export const BottomHeader = () => {
+  const route = useRouter();
   const { user } = useAuthUser();
   const [show, setShow] = React.useState(false);
   const [showModal, setShowModal] = React.useState(false);
   const { signInUser, logout } = useAuthMethod();
-  const initialValues = {
-    username: "",
-    password: "",
-  };
+
+  const [fieldStatus, setFieldStatus] = React.useState({
+    isOTP: false,
+    isText: true,
+    isSubmit: false,
+    optError: false,
+  });
+  const [minutes, setMinutes] = React.useState(0);
+  const [seconds, setSeconds] = React.useState(0);
+  const [OTP, setOTP] = React.useState("");
+  const [fieldValue, setDFieldValue] = useState("");
 
   useEffect(() => {
     if (user) {
       setShowModal(!setShowModal);
     }
   }, [user]);
+
   const handleUserLogin = async (value) => {
     signInUser(value);
   };
 
+  console.log("route--->>", route);
+
+  const handleOTPSend = (ipNo) => {
+    setMinutes(0);
+    setSeconds(30);
+    setFieldStatus({ ...fieldStatus, isSubmit: true });
+    setTimeout(()=>{
+      AppNotification(true, 'OTP send');
+      setFieldStatus({
+        ...fieldStatus,
+        isText: false,
+        isOTP: true,
+        isSubmit: false,
+      });
+    }, 5000);
+    // jwtAxios
+    //   .post("pf/patient/generateotp", { mobileNo: ipNo })
+    //   .then((response) => {
+    //     const res = response.data;
+    //     if (res.status === "true") {
+    //       AppNotification(true, res.message);
+    //       setFieldStatus({
+    //         ...fieldStatus,
+    //         isText: false,
+    //         isOTP: true,
+    //         isSubmit: false,
+    //       });
+    //     } else {
+    //       AppNotification(false, res.message ?? "Something went wrong !!");
+    //       setFieldStatus({
+    //         ...fieldStatus,
+    //         isText: true,
+    //         isOTP: false,
+    //         isSubmit: false,
+    //       });
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     AppNotification(false, error.message ?? "Network Error !!");
+    //     setFieldStatus({
+    //       ...fieldStatus,
+    //       isText: true,
+    //       isOTP: false,
+    //       isSubmit: false,
+    //     });
+    //   });
+  };
+
+  const verifyOTP = () => {
+    setFieldStatus({ ...fieldStatus, isSubmit: true });
+
+    // const obj = {
+    //   mobileNo: ipNo,
+    //   otp: OTP,
+    // };
+    // jwtAxios
+    //   .post("pf/patient/validateotp", obj)
+    //   .then((response) => {
+    //     const res = response.data;
+    //     if (res.status === "true") {
+    //       AppNotification(true, res.message ?? "OTP verify successfully !!");
+    //       // const mobole = window.btoa(ipNo);
+
+    //       setTimeout(() => {
+
+    //         // router.push({
+    //         //   pathname: "/user-feedback/",
+    //         //   query: {
+    //         //     details: mobole,
+    //         //   },
+    //         // });
+    //         setFieldStatus({ ...fieldStatus, isSubmit: false });
+    //         setUserData(res.data); 
+    //       }, 2000);
+    //     } else {
+    //       setFieldStatus({ ...fieldStatus, isSubmit: false });
+    //       AppNotification(false, res.message ?? "Please enter correct otp !!");
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     AppNotification(false, error.message ?? "Network Error !!");
+    //     setFieldStatus({ ...fieldStatus, isSubmit: false });
+    //   });
+  };
+
   return (
     <header>
+
       <div className="container">
         <div className="navSec">
           <div className="row">
@@ -54,7 +159,7 @@ export const BottomHeader = () => {
                     className={
                       show
                         ? "collapse navbar-collapse show"
-                        : `collapse navbar-collapse`
+                        : "collapse navbar-collapse"
                     }
                     id="collapsibleNavbar"
                   >
@@ -64,24 +169,105 @@ export const BottomHeader = () => {
                           Home
                         </Link>
                       </li>
+                      <li
+                        className={`nav-item dropdown ${
+                          route.pathname === "/register-complaint" ||
+                          route.pathname === "/complaint-view-status"
+                            ? "routematch"
+                            : ""
+                        }`}
+                      >
+                        <Link
+                          className="nav-link dropdown-toggle"
+                          href="#"
+                          id="navbarDropdown"
+                          role="button"
+                          data-toggle="dropdown"
+                          aria-haspopup="true"
+                          aria-expanded="false"
+                        >
+                          Complaint
+                        </Link>
+                        <div
+                          className="dropdown-menu"
+                          aria-labelledby="navbarDropdown"
+                        >
+                          <Link
+                            className="dropdown-item"
+                            href="/register-complaint"
+                            title=" Register Complaint"
+                          >
+                            Register Complaint
+                          </Link>
+                          <Link
+                            className="dropdown-item"
+                            href="/complaint-view-status"
+                            title="View Status"
+                          >
+                            View Status
+                          </Link>
+                        </div>
+                      </li>
                       <li className="nav-item">
-                        <Link className="nav-link" href="/my-activity" title="Home">
+                        <Link
+                          className="nav-link"
+                          href="/my-activity"
+                          title="My Activity"
+                        >
                           My Activity
                         </Link>
                       </li>
-                      <li className="nav-item">
-                        <Link className="nav-link" href="/" title="Home">
-                            Master Management
+
+                      <li className="nav-item dropdown">
+                        <Link
+                          className="nav-link dropdown-toggle"
+                          href="#"
+                          id="navbarDropdown"
+                          role="button"
+                          data-toggle="dropdown"
+                          aria-haspopup="true"
+                          aria-expanded="false"
+                        >
+                          Master Management
                         </Link>
+                        <div
+                          className="dropdown-menu"
+                          aria-labelledby="navbarDropdown"
+                        >
+                          <Link
+                            className="dropdown-item"
+                            href="/manage-master/department"
+                            title="Department"
+                          >
+                            Department
+                          </Link>
+                          <Link
+                            className="dropdown-item"
+                            href="/manage-master/area-of-concern"
+                            title="Area Of Concern"
+                          >
+                            Area Of Concern
+                          </Link>
+                        </div>
                       </li>
-                      <li className="nav-item">
-                        <Link className="nav-link" href="/" title="Home">
+
+                      <li
+                        className={`nav-item ${
+                          route.pathname === "/dashboard" ? "routematch" : ""
+                        } `}
+                      >
+                        <Link className="nav-link" href="/" title="Dashboard">
                           Dashboard
                         </Link>
                       </li>
-                      <li className="nav-item">
-                        <Link className="nav-link" href="/" title="Home">
-                         Report
+
+                      <li
+                        className={`nav-item  ${
+                          route.pathname === "/reports" ? "routematch" : ""
+                        } `}
+                      >
+                        <Link className="nav-link" href="/" title="Report">
+                          Report
                         </Link>
                       </li>
                     </ul>
@@ -112,60 +298,131 @@ export const BottomHeader = () => {
         </div>
       </div>
 
-      <Modal show={showModal} onHide={() => setShowModal(!showModal)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Login</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Formik
-            initialValues={initialValues}
-            validationSchema={validationSchema}
-            onSubmit={(values) => {
-              handleUserLogin(values);
+      <Dialog
+        onClose={() => setShowModal(!showModal)}
+        aria-labelledby="customized-dialog-title"
+        open={showModal}
+        fullWidth
+        maxWidth="sm"
+      >
+      {fieldStatus.isSubmit && <AppLoader/>}
+        <DialogTitle
+          sx={{ m: 0, p: 2, textAlign: "center" }}
+          id="customized-dialog-title"
+        >
+          Login
+          <IconButton
+            aria-label="close"
+            onClick={() => setShowModal(!showModal)}
+            sx={{
+              position: "absolute",
+              right: 8,
+              top: 8,
+              color: (theme) => theme.palette.grey[500],
             }}
           >
-            {() => (
-              <Form initialtouched={{ zip: true }}>
-                <div className="form-div mb-3">
-                  <Field
-                    name="username"
-                    className="form-control border-none"
-                    placeholder="User Name"
-                  />
-                  <ErrorMessage name={"username"}>
-                    {(msg) => (
-                      <div style={{ color: "red", textAlign: "left" }}>
-                        {msg}
-                      </div>
-                    )}
-                  </ErrorMessage>
-                </div>
-                <div className="form-div mb-3">
-                  <Field
-                    type="password"
-                    name="password"
-                    className="form-control"
-                    placeholder="Password"
-                  />
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
+        <DialogContent dividers>
+        {fieldStatus.isText &&
+          <Formik
+            initialValues={{ username: "" }}
+            validationSchema={otpValidation}
+            onSubmit={(values) => handleOTPSend(values)}
+          >
+            {({ values, errors, setFieldValue }) => (
+              <Form>
+                <Grid container spacing={2}>
+                  <Grid item xs={12}>
+                    <TextField
+                      name="username"
+                      fullWidth
+                      value={values.username}
+                      placeholder="Enter email / phone"
+                      error={!!errors.username}
+                      helperText={errors.username}
+                      onChange={(e) => {
+                        setFieldValue("username", e.target.value);
+                        setDFieldValue(e.target.value);
+                      }}
+                    />
+                  </Grid>
 
-                  <ErrorMessage name={"password"}>
-                    {(msg) => (
-                      <div style={{ color: "red", textAlign: "left" }}>
-                        {msg}
-                      </div>
-                    )}
-                  </ErrorMessage>
-                </div>
-                <div className="form-div">
-                  <button type="submit" className="btn btn-primary w-100">
-                    Submit
-                  </button>
-                </div>
+                  <Grid item xs={12} sx={{ textAlign: "center" }}>
+                    <Button
+                      sx={{ position: "relative", minWidth: 100 }}
+                      color="primary"
+                      variant="contained"
+                      type="submit"
+                      disabled={fieldStatus.isSubmit}
+                    >
+                      Submit
+                    </Button>
+                  </Grid>
+                </Grid>
               </Form>
             )}
           </Formik>
-        </Modal.Body>
-      </Modal>
+          }
+          {fieldStatus.isOTP && (
+            <>
+              <Grid item >
+                <Grid
+                  item
+                  sx={{ display: "flex", justifyContent: "center" }}
+                >
+                  <p className="fw-bold">Please enter OTP to verify</p>
+                </Grid>
+                <Grid sx={{ display: "flex", justifyContent: "center" }}>
+                  <OTPInput
+                    value={OTP}
+                    onChange={setOTP}
+                    numInputs={6}
+                    inputType="tel"
+                    inputStyle={{
+                      height: 40,
+                      width: 40,
+                      border: "1px solid black",
+                    }}
+                    shouldAutoFocus={true}
+                    renderSeparator={
+                      <span style={{ textAlign: "center" }}> - </span>
+                    }
+                    renderInput={(props) => <input {...props} />}
+                  />
+                </Grid>
+                <TimerCount
+                fieldValue={fieldValue}
+                  handleOTPSend={handleOTPSend}
+                  setSeconds={setSeconds}
+                  seconds={seconds}
+                  setMinutes={setMinutes}
+                  minutes={minutes}
+                />
+                <Grid
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    mt: 3,
+                  }}
+                >
+                  <button
+                    className="btn btn-primary"
+                    onClick={verifyOTP}
+                    disabled={fieldStatus.isSubmit}
+                  >
+                    {!fieldStatus.isSubmit
+                      ? "Verify OTP"
+                      : "Please wait..."}
+                  </button>
+                </Grid>
+              </Grid>
+            </>
+          )}
+
+        </DialogContent>
+      </Dialog>
     </header>
   );
 };

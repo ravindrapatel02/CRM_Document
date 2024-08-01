@@ -33,7 +33,7 @@ const JWTAuthAuthProvider = ({ children }) => {
       }
       setAuthToken(token);
       jwtAxios
-        .get("sgt/user/userprofile")
+        .get("crm/user/userprofile")
         .then((res) => {
           let resData = res.data.data;
           if (resData !== null) {
@@ -76,7 +76,7 @@ const JWTAuthAuthProvider = ({ children }) => {
     }
     setAuthToken(token);
     jwtAxios
-      .get("sgt/user/userprofile")
+      .get("crm/user/userprofile")
       .then(
         (res) => {
           let resData = res.data;
@@ -108,7 +108,7 @@ const JWTAuthAuthProvider = ({ children }) => {
   const signInUser = async ({ username, password }) => {
    
     try {
-      const { data } = await jwtAxios.post("auth/authenticatesgtsurvey", {
+      const { data } = await jwtAxios.post("auth/authenticatecrmsapp", {
         username,
         password,
       });
@@ -116,7 +116,7 @@ const JWTAuthAuthProvider = ({ children }) => {
       localStorage.setItem("token", data.token);
       localStorage.setItem("role", data.role);
       setAuthToken(data.token); 
-      const res = await jwtAxios.get("sgt/user/userprofile");
+      const res = await jwtAxios.get("crm/user/userprofile");
       let resData = res.data.data      ;
       setJWTAuthData({
         user: { ...resData, role: data.role },

@@ -4,7 +4,8 @@ import { BASE_URL } from "../../shared/constants/AppConst";
 const jwtAxios = axios.create({
   baseURL: BASE_URL, //YOUR_API_URL HERE
   headers: {
-    'Content-Type': 'application/json',
+    // 'Content-Type': 'application/json',
+    
     'Access-Control-Allow-Origin':'*',
   },
 });

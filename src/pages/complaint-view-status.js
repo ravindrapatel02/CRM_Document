@@ -1,30 +1,30 @@
-import { Box, Card, Hidden, Typography } from "@mui/material";
-import Grid from "@mui/material/Grid";
+import AppPageContainer from "@components/AppContainers/AppPageContainer";
+import AppSectionContainer from "@components/AppContainers/AppSectionContainer";
+import AppsContent from "@components/AppsContainer/AppsContent";
+import AppsHeader from "@components/AppsContainer/AppsHeader";
+import AppSearch from "@components/AppSearchBar";
+import AppSectionTitle from "@components/AppSectionTitle";
+import AppsPagination from "@components/AppsPagination";
+// import ActivityTable from '@components/AppUI/ActivityTable';
+import ComplaintTable from "@components/AppUI/complaint/table";
+import { Box, Button, Card, Grid, Hidden, useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
-import BookingTable from "../components/BookingDetails/Table";
-import AppsHeader from "../components/AppsContainer/AppsHeader";
-import AppSearch from "../components/AppSearchBar";
-import AppsPagination from "../components/AppsPagination";
-import AppsContent from "../components/AppsContainer/AppsContent";
 import { useDispatch, useSelector } from "react-redux";
-import { getBookingDetails } from "../redux/slice/BookingDetailsSlice";
-import { useAuthUser } from "../hooks/AuthHooks";
-const ROW_PER_PAGE = 10;
 
-const BookingDeailsDashboard = () => {
+const ROW_PER_PAGE = 10;
+const ComplaintViewStatus = () => {
+  const router = useRouter();
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const [dataCount, setDataCount] = useState(50);
-  const {bookingData} = useSelector((state) => state.booking); 
+  // const { bookingData } = useSelector((state) => state.booking);
+  const bookingData = [];
   const dispatch = useDispatch();
   const [page, setPage] = useState(0);
   const [data, setData] = useState([]);
-  const { user } = useAuthUser();
-
-  useEffect(()=>{
-    if(user){
-    dispatch(getBookingDetails({userId :user.id}));
-    }
-  } ,[ ]);
- 
+  // const { user } = useAuthUser();
 
   useEffect(() => {
     let newAllApprovedList = [...bookingData];
@@ -45,12 +45,33 @@ const BookingDeailsDashboard = () => {
   };
 
   return (
-    <Grid container sx={{ display: "flex", justifyContent: "center", mb: 5 , height:'76.8vh'}}>
-      <Grid item xs={10}>
-        <Grid item xs={12} sx={{ textAlign: "center", padding: 4 }}>
-          <Typography sx={{ fontWeight: "bold", fontSize: "20px" }}>
-             Manage Master 
-          </Typography>
+    <AppSectionContainer>
+      <Box
+        sx={{
+          textAlign: "center",
+        }}
+      >
+        <AppSectionTitle
+          primaryText={"View Complaint Status"}
+          secondaryText={""}
+        />
+      </Box>
+      <AppPageContainer>
+        <Grid item>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "flex-end",
+              // flexDirection: "row",
+              alignItems: "center",
+              width: 1,
+              pb: 2,
+            }}
+          >
+            <Box mx={2}>
+              <Button>Export</Button>
+            </Box>
+          </Box>
         </Grid>
 
         <Card sx={{ borderTop: 1 }}>
@@ -94,7 +115,7 @@ const BookingDeailsDashboard = () => {
               paddingBottom: 2.5,
             }}
           >
-            <BookingTable data={data} />
+            <ComplaintTable data={data} />
           </AppsContent>
           <Hidden smUp>
             <AppsPagination
@@ -105,9 +126,9 @@ const BookingDeailsDashboard = () => {
             />
           </Hidden>
         </Card>
-      </Grid>
-    </Grid>
+      </AppPageContainer>
+    </AppSectionContainer>
   );
 };
 
-export default BookingDeailsDashboard;
+export default ComplaintViewStatus;

@@ -8,54 +8,79 @@ import TableHeader from "@components/AppTable/TableHeader";
 const TableHeading = () => {
   return (
     <TableHeader>
-      <TableCell
-      sx={{
-        background: "#f5f7f6 !important",
-      }}
-        align="left"
-      >
-        S.No.
-      </TableCell>
-      <TableCell
-        sx={{
-          background: "#f5f7f6 !important",
-        }}
-        align="left"
-      >
-        Type
-      </TableCell>
-      <TableCell
-        sx={{
-          background: "#f5f7f6 !important",
-        }}
-        align="left"
-      >
-        Requesting For
-      </TableCell>
-      <TableCell
-        sx={{
-          background: "#f5f7f6 !important",
-        }}
-        align="left"
-      >
-        Booking in the Name of
-      </TableCell>
-      <TableCell
-        sx={{
-          background: "#f5f7f6 !important",
-        }}
-        align="left"
-      >
-        Seat No.
-      </TableCell>
-
-      <TableCell
+    <TableCell
       sx={{
         background: "#f5f7f6 !important",
       }}
       align="left"
     >
-      Location
+      S.No.
+    </TableCell>
+    <TableCell
+      sx={{
+        background: "#f5f7f6 !important",
+      }}
+      align="left"
+    >
+      Requester Name
+    </TableCell>
+    <TableCell
+      sx={{
+        background: "#f5f7f6 !important",
+      }}
+      align="left"
+    >
+      Email Id
+    </TableCell>
+    <TableCell
+      sx={{
+        background: "#f5f7f6 !important",
+      }}
+      align="left"
+    >
+      Contact No
+    </TableCell>
+    <TableCell
+      sx={{
+        background: "#f5f7f6 !important",
+      }}
+      align="left"
+    >
+      Complaint Type
+    </TableCell>
+    <TableCell
+      sx={{
+        background: "#f5f7f6 !important",
+      }}
+      align="left"
+    >
+      Feedback Type
+    </TableCell>
+
+    <TableCell
+      sx={{
+        background: "#f5f7f6 !important",
+      }}
+      align="left"
+    >
+      Organization
+    </TableCell>
+    <TableCell
+      sx={{
+        background: "#f5f7f6 !important",
+      }}
+      align="left"
+    >
+      Area fo Concern
+    </TableCell>
+
+    <TableCell
+      sx={{
+        background: "#f5f7f6 !important",
+      }}
+      align="left"
+    >
+      Status
     </TableCell>
     <TableCell
     sx={{
@@ -63,49 +88,9 @@ const TableHeading = () => {
     }}
     align="left"
   >
-   Building
+    Action
   </TableCell>
-  <TableCell
-  sx={{
-    background: "#f5f7f6 !important",
-  }}
-  align="left"
->
- Floor
-</TableCell>
-      <TableCell
-        sx={{
-          background: "#f5f7f6 !important",
-        }}
-        align="left"
-      >
-        From Date
-      </TableCell>
-      <TableCell
-        sx={{
-          background: "#f5f7f6 !important",
-        }}
-        align="left"
-      >
-        To Date
-      </TableCell>
-      <TableCell
-        sx={{
-          background: "#f5f7f6 !important",
-        }}
-        align="left"
-      >
-        Remarks
-      </TableCell>
-      <TableCell
-        sx={{
-          background: "#f5f7f6 !important",
-        }}
-        align="left"
-      >
-        Status
-      </TableCell>
-    </TableHeader>
+  </TableHeader>
   );
 };
 

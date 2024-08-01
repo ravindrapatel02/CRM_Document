@@ -54,7 +54,7 @@ const AppSectionTitle = (props) => {
 				variants={headerVariants}
 				sx={{
 					mb: 2,
-					textTransform: "uppercase",
+					textTransform: "capitalize",
 					...headerSx
 				}}
 			>
