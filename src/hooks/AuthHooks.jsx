@@ -14,12 +14,13 @@ export const useAuthUser = () => {
 };
 
 export const useAuthMethod = () => {
-  const { signInUser, signUpUser, logout, getUserProfile } = useJWTAuthActions();
+  const { signInUser, signUpUser, logout, getUserProfile , verifyOTP} = useJWTAuthActions();
 
   return {
     signInUser,
     logout,
     signUpUser,
-    getUserProfile
+    getUserProfile,
+    verifyOTP,
   };
 };

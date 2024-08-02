@@ -20,6 +20,14 @@ const TableHeading = () => {
         }}
         align="left"
       >
+       Complaint No.
+      </TableCell>
+      <TableCell
+        sx={{
+          background: "#f5f7f6 !important",
+        }}
+        align="left"
+      >
         Requester Name
       </TableCell>
       <TableCell

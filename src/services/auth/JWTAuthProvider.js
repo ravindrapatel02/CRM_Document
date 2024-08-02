@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import jwtAxios, { setAuthToken } from "./index";
 import { useRouter } from "next/router"; 
 import AppNotification from "@components/AppNotification";
+import { API_URL } from "src/api";
 
 const JWTAuthContext = createContext();
 const JWTAuthActionsContext = createContext();
@@ -105,6 +106,7 @@ const JWTAuthAuthProvider = ({ children }) => {
         });
       });
   };
+
   const signInUser = async ({ username, password }) => {
    
     try {
@@ -164,6 +166,34 @@ const JWTAuthAuthProvider = ({ children }) => {
     router.push("/");
   };
 
+  const verifyOTP =  async ({ mobileNo, otp }) => {
+    
+    try {
+      const { data } = await jwtAxios.post("auth/authenticatecrmsapp", {
+        username:mobileNo,
+        otp,
+      });
+
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("role", data.role);
+      setAuthToken(data.token); 
+      const res = await jwtAxios.get("crm/user/userprofile");
+      let resData = res.data.data      ;
+      setJWTAuthData({
+        user: { ...resData, role: data.role },
+        isLoading: false,
+        isAuthenticated: true,
+      }); 
+    } catch (error) {
+      AppNotification(false, error.message ?? 'UserID or Password is incorrect !!');
+      setJWTAuthData({
+        ...jwtAuthData,
+        isAuthenticated: false,
+        isLoading: false,
+      }); 
+    }
+  };
+
   return (
     <JWTAuthContext.Provider
       value={{
@@ -176,6 +206,7 @@ const JWTAuthAuthProvider = ({ children }) => {
           signInUser,
           logout,
           userprofile,
+          verifyOTP,
         }}
       >
         {children}

@@ -25,7 +25,7 @@ const StyledTableCell = styled(TableCell)(() => ({
 }));
  
 
-const TableItem = ({ data , handleRemoveSelectSeat , handleChange , index}) => { 
+const TableItem = ({ data , index}) => { 
    
   return (
     <>
@@ -37,41 +37,35 @@ const TableItem = ({ data , handleRemoveSelectSeat , handleChange , index}) => {
           {index +1}
         </StyledTableCell>
         <StyledTableCell>
-          {data.seatType}
+          {data.complNumb}
         </StyledTableCell>
         <StyledTableCell>
-       {data.seatBookingType}
+       {data.firstName +" " + data.lastName}
         </StyledTableCell>
         <StyledTableCell>
-         {data.name}
+         {data.emailId}
         </StyledTableCell>
         <StyledTableCell>
-          {data.workStationNo}
-        </StyledTableCell>
-
-        <StyledTableCell>
-          {data.location}
-        </StyledTableCell>
-        <StyledTableCell>
-          {data.building}
-        </StyledTableCell>
-        <StyledTableCell>
-          {data.floor}
+          {data.contactNo}
         </StyledTableCell>
 
         <StyledTableCell>
-          {(data.fromDate).substring(0,10)}
+          {data.complType}
+        </StyledTableCell>
+        <StyledTableCell>
+          {data.custType}
+        </StyledTableCell>
+        <StyledTableCell>
+          {data.orgination}
+        </StyledTableCell>
+
+        <StyledTableCell>
+          {data.areaofConcern}
         </StyledTableCell>
          <StyledTableCell>
-        {(data.toDate).substring(0,10)}
+       {data.status}
         </StyledTableCell>
-        <StyledTableCell>
-         {data.remarks}
-        </StyledTableCell> 
-        <StyledTableCell>
-         {data.status}
-        </StyledTableCell> 
-        
+         
       </StyledTableRow>
     </>
   );

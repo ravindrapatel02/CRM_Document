@@ -9,8 +9,11 @@ export const API_URL = {
 
   // CRM Document
   CREATE_REQUEST: '/crm/workflow/crmsubmitreq',
+  GET_COMPLAINT_REQUEST: '/crm/workflow/custsubmitdetbypernnumb',
   CREATE_DEPARTMENT : '/crm/master/curddeptmaster',
   GET_DEPARTMENT: '/crm/master/deptmasterlist',
   GET_AREA_CONCERN_LIST: '/crm/master/concernmasterlist',
   ADD_AREA_OF_CONCERN: '/crm/master/curdconcernmaster',
+  SEND_OTP: '/crm/workflow/generateotp',
+  VERIFY_OTP: '/crm/workflow/validateotp',
 };

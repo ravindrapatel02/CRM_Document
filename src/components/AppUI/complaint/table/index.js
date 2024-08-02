@@ -6,6 +6,7 @@ import propTypes from 'prop-types';
 import TableHeading from './TableHeading';
 import TableItemEmpty from './TableItemEmpty';
 import AppTableContainer from '@components/AppTableContainer';
+import TableItem from './TableItem';
 
 const ComplaintTable = ({data}) => {
   return (

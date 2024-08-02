@@ -3,6 +3,7 @@ import { configureStore } from '@reduxjs/toolkit';
 
 import DepartmentSlice from '@redux/slice/DepartmentSlice';
 import AreaOfConcernSlice from '@redux/slice/AreaOfConcernSlice';
+import ComplaintViewRequestSlice from '@redux/slice/ComplaintViewRequestSlice';
 
 export const store = configureStore({
   reducer: {
@@ -17,6 +18,7 @@ export const store = configureStore({
     // entity:EntitySlice,
     // sector:SectorSlice
     department:DepartmentSlice,
-    areaConcern : AreaOfConcernSlice
+    areaConcern : AreaOfConcernSlice,
+    complaint: ComplaintViewRequestSlice,
   },
 });
