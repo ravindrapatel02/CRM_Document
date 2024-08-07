@@ -4,6 +4,8 @@ import { configureStore } from '@reduxjs/toolkit';
 import DepartmentSlice from '@redux/slice/DepartmentSlice';
 import AreaOfConcernSlice from '@redux/slice/AreaOfConcernSlice';
 import ComplaintViewRequestSlice from '@redux/slice/ComplaintViewRequestSlice';
+import MyTaskSlice from '@redux/slice/MyTaskSlice';
+import SPOCListSlice from '@redux/slice/SPOCListSlice';
 
 export const store = configureStore({
   reducer: {
@@ -20,5 +22,7 @@ export const store = configureStore({
     department:DepartmentSlice,
     areaConcern : AreaOfConcernSlice,
     complaint: ComplaintViewRequestSlice,
+    taskList :MyTaskSlice,
+    spocList: SPOCListSlice
   },
 });

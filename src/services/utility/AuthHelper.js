@@ -11,6 +11,7 @@ export const getUserFromJwtAuth = (user) => {
         contactNo:user.contactNo,
         address:user.address,
         attemptSurvey:user.attemptSurvey,
+        deptName:user.deptName,
       };
     return user;
   };

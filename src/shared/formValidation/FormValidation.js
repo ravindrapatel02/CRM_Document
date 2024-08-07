@@ -4,7 +4,7 @@ import * as yup from "yup";
 export const createConsernValidation = yup.object({
   firstName: yup.string().required("Please enter first name"),
   lastName: yup.string().required("Please enter last name"),
-  requrstType: yup.string().required("Please select request type"),
+  complType: yup.string().required("Please select request type"),
   emailId: yup.string().required("Please enter email"),
   deptName: yup.string().required("Please select the department"),
   contactNo: yup.string().required("Please enter contact number"),
@@ -13,6 +13,7 @@ export const createConsernValidation = yup.object({
   feedbackTypeDate: yup.string().required("Please enter date"),
   areaConcern: yup.string().required("Please select area of concern"),
   detailsDesc: yup.string().required("Please enter description"),
+  selConsent: yup.string().required('Please accept the consent')
 });
 
 export const departmentValidation = yup.object({

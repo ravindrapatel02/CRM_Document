@@ -16,4 +16,10 @@ export const API_URL = {
   ADD_AREA_OF_CONCERN: '/crm/master/curdconcernmaster',
   SEND_OTP: '/crm/workflow/generateotp',
   VERIFY_OTP: '/crm/workflow/validateotp',
+  MY_TASK_LIST: '/crm/workflow/assigntasklistdetails',
+  SPOC_LIST: '/crm/master/getmasterdropdownlist',
+  GET_COMPLAINT_DETAILS: '/crm/workflow/getdetailsbycomplnumb',
+  GET_USER_LIST: '/crm/master/getmasterdropdownlist',
+  ASSIGN_TASk: '/crm/workflow/updateuserloghistory',
 };
+

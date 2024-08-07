@@ -20,7 +20,12 @@ const AddAreaofConcern = () =>{
         });
     };
 
-
+    useEffect(() => {
+      if (!user) {
+        router.push("/");
+      }
+    } ,[]);
+    
   return (
     <AppSectionContainer>
     <Box

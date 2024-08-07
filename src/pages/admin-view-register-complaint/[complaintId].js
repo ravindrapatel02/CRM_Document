@@ -14,29 +14,35 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { getAreaOfConcern } from "@redux/slice/AreaOfConcernSlice";
-import { getDepartment } from "@redux/slice/DepartmentSlice";
+import { getSPOCList } from "@redux/slice/SPOCListSlice";
+import { isValidBase64 } from "@shared/constants/AppConst";
 import { createConsernValidation } from "@shared/formValidation/FormValidation";
 import { Form, Formik } from "formik";
+import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { API_URL } from "src/api";
+import { useAuthUser } from "src/hooks/AuthHooks";
 import jwtAxios from "src/services/auth";
 
-const RegisterComplaint = () => {
+const AdminViewRegisterComplaint = () => {
   const dispatch = useDispatch();
   const router = useRouter();
+  const { user } = useAuthUser();
   useEffect(() => {
-    dispatch(getAreaOfConcern());
-    dispatch(getDepartment());
+    if (user) {
+      const obj = {
+        deptname: user.deptName,
+        flag: user.role[0] === "CRM_ADMIN" ? "CRM_SPOC" : "CRM_HOD",
+      };
+      dispatch(getSPOCList(obj));
+    }
   }, []);
-
-  const { deptData } = useSelector((state) => state.department);
-  const { areaConcernData } = useSelector((state) => state.areaConcern);
-
-
-  const initialValues = {
+  const { complaintId } = router.query;
+  const { spocData } = useSelector((state) => state.spocList);
+  const [loading, setLoading] = useState(true);
+  const [initialValues, setInitialValues] = useState({
     firstName: "",
     lastName: "",
     custType: "",
@@ -50,50 +56,73 @@ const RegisterComplaint = () => {
     areaConcern: "",
     detailsDesc: "",
     file: "",
-  };
+  });
 
-  const handleSubmit = (values) => {
-    const formData = new FormData();
-    formData.append("firstName", values.firstName);
+  useEffect(() => {
+    if (complaintId) {
+      if (typeof window !== "undefined" && isValidBase64(complaintId)) {
+        jwtAxios
+          .post(API_URL.GET_COMPLAINT_DETAILS, {
+            complNumb: window?.atob(complaintId),
+          })
+          .then((response) => {
+            const res = response.data;
+            if (res.status === "true") {
+              setInitialValues({
+                firstName: res.data.firstName,
+                lastName: res.data.lastName,
+                custType: res.data.custType,
+                deptName: res.data.deptName,
+                complType: res.data.complType,
+                emailId: res.data.emailId,
+                contactNo: res.data.contactNo,
+                selConsent: "yes",
+                organization: res.data.crmCustComplReqdtls[0].organization,
+                feedbackType: res.data.crmCustComplReqdtls[0].feedbackType,
+                feedbackTypeDate:
+                  res.data.crmCustComplReqdtls[0].feedbackDate.slice(0, 10),
+                // (res.data.crmCustComplReqdtls[0].feedbackTypeDate).slice(1,10),
+                areaConcern: res.data.crmCustComplReqdtls[0].areaConcern,
+                detailsDesc: res.data.crmCustComplReqdtls[0].detailsDesc,
+              });
+              setLoading(false);
+            } else {
+              AppNotification(false, res.message);
+            }
+          })
+          .catch((error) => {
+            AppNotification(false, error.message);
+          });
+      }
+    }
+  }, [complaintId]);
 
-    formData.append("lastName", values.lastName);
-    // formData.append("custType", "None-GMR");
-    formData.append("deptName", values.deptName);
-    formData.append("complType", values.complType);
-    formData.append("emailId", values.emailId);
-    formData.append("contactNo", values.contactNo);
-    formData.append("crmCustComplReqdtls[0].organization", values.organization);
-    formData.append("crmCustComplReqdtls[0].feedbackType", values.feedbackType);
-    formData.append("crmCustComplReqdtls[0].areaConcern", values.areaConcern);
-    formData.append("crmCustComplReqdtls[0].detailsDesc", values.detailsDesc);
-    formData.append(
-      "crmCustComplReqdtls[0].feedbackDate",
-      new Date(values.feedbackTypeDate)
-    );
-    formData.append("crmCustComplReqdtls[0].upldFile", values.file);
-    formData.append("crmCustComplReqdtls[0].selConsent", values.selConsent);
-
+  const handleSubmit = (reqObj) => {
     jwtAxios
-      .post(API_URL.CREATE_REQUEST, formData)
+      .post(API_URL.ASSIGN_TASk, reqObj)
       .then((response) => {
         const res = response.data;
         if (res.status === "true") {
           AppNotification(
             true,
-            res.message ?? "Complaint submitted successfully !"
+            res.message ?? "Complaint frowered successfully !"
           );
           setTimeout(() => {
-            router.push("/complaint-view-status");
+            router.push("/my-activity");
           }, 3000);
         } else {
           AppNotification(false, res.message ?? "Something went wrong !");
         }
+        console.log(response.data);
       })
       .catch((error) => {
         AppNotification(false, error.message ?? "Network Error !");
       });
   };
 
+  if(user.role[0]!=='CRM_ADMIN' || user.role[0]!=="CRM_SPOC"){
+    router.push('/');
+  }
   return (
     <AppSectionContainer>
       <Box
@@ -102,19 +131,20 @@ const RegisterComplaint = () => {
         }}
       >
         <AppSectionTitle
-          primaryText={"Customer Complaint Form"}
+          primaryText={"View Customer Complaint Form"}
           secondaryText={""}
         />
       </Box>
-      {deptData &&
-      deptData.length > 0 &&
-      areaConcernData &&
-      areaConcernData.length > 0 ? (
+      {!loading ? (
         <Formik
           initialValues={initialValues}
           validationSchema={createConsernValidation}
           onSubmit={(values) => {
-            handleSubmit(values);
+            const obj = {
+              assignToUserId: values.assignToUserId,
+              complNumb: window.atob(complaintId),
+            };
+            handleSubmit(obj);
           }}
         >
           {({ values, setFieldValue, errors }) => (
@@ -124,6 +154,7 @@ const RegisterComplaint = () => {
                   <TextField
                     name="firstName"
                     value={values.firstName}
+                    disabled
                     fullWidth
                     onChange={(e) => {
                       setFieldValue("firstName", e.target.value);
@@ -144,6 +175,7 @@ const RegisterComplaint = () => {
                   <TextField
                     name="lastName"
                     value={values.lastName}
+                    disabled
                     fullWidth
                     onChange={(e) => {
                       setFieldValue("lastName", e.target.value);
@@ -160,42 +192,12 @@ const RegisterComplaint = () => {
                     }}
                   />
                 </Grid>
-                {/*<Grid item xs={12} md={6}>
-              <TextField
-                name="custType"
-                select
-                value={values.custType}
-                fullWidth
-                error={errors.custType}
-                helperText={errors.custType}
-                onChange={(e) => {
-                  setFieldValue("custType", e.target.value);
-                }}
-                label={
-                  <span>
-                     Customer Type
-                    <span style={{ color: "#d32f2f" }}>*</span>
-                  </span>
-                }
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              >
-                <MenuItem disabled selected>
-                  Customer Type
-                </MenuItem>
-                <MenuItem value="GMR">
-                  GMR
-                </MenuItem>
-                <MenuItem value="Non-GMR">Non-GMR</MenuItem>
-               
-              </TextField>
-            </Grid>*/}
+
                 <Grid item xs={12} md={6}>
                   <TextField
                     name="deptName"
-                    select
                     value={values.deptName}
+                    disabled
                     fullWidth
                     error={errors.deptName ? true : false}
                     helperText={errors.deptName}
@@ -211,26 +213,12 @@ const RegisterComplaint = () => {
                     InputLabelProps={{
                       shrink: true,
                     }}
-                  >
-                    <MenuItem disabled selected>
-                      Department
-                    </MenuItem>
-                    {deptData &&
-                      deptData.length > 0 &&
-                      deptData.map((item, index) => (
-                        <MenuItem
-                          value={item.deptCode}
-                          key={index + "_" + item.id}
-                        >
-                          {item.deptName}
-                        </MenuItem>
-                      ))}
-                  </TextField>
+                  ></TextField>
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <TextField
                     name="complType"
-                    select
+                    disabled
                     value={values.complType}
                     fullWidth
                     error={errors.complType ? true : false}
@@ -247,20 +235,13 @@ const RegisterComplaint = () => {
                     InputLabelProps={{
                       shrink: true,
                     }}
-                  >
-                    <MenuItem disabled selected>
-                      Request Type
-                    </MenuItem>
-                    <MenuItem value="Airlines">Airlines</MenuItem>
-                    <MenuItem value="Agents">Agents</MenuItem>
-                    <MenuItem value="CHA">CHA</MenuItem>
-                    <MenuItem value="Direct Customer">Direct Customer</MenuItem>
-                  </TextField>
+                  ></TextField>
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <TextField
                     name="email"
                     value={values.emailId}
+                    disabled
                     fullWidth
                     error={errors.emailId ? true : false}
                     helperText={errors.emailId}
@@ -282,6 +263,7 @@ const RegisterComplaint = () => {
                   <TextField
                     name="contactNo"
                     value={values.contactNo}
+                    disabled
                     fullWidth
                     error={errors.contactNo ? true : false}
                     helperText={errors.contactNo}
@@ -303,6 +285,7 @@ const RegisterComplaint = () => {
                   <TextField
                     name="organization"
                     value={values.organization}
+                    disabled
                     fullWidth
                     error={errors.organization ? true : false}
                     helperText={errors.organization}
@@ -323,8 +306,8 @@ const RegisterComplaint = () => {
                 <Grid item xs={12} md={6}>
                   <TextField
                     name="feedbackType"
-                    select
                     value={values.feedbackType}
+                    disabled
                     error={errors.feedbackType ? true : false}
                     helperText={errors.feedbackType}
                     fullWidth
@@ -340,28 +323,14 @@ const RegisterComplaint = () => {
                     InputLabelProps={{
                       shrink: true,
                     }}
-                  >
-                    <MenuItem disabled selected>
-                      Feedback Type
-                    </MenuItem>
-                    <MenuItem value="Domestic Outbound">
-                      Domestic Outbound
-                    </MenuItem>
-                    <MenuItem value="Domestic Inbound">
-                      Domestic Inbound
-                    </MenuItem>
-                    <MenuItem value="Exports">Exports</MenuItem>
-                    <MenuItem value="Imports">Imports</MenuItem>
-                    <MenuItem value="Courier Exports">Courier Exports</MenuItem>
-                    <MenuItem value="Courier Imports">Courier Imports</MenuItem>
-                    <MenuItem value="Others">Others</MenuItem>
-                  </TextField>
+                  ></TextField>
                 </Grid>
 
                 <Grid item xs={12} md={6}>
                   <TextField
                     type="date"
                     name="feedbackTypeDate"
+                    disabled
                     value={values.feedbackTypeDate}
                     error={errors.feedbackTypeDate ? true : false}
                     helperText={errors.feedbackTypeDate}
@@ -383,8 +352,8 @@ const RegisterComplaint = () => {
                 <Grid item xs={12} md={6}>
                   <TextField
                     name="areaConcern"
-                    select
                     value={values.areaConcern}
+                    disabled
                     error={errors.areaConcern ? true : false}
                     helperText={errors.areaConcern}
                     fullWidth
@@ -400,21 +369,7 @@ const RegisterComplaint = () => {
                     InputLabelProps={{
                       shrink: true,
                     }}
-                  >
-                    <MenuItem disabled selected>
-                      Area of concern
-                    </MenuItem>
-                    {areaConcernData &&
-                      areaConcernData.length > 0 &&
-                      areaConcernData.map((item, index) => (
-                        <MenuItem
-                          value={item.concernType}
-                          key={index + "_" + item.id}
-                        >
-                          {item.concernType}
-                        </MenuItem>
-                      ))}
-                  </TextField>
+                  ></TextField>
                 </Grid>
 
                 <Grid item xs={12} md={6}>
@@ -422,6 +377,7 @@ const RegisterComplaint = () => {
                     name="detailsDesc"
                     value={values.detailsDesc}
                     fullWidth
+                    disabled
                     error={errors.detailsDesc ? true : false}
                     helperText={errors.detailsDesc}
                     onChange={(e) => {
@@ -439,58 +395,49 @@ const RegisterComplaint = () => {
                   />
                 </Grid>
                 <Grid item xs={12} md={6}>
+                  <Box>
+                    <Typography variant="body1">Attachement</Typography>
+                    <Link href="/" target="_blank">
+                      Attachement name
+                    </Link>
+                  </Box>
+                </Grid>
+
+                <Grid item xs={12} md={6}>
                   <TextField
-                    type="file"
-                    name="file"
-                    //   value={values.file}
+                    name="assignToUserId"
+                    select
+                    value={values.assignToUserId}
+                    error={errors.assignToUserId ? true : false}
+                    helperText={errors.assignToUserId}
                     fullWidth
                     onChange={(e) => {
-                      setFieldValue("file", e.target.files[0]);
+                      setFieldValue("assignToUserId", e.target.value);
                     }}
-                    label={<span>Attachments</span>}
+                    label={
+                      <span>
+                        Assign to user
+                        <span style={{ color: "#d32f2f" }}>*</span>
+                      </span>
+                    }
                     InputLabelProps={{
                       shrink: true,
                     }}
-                  />
-                </Grid>
-
-                <Grid item xs={12} md={12}>
-                  <FormControl>
-                    <RadioGroup
-                      name="selConsent"
-                      value={values.selConsent}
-                      onChange={(e) =>
-                        setFieldValue("selConsent", e.target.value)
-                      }
-                    >
-                      <FormControlLabel
-                        value="yes"
-                        control={<Radio />}
-                        label=<div>
-                          I <b>{values.firstName + values.lastName},</b> hereby
-                          voluntarily agree that may collect, use, process and
-                          store my <b>“Personal Information”</b> . I understand
-                          that the purpose of collection, usage, processing
-                          and/or storage of my Personal Information is to use it
-                          for compliance with the security procedures (such as
-                          regulated access to the office premises by issue of
-                          complaint) practiced by the Company by itself and/or
-                          through third party vendors/agencies for the overall
-                          security of its buildings, premises, installations and
-                          people. I further acknowledge and agree that my
-                          Personal Information may be shared by the Company with
-                          third party Vendors/agencies engaged by the Company in
-                          connection with the Purpose.
-                        </div>
-                      />
-                      {errors.selConsent && errors.selConsent.length > 3 && (
-                        <Typography variant="body1" style={{ color: "red" }}>
-                          {" "}
-                          {errors.selConsent}
-                        </Typography>
-                      )}
-                    </RadioGroup>
-                  </FormControl>
+                  >
+                    <MenuItem disabled selected>
+                      Assign to user
+                    </MenuItem>
+                    {spocData &&
+                      spocData.length > 0 &&
+                      spocData.map((item, index) => (
+                        <MenuItem
+                          value={item.userId}
+                          key={index + "_" + item.userId}
+                        >
+                          {item.userName}
+                        </MenuItem>
+                      ))}
+                  </TextField>
                 </Grid>
                 <Grid item md={12} textAlign={"center"} mt={3}>
                   <Button
@@ -517,4 +464,4 @@ const RegisterComplaint = () => {
   );
 };
 
-export default RegisterComplaint;
+export default AdminViewRegisterComplaint;

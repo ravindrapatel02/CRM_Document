@@ -241,7 +241,7 @@ header {
 }
 
 #collapsibleNavbar .navbar-nav>li:hover {
-    background: #f3b543;
+    background: #422c03;
     color: #000;
 }
 
@@ -922,6 +922,20 @@ footer .copy {
     
 
 }
+.bannerBox {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+  
+  .bannerImage {
+    background-image: url(/images/rightImg.png);
+    width: 100%;
+    /* height: 80vh; */
+    background-repeat: no-repeat;
+    /* background-position: center; */
+    /* background-size: cover; */
+  }
 
 @media (max-width: 578px) {
     .tabWrapper .docTab {

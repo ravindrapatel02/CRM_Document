@@ -15,6 +15,7 @@ import { getAreaOfConcern } from "@redux/slice/AreaOfConcernSlice";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useAuthUser } from "src/hooks/AuthHooks";
 // import { useAuthUser } from "src/hooks/AuthHooks";
 const ROW_PER_PAGE = 10;
 
@@ -22,6 +23,7 @@ const AreaofConcern = () => {
   const [dataCount, setDataCount] = useState(0);
   const { areaConcernData , loading} = useSelector((state) => state.areaConcern);
   const dispatch = useDispatch();
+  const { user } = useAuthUser();
   const [page, setPage] = useState(0);
   const [data, setData] = useState([]);
   const router = useRouter();
@@ -37,6 +39,11 @@ const AreaofConcern = () => {
   useEffect(() => {
     dispatch(getAreaOfConcern());
   }, []);
+  useEffect(() => {
+    if (!user) {
+      router.push("/");
+    }
+  });
 
   useEffect(() => {
     if(areaConcernData.length>0 && !loading){
@@ -64,7 +71,6 @@ const AreaofConcern = () => {
     // setopen(false);
     // setUpdateDetails(null);
   };
-// console.log('updateDetails==>' , updateDetails);
 
   return (
     <AppSectionContainer>

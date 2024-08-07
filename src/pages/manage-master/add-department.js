@@ -1,27 +1,37 @@
 import AppSectionContainer from "@components/AppContainers/AppSectionContainer";
 import AppNotification from "@components/AppNotification";
 import AppSectionTitle from "@components/AppSectionTitle";
+import AppLoader from "@components/CustomLoader";
 import { Box, Button, Grid, TextField } from "@mui/material";
 import { departmentValidation } from "@shared/formValidation/FormValidation";
 import { Form, Formik } from "formik";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { API_URL } from "src/api";
+import { useAuthUser } from "src/hooks/AuthHooks";
 import jwtAxios from "src/services/auth";
 
 const AddDepartment = () => {
   const router = useRouter();
+  const { user } = useAuthUser();
+  const [isSubmit , setIsSubmit] = useState(false);
   const initialValues = {
     deptName: "",
     deptCode: "",
     flag: "create",
   };
 
+  useEffect(() => {
+    if (!user) {
+      router.push("/");
+    }
+  });
+
   const handleSubmit = (reqObj) => {
+    setIsSubmit(true);
     jwtAxios
       .post(API_URL.CREATE_DEPARTMENT, reqObj)
       .then((response) => {
-        console.log(response);
         const res = response.data;
         if (res.status === "true") {
           AppNotification(true, res.message);
@@ -30,28 +40,31 @@ router.push('/manage-master/department');
           } ,3000);
         } else {
           AppNotification(false, res.message ?? "Sonething went wrong !");
+          setIsSubmit(false);
         }
       })
       .catch((error) => {
         AppNotification(false, error.msg ?? "Network Error !");
+        setIsSubmit(false);
       });
   };
 
   return (
+    <React.Fragment>
+    {isSubmit && <AppLoader/>}
     <AppSectionContainer>
       <Box
         sx={{
           textAlign: "center",
         }}
       >
-        <AppSectionTitle primaryText={"Add Department"} secondaryText={""} />
+        <AppSectionTitle primaryText={"Add Department AAAA"} secondaryText={""} />
       </Box>
 
       <Formik
         initialValues={initialValues}
         validationSchema={departmentValidation}
         onSubmit={(values, { setSubmitting, setTouched }) => {
-          console.log(values);
           handleSubmit(values);
           setTouched({
             deptName: true,
@@ -83,7 +96,6 @@ router.push('/manage-master/department');
                     shrink: true,
                   }}
                 />
-                {console.log("errors-->", errors)}
               </Grid>
               <Grid item xs={12} md={6}>
                 <TextField
@@ -115,6 +127,7 @@ router.push('/manage-master/department');
                   color="primary"
                   variant="contained"
                   type="submit"
+                  disabled={isSubmit}
                 >
                   Submit
                 </Button>
@@ -124,6 +137,7 @@ router.push('/manage-master/department');
         )}
       </Formik>
     </AppSectionContainer>
+    </React.Fragment>
   );
 };
 

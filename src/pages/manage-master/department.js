@@ -37,6 +37,11 @@ const DepartmentMaster = () => {
     setPage(0);
   }, [deptData]);
 
+  useEffect(() => {
+    if (!user) {
+      router.push("/");
+    }
+  });
   const onPageChange = (event, value) => {
     setPage(value);
     let newAllApprovedList = [...deptData];
