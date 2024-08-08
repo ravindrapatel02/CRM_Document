@@ -19,11 +19,14 @@ const UpdateDepartmentModal = (props) => {
   const { open, updateDetails, handleCloseModal } = props;
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
-  const [submit , setSubmit] = useState(false);
+  const [submit, setSubmit] = useState(false);
 
   const [initialValues, setInitialValues] = useState({
     deptName: "",
     deptCode: "",
+    spocName: "",
+    spocPernerNo: "",
+    spocEmail: "",
     id: "",
     flag: "update",
   });
@@ -34,6 +37,9 @@ const UpdateDepartmentModal = (props) => {
         deptName: updateDetails.deptName,
         deptCode: updateDetails.deptCode,
         id: updateDetails.id,
+        spocName: updateDetails.spocName,
+        spocPernerNo: updateDetails.spocPernerNo,
+        spocEmail: updateDetails.spocEmail,
         flag: "update",
       });
 
@@ -127,6 +133,46 @@ const UpdateDepartmentModal = (props) => {
                       placeholder="Enter department code"
                     />
                   </Grid>
+
+                  <Grid item xs={12} md={6}>
+                  <TextField
+                    name="spocName"
+                    fullWidth
+                    value={values.spocName}
+                    error={errors.spocName ? true : false}
+                    helperText={errors.spocName && errors.spocName}
+                    onChange={(e) => {
+                      setFieldValue("spocName", e.target.value);
+                    }}
+                    placeholder="Enter spoc name"
+                  />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                <TextField
+                  name="spocPernerNo"
+                  fullWidth
+                  value={values.spocPernerNo}
+                  error={errors.spocPernerNo ? true : false}
+                  helperText={errors.spocPernerNo && errors.spocPernerNo}
+                  onChange={(e) => {
+                    setFieldValue("spocPernerNo", e.target.value);
+                  }}
+                  placeholder="Enter spoc perner no."
+                />
+              </Grid>
+              <Grid item xs={12} md={6}>
+              <TextField
+                name="spocEmail"
+                fullWidth
+                value={values.spocEmail}
+                error={errors.spocEmail ? true : false}
+                helperText={errors.spocEmail && errors.spocEmail}
+                onChange={(e) => {
+                  setFieldValue("spocEmail", e.target.value);
+                }}
+                placeholder="Enter spoc email"
+              />
+            </Grid>
                   <Grid
                     item
                     xs={12}

@@ -1,7 +1,6 @@
 import Link from "next/link";
 import * as React from "react";
 import { Avatar } from "@mui/material";
-// import { TimeCountDown } from "../../TimerCount/TimeCountDown";
 import { useAuthUser } from "src/hooks/AuthHooks";
 import { TimeCountDown } from "@components/TimerCount/TimeCountDown";
 
@@ -61,7 +60,7 @@ export const TopHeader = () => {
               ) : (
                 <ul className="list-inline text-right d-grid">
                   <li className="list-inline-item bdrNone topNavBar fw-bold">
-                   {getUserAvatar()}
+                   {getUserAvatar()} ( {user.role[0]} )
                   </li>
                   <li className="list-inline-item bdrNone topNavBar">
                     <i className="fa fa-clock-o mr-2"> <TimeCountDown/>  </i>

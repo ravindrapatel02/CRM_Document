@@ -5,8 +5,7 @@ import AppsHeader from "@components/AppsContainer/AppsHeader";
 import AppSearch from "@components/AppSearchBar";
 import AppSectionTitle from "@components/AppSectionTitle";
 import AppsPagination from "@components/AppsPagination";
-// import ActivityTable from '@components/AppUI/ActivityTable';
-import ComplaintTable from "@components/AppUI/complaint/table";
+import ActivityTable from "@components/AppUI/ActivityTable";
 import AppLoader from "@components/CustomLoader";
 import { Box, Button, Card, Grid, Hidden } from "@mui/material";
 import { getMyTaskList } from "@redux/slice/MyTaskSlice";
@@ -19,11 +18,8 @@ const ROW_PER_PAGE = 10;
 
 const MyActivity = () => {
   const router = useRouter();
-  // const theme = useTheme();
-  // const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const [dataCount, setDataCount] = useState(0);
   const { taskData, loading } = useSelector((state) => state.taskList);
-  // const [allComplaintList, setAllComplaintList] = useState([]);
   const dispatch = useDispatch();
   const [page, setPage] = useState(0);
   const [data, setData] = useState([]);
@@ -45,30 +41,7 @@ const MyActivity = () => {
       router.push("/");
     }
   });
-
-  // useEffect(() => {
-  //   if (taskData.length > 0) {
-  //     const complaintArray = [];
-  //     taskData.forEach((item) => {
-  //       complaintArray.push({
-  //         complNumb: item.complNumb,
-  //         complType: item.complType,
-  //         contactNo: item.contactNo,
-  //         createdOn: item.createdOn,
-  //         custType: item.custType,
-  //         deptName: item.deptName,
-  //         emailId: item.emailId,
-  //         firstName: item.firstName,
-  //         id: item.id,
-  //         // lastName: item.lastName,
-  //         // status: item.logHistoryCustIdVal[0].status,
-  //         // userLevel: item.logHistoryCustIdVal[0].userLevel,
-  //       });
-  //     });
-  //     setAllComplaintList(complaintArray);
-  //   }
-  // }, [taskData]);
-
+ 
   useEffect(() => {
     let newAllApprovedList = [...taskData];
     let paginatedData = newAllApprovedList.splice(0, ROW_PER_PAGE);
@@ -158,7 +131,7 @@ const MyActivity = () => {
                 paddingBottom: 2.5,
               }}
             >
-              <ComplaintTable data={data} />
+              <ActivityTable data={data} />
             </AppsContent>
             <Hidden smUp>
               <AppsPagination

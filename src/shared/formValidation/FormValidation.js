@@ -13,12 +13,18 @@ export const createConsernValidation = yup.object({
   feedbackTypeDate: yup.string().required("Please enter date"),
   areaConcern: yup.string().required("Please select area of concern"),
   detailsDesc: yup.string().required("Please enter description"),
-  selConsent: yup.string().required('Please accept the consent')
+  selConsent: yup.string().required("Please accept the consent"),
 });
 
 export const departmentValidation = yup.object({
-  deptName: yup.string().required("Please enter department name"),
-  deptCode: yup.string().required("Please enter department short name"),
+  deptName: yup.string().required("Please enter department name."),
+  deptCode: yup.string().required("Please enter department short name."),
+  spocName: yup.string().required("Please enter SPOC name."),
+  spocPernerNo: yup.string().required("Please enter spoc perner no."),
+  spocEmail: yup
+    .string()
+    .required("Please enter spoc email")
+    .email("Please enter valid email"),
 });
 
 export const areaOfConcernValidation = yup.object({

@@ -14,10 +14,10 @@ const PageNotFound = () => {
       </div>
         <div className='space-x-4'>
           <Link
-            className='underline text-blue-600 hover:text-red-500 duration-300'
+            className='btn btn-primary mb-5'
             href='/'
           >
-            Homepage
+           Go back to home
           </Link>
           
         </div>

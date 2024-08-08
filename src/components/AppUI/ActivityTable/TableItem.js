@@ -2,9 +2,8 @@ import React from 'react';
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import PropTypes from 'prop-types';
-import { styled } from '@mui/material/styles';   
-import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
-import { Autocomplete, Box, TextField } from '@mui/material';
+import { styled } from '@mui/material/styles';    
+import Link from 'next/link';
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   '&:hover': {
     backgroundColor: theme.palette.action.hover,
@@ -25,54 +24,33 @@ const StyledTableCell = styled(TableCell)(() => ({
 }));
  
 
-const TableItem = ({ data , handleRemoveSelectSeat , handleChange , index}) => { 
-   
+const TableItem = ({ data , index}) => { 
+   console.log(data)
   return (
     <>
-      <StyledTableRow
-        key={`row-${data.seatNo}`}
-         >
-        <StyledTableCell  >
-           
-          {index +1}
-        </StyledTableCell>
-        <StyledTableCell>
-          {data.seatType}
-        </StyledTableCell>
-        <StyledTableCell>
-       {data.seatBookingType}
-        </StyledTableCell>
-        <StyledTableCell>
-         {data.name}
-        </StyledTableCell>
-        <StyledTableCell>
-          {data.workStationNo}
-        </StyledTableCell>
+    <StyledTableRow key={`row-${data.seatNo}`}>
+    <StyledTableCell>{index + 1}</StyledTableCell>
+    <StyledTableCell>
+    <Link href={`/admin-view-register-complaint/${window.btoa(data.complNumb)}`}>
+    {data.complNumb}
+    </Link> 
+    </StyledTableCell>
+    <StyledTableCell>
+    {data.feedbackDate ? data.feedbackDate.substring(0,10) :''}
+  </StyledTableCell>
+    <StyledTableCell>
+      {data.firstName + " " + data.lastName}
+    </StyledTableCell>
+    <StyledTableCell>{data.emailId}</StyledTableCell>
+    <StyledTableCell>{data.contactNo}</StyledTableCell>
+<StyledTableCell>{data.deptName}</StyledTableCell>
+    <StyledTableCell>{data.complType}</StyledTableCell>
+    <StyledTableCell>{data.feedbackType}</StyledTableCell>
+    <StyledTableCell>{data.organization}</StyledTableCell>
 
-        <StyledTableCell>
-          {data.location}
-        </StyledTableCell>
-        <StyledTableCell>
-          {data.building}
-        </StyledTableCell>
-        <StyledTableCell>
-          {data.floor}
-        </StyledTableCell>
-
-        <StyledTableCell>
-          {(data.fromDate).substring(0,10)}
-        </StyledTableCell>
-         <StyledTableCell>
-        {(data.toDate).substring(0,10)}
-        </StyledTableCell>
-        <StyledTableCell>
-         {data.remarks}
-        </StyledTableCell> 
-        <StyledTableCell>
-         {data.status}
-        </StyledTableCell> 
-        
-      </StyledTableRow>
+    <StyledTableCell>{data.areaConcern}</StyledTableCell>
+    <StyledTableCell>{data.statusName}</StyledTableCell>
+  </StyledTableRow>
     </>
   );
 };
@@ -81,6 +59,6 @@ export default TableItem;
 
 TableItem.propTypes = {
   data: PropTypes.object.isRequired, 
-  handleRemoveSelectSeat: PropTypes.func,
-  handleChange :PropTypes.func,
+  // handleRemoveSelectSeat: PropTypes.func,
+  // handleChange :PropTypes.func,
 };

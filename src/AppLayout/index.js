@@ -7,9 +7,11 @@ import Footer from "./Footer";
 
 export const AppLayout = ({ children }) => {
   const { isLoading, user } = useAuthUser();
+
   if (isLoading) {
     return <AppLoader />;
   }
+  console.log('isLoading==>>' , isLoading);
   if (isLoading && !user) {
     return <AppLoader />;
   }

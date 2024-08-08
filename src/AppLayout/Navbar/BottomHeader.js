@@ -65,7 +65,18 @@ export const BottomHeader = () => {
   const handleUserLogin = async (value) => {
     signInUser(value);
   };
- 
+
+  useEffect(() => {
+    if (showModal === false) {
+      setFieldStatus({
+        isOTP: false,
+        isText: true,
+        isSubmit: false,
+        optError: false,
+      });
+    }
+  }, []);
+
   const handleOTPSend = (mobileNo) => {
     setMinutes(0);
     setSeconds(30);
@@ -167,9 +178,11 @@ export const BottomHeader = () => {
                     id="collapsibleNavbar"
                   >
                     <ul className="navbar-nav">
-                      <li className={`nav-item  ${
-                        route.pathname === "/" ? "routematch" : ""
-                      } `}>
+                      <li
+                        className={`nav-item  ${
+                          route.pathname === "/" ? "routematch" : ""
+                        } `}
+                      >
                         <Link className="nav-link" href="/" title="Home">
                           Home
                         </Link>
@@ -204,86 +217,107 @@ export const BottomHeader = () => {
                           >
                             Register Complaint
                           </Link>
-                          { user && user.role[0]==="CRM_USER" && <Link
-                            className="dropdown-item"
-                            href="/complaint-view-status"
-                            title="View Status"
-                          >
-                            View Status
-                          </Link>}
-                        </div>
-                      </li> 
-                      { user  && (user.role[0]==="CRM_ADMIN" || user.role[0]==="CRM_SPOC") &&
-                      <li className={`nav-item  ${
-                        route.pathname === "/my-activity" ? "routematch" : ""
-                      } `}>
-                        <Link
-                          className="nav-link"
-                          href="/my-activity"
-                          title="My Activity"
-                        >
-                          My Activity
-                        </Link>
-                      </li>
-                      }
-                      { user && (user.role[0]==="CRM_ADMIN") &&
-                      <li className="nav-item dropdown">
-                        <Link
-                          className="nav-link dropdown-toggle"
-                          href="#"
-                          id="navbarDropdown"
-                          role="button"
-                          data-toggle="dropdown"
-                          aria-haspopup="true"
-                          aria-expanded="false"
-                        >
-                          Master Management
-                        </Link>
-                        <div
-                          className="dropdown-menu"
-                          aria-labelledby="navbarDropdown"
-                        >
-                          <Link
-                            className="dropdown-item"
-                            href="/manage-master/department"
-                            title="Department"
-                          >
-                            Department
-                          </Link>
-                          <Link
-                            className="dropdown-item"
-                            href="/manage-master/area-of-concern"
-                            title="Area Of Concern"
-                          >
-                            Area Of Concern
-                          </Link>
+                          {user && user.role[0] === "CRM_USER" && (
+                            <Link
+                              className="dropdown-item"
+                              href="/complaint-view-status"
+                              title="View Status"
+                            >
+                              View Status
+                            </Link>
+                          )}
                         </div>
                       </li>
-                      }
-                      { user && (user.role[0]==="CRM_ADMIN" || user.role[0]==="CRM_SPOC") &&
-                        <li
-                          className={`nav-item  ${
-                            route.pathname === "/user-dashboard" ? "routematch" : ""
-                          } `}
-                        >
-                          <Link 
-                          className="nav-link" href="/user-dashboard" title="Dashboard">
-                            Dashboard
+                      {user &&
+                        (user.role[0] === "CRM_ADMIN" ||
+                          user.role[0] === "CRM_SPOC") && (
+                          <li
+                            className={`nav-item  ${
+                              route.pathname === "/my-activity"
+                                ? "routematch"
+                                : ""
+                            } `}
+                          >
+                            <Link
+                              className="nav-link"
+                              href="/my-activity"
+                              title="My Activity"
+                            >
+                              My Activity
+                            </Link>
+                          </li>
+                        )}
+                      {user && user.role[0] === "CRM_ADMIN" && (
+                        <li className="nav-item dropdown">
+                          <Link
+                            className="nav-link dropdown-toggle"
+                            href="#"
+                            id="navbarDropdown"
+                            role="button"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                          >
+                            Master Management
                           </Link>
+                          <div
+                            className="dropdown-menu"
+                            aria-labelledby="navbarDropdown"
+                          >
+                            <Link
+                              className="dropdown-item"
+                              href="/manage-master/department"
+                              title="Department"
+                            >
+                              Department
+                            </Link>
+                            <Link
+                              className="dropdown-item"
+                              href="/manage-master/area-of-concern"
+                              title="Area Of Concern"
+                            >
+                              Area Of Concern
+                            </Link>
+                          </div>
                         </li>
-                          }
+                      )}
+                      {user &&
+                        (user.role[0] === "CRM_ADMIN" ||
+                          user.role[0] === "CRM_SPOC") && (
+                          <li
+                            className={`nav-item  ${
+                              route.pathname === "/user-dashboard"
+                                ? "routematch"
+                                : ""
+                            } `}
+                          >
+                            <Link
+                              className="nav-link"
+                              href="/user-dashboard"
+                              title="Dashboard"
+                            >
+                              Dashboard
+                            </Link>
+                          </li>
+                        )}
 
-                        { user && (user.role[0]==="CRM_ADMIN" || user.role[0]==="CRM_SPOC") &&
-                      <li
-                        className={`nav-item  ${
-                          route.pathname === "/reports" ? "routematch" : ""
-                        } `}
-                      >
-                        <Link className="nav-link" href="/reports" title="Report">
-                          Report
-                        </Link>
-                      </li>
-                        }
+                      {user &&
+                        (user.role[0] === "CRM_ADMIN" ||
+                          user.role[0] === "CRM_SPOC") && (
+                          <li
+                            className={`nav-item  ${
+                              route.pathname === "/reports" ? "routematch" : ""
+                            } `}
+                          >
+                            <Link
+                              className="nav-link"
+                              href="/reports"
+                              title="Report"
+                            >
+                              Report
+                            </Link>
+                          </li>
+                        )}
                     </ul>
                   </div>
                 </div>
@@ -291,9 +325,21 @@ export const BottomHeader = () => {
             </div>
             <div className="col-md-3">
               <div className="text-right">
-                <Link href={""}>
+                <Link href={"/"}>
                   {user ? (
-                    <button className="btn uGuide-btn" onClick={logout}>
+                    <button
+                      className="btn uGuide-btn"
+                      onClick={() => {
+                        logout();
+                        setFieldStatus({
+                          isOTP: false,
+                          isText: true,
+                          isSubmit: false,
+                          optError: false,
+                        });
+                        setOTP("");
+                      }}
+                    >
                       <i className="fa fa-power-off"></i>
                       <span className="mx-2">Logout</span>
                     </button>
@@ -444,4 +490,3 @@ export const BottomHeader = () => {
     </header>
   );
 };
- 
