@@ -228,25 +228,23 @@ export const BottomHeader = () => {
                           )}
                         </div>
                       </li>
-                      {user &&
-                        (user.role[0] === "CRM_ADMIN" ||
-                          user.role[0] === "CRM_SPOC") && (
-                          <li
-                            className={`nav-item  ${
-                              route.pathname === "/my-activity"
-                                ? "routematch"
-                                : ""
-                            } `}
+                      {user && user.role[0] !== "CRM_USER" && (
+                        <li
+                          className={`nav-item  ${
+                            route.pathname === "/my-activity"
+                              ? "routematch"
+                              : ""
+                          } `}
+                        >
+                          <Link
+                            className="nav-link"
+                            href="/my-activity"
+                            title="My Activity"
                           >
-                            <Link
-                              className="nav-link"
-                              href="/my-activity"
-                              title="My Activity"
-                            >
-                              My Activity
-                            </Link>
-                          </li>
-                        )}
+                            My Activity
+                          </Link>
+                        </li>
+                      )}
                       {user && user.role[0] === "CRM_ADMIN" && (
                         <li className="nav-item dropdown">
                           <Link
@@ -281,43 +279,39 @@ export const BottomHeader = () => {
                           </div>
                         </li>
                       )}
-                      {user &&
-                        (user.role[0] === "CRM_ADMIN" ||
-                          user.role[0] === "CRM_SPOC") && (
-                          <li
-                            className={`nav-item  ${
-                              route.pathname === "/user-dashboard"
-                                ? "routematch"
-                                : ""
-                            } `}
+                      {user && user.role[0] !== "CRM_USER" && (
+                        <li
+                          className={`nav-item  ${
+                            route.pathname === "/user-dashboard"
+                              ? "routematch"
+                              : ""
+                          } `}
+                        >
+                          <Link
+                            className="nav-link"
+                            href="/user-dashboard"
+                            title="Dashboard"
                           >
-                            <Link
-                              className="nav-link"
-                              href="/user-dashboard"
-                              title="Dashboard"
-                            >
-                              Dashboard
-                            </Link>
-                          </li>
-                        )}
+                            Dashboard
+                          </Link>
+                        </li>
+                      )}
 
-                      {user &&
-                        (user.role[0] === "CRM_ADMIN" ||
-                          user.role[0] === "CRM_SPOC") && (
-                          <li
-                            className={`nav-item  ${
-                              route.pathname === "/reports" ? "routematch" : ""
-                            } `}
+                      {user && user.role[0] !== "CRM_USER" && (
+                        <li
+                          className={`nav-item  ${
+                            route.pathname === "/reports" ? "routematch" : ""
+                          } `}
+                        >
+                          <Link
+                            className="nav-link"
+                            href="/reports"
+                            title="Report"
                           >
-                            <Link
-                              className="nav-link"
-                              href="/reports"
-                              title="Report"
-                            >
-                              Report
-                            </Link>
-                          </li>
-                        )}
+                            Report
+                          </Link>
+                        </li>
+                      )}
                     </ul>
                   </div>
                 </div>

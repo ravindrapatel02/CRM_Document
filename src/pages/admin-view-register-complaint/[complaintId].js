@@ -11,7 +11,7 @@ import {
   Typography,
 } from "@mui/material";
 import { getSPOCList } from "@redux/slice/SPOCListSlice";
-import { isValidBase64 } from "@shared/constants/AppConst";
+import { BASE_URL, isValidBase64 } from "@shared/constants/AppConst";
 import { createConsernValidation } from "@shared/formValidation/FormValidation";
 import { Form, Formik } from "formik";
 import Link from "next/link";
@@ -40,6 +40,8 @@ const AdminViewRegisterComplaint = () => {
   const { spocData } = useSelector((state) => state.spocList);
   const [loading, setLoading] = useState(true);
   const [isNotFound, setIsNotFound] = useState(false);
+  const [userAttachements, setUserAttachements] = useState([]);
+
   const [initialValues, setInitialValues] = useState({
     firstName: "",
     lastName: "",
@@ -75,6 +77,9 @@ const AdminViewRegisterComplaint = () => {
             if (res.status === "true" && user.role[0] !== "CRM_USER") {
               const userAppList = res.data.logHistoryCustIdVal;
               const userLevel = userAppList[userAppList.length - 1].userLevel;
+
+              setUserAttachements(res.data.upldFileList);
+
               setInitialValues({
                 firstName: res.data.firstName,
                 lastName: res.data.lastName,
@@ -109,9 +114,12 @@ const AdminViewRegisterComplaint = () => {
     }
   }, [complaintId]);
 
-  const handleSubmit = (reqObj) => {
+  const handleSubmit = (reqObj, level) => {
     jwtAxios
-      .post(API_URL.ASSIGN_TASk, reqObj)
+      .post(
+        level === "level-1" ? API_URL.ASSIGN_TASK : API_URL.UPDATE_TASK_STATUS,
+        reqObj
+      )
       .then((response) => {
         const res = response.data;
         if (res.status === "true") {
@@ -153,28 +161,49 @@ const AdminViewRegisterComplaint = () => {
           initialValues={initialValues}
           validationSchema={createConsernValidation}
           onSubmit={(values) => {
-            console.log(values);
-            // let obj={}
-            if(values.statusName==='level-1'){
-           const obj = {
-              assignToUserId: values.assignToUserId,
-              complNumb: window.atob(complaintId),
-            };
-            handleSubmit(obj);
-          }else{
-            const formData = new FormData();
-            // formData.append('assignToUserId', values.assignToUserId)
-            formData.append('complNumb', window.atob(complaintId));
-            formData.append('remarks',values.remarks);
-            formData.append('newFile',values.newFile );
-            formData.append('status' , values.status)
-             
-            handleSubmit(formData);
-          }
-            
+            if (
+              values.status === "approve" ||
+              values.status === "reject" ||
+              values.status === "return"
+            ) {
+              const obj = {
+                // assignToUserId: values.assignToUserId,
+                complNumb: window.atob(complaintId),
+                userId: user.id,
+                flag: values.status,
+                logRemarks: values.remarks,
+                // complPriority:values.complPriority,
+              };
+              // console.log('Hellooo2222')
+              handleSubmit(obj, "level-1");
+
+              return 0;
+            }
+            console.log("Hellooo99999");
+
+            if (values.statusName === "level-1") {
+              const obj = {
+                assignToUserId: values.assignToUserId,
+                complNumb: window.atob(complaintId),
+                userId: user.id,
+                flag: "submit",
+                complPriority: values.complPriority,
+              };
+              handleSubmit(obj, "level-1");
+            } else {
+              const formData = new FormData();
+              // formData.append('assignToUserId', values.assignToUserId)
+              formData.append("complNumb", window.atob(complaintId));
+              formData.append("logRemarks", values.remarks);
+              formData.append("upldFile", values.newFile);
+              // formData.append("status", values.status);
+              formData.append("userId", user.id);
+              formData.append("flag", values.status);
+              handleSubmit(formData, "ApproverLevel");
+            }
           }}
         >
-          {({ values, setFieldValue, errors , handleSubmit }) => (
+          {({ values, setFieldValue, errors, handleSubmit }) => (
             <Form initialtouched={{ zip: true }}>
               <Grid container spacing={2} mt={5}>
                 <Grid item xs={12} md={6}>
@@ -421,55 +450,97 @@ const AdminViewRegisterComplaint = () => {
                     }}
                   />
                 </Grid>
-                <Grid item xs={12} md={6}>
-                  <Box>
-                    <Typography variant="body1">User Attachement</Typography>
-                    <Link href="/" target="_blank">
-                      Attachement name
-                    </Link>
-                  </Box>
-                </Grid>
+                {userAttachements && userAttachements.length > 0 && (
+                  <Grid item xs={12} md={6}>
+                    <Box>
+                      <Typography variant="body1">User Attachement</Typography>
+                      <a
+                        href={
+                          BASE_URL +
+                          `/crm/workflow/displayfile?fileURL=${userAttachements[0].fileURL}`
+                        }
+                        target="_blank"
+                      >
+                        Attachement Name - ( {userAttachements[0].fileName} )
+                      </a>
+                    </Box>
+                  </Grid>
+                )}
                 {user.role[0] === "CRM_ADMIN" &&
                   values.statusName === "level-1" && (
                     <React.Fragment>
-                    <Grid item xs={12} md={6}>
-                      <TextField
-                        name="assignToUserId"
-                        select
-                        value={values.assignToUserId}
-                        error={errors.assignToUserId ? true : false}
-                        helperText={errors.assignToUserId}
-                        fullWidth
-                        onChange={(e) => {
-                          setFieldValue("assignToUserId", e.target.value);
-                        }}
-                        label={
-                          <span>
+                      <Grid item xs={12} md={6}>
+                        <TextField
+                          name="assignToUserId"
+                          select
+                          value={values.assignToUserId}
+                          error={errors.assignToUserId ? true : false}
+                          helperText={errors.assignToUserId}
+                          fullWidth
+                          onChange={(e) => {
+                            setFieldValue("assignToUserId", e.target.value);
+                          }}
+                          label={
+                            <span>
+                              Assign to user
+                              <span style={{ color: "#d32f2f" }}>*</span>
+                            </span>
+                          }
+                          InputLabelProps={{
+                            shrink: true,
+                          }}
+                        >
+                          <MenuItem disabled selected>
                             Assign to user
-                            <span style={{ color: "#d32f2f" }}>*</span>
-                          </span>
-                        }
-                        InputLabelProps={{
-                          shrink: true,
-                        }}
-                      >
-                        <MenuItem disabled selected>
-                          Assign to user
-                        </MenuItem>
-                        {spocData &&
-                          spocData.length > 0 &&
-                          spocData.map((item, index) => (
-                            <MenuItem
-                              value={item.userId}
-                              key={index + "_" + item.userId}
-                            >
-                              {item.userName}
-                            </MenuItem>
-                          ))}
-                      </TextField>
-                    </Grid>
-                    
-                    <Grid item md={12} textAlign={"center"} mt={3}>
+                          </MenuItem>
+                          {spocData &&
+                            spocData.length > 0 &&
+                            spocData.map((item, index) => (
+                              <MenuItem
+                                value={item.userId}
+                                key={index + "_" + item.userId}
+                              >
+                                {item.userName}
+                              </MenuItem>
+                            ))}
+                        </TextField>
+                      </Grid>
+
+                      <Grid item xs={12} md={6}>
+                        <TextField
+                          name="complPriority"
+                          select
+                          value={values.complPriority}
+                          error={errors.complPriority ? true : false}
+                          helperText={errors.complPriority}
+                          fullWidth
+                          onChange={(e) => {
+                            setFieldValue("complPriority", e.target.value);
+                          }}
+                          label={
+                            <span>
+                              Complaint Priority
+                              <span style={{ color: "#d32f2f" }}>*</span>
+                            </span>
+                          }
+                          InputLabelProps={{
+                            shrink: true,
+                          }}
+                        >
+                          <MenuItem disabled selected>
+                            complaint Priority
+                          </MenuItem>
+
+                          <MenuItem value={"High-24Hrs"}> High-24Hrs </MenuItem>
+                          <MenuItem value={"Moderate-48Hrs"}>
+                            {" "}
+                            Moderate-48Hrs{" "}
+                          </MenuItem>
+                          <MenuItem value={"Low-48Hrs"}> Low-48Hrs </MenuItem>
+                        </TextField>
+                      </Grid>
+
+                      <Grid item md={12} textAlign={"center"} mt={3}>
                         <div>
                           <Button
                             sx={{
@@ -482,14 +553,13 @@ const AdminViewRegisterComplaint = () => {
                             // disabled={isSubmitting}
                             onClick={() => {
                               setFieldValue("status", "submit");
-                            handleSubmit();
+                              handleSubmit();
                             }}
                           >
                             Submit
                           </Button>
-                          </div>
-                          </Grid>
-
+                        </div>
+                      </Grid>
                     </React.Fragment>
                   )}
 
@@ -514,22 +584,23 @@ const AdminViewRegisterComplaint = () => {
                           }}
                         ></TextField>
                       </Grid>
-                      <Grid item xs={12} md={6}>
-                        <TextField
-                          type="file"
-                          name="newFile"
-                          //   value={values.file}
-                          fullWidth
-                          onChange={(e) => {
-                            setFieldValue("newFile", e.target.files[0]);
-                          }}
-                          label={<span>Attachments</span>}
-                          InputLabelProps={{
-                            shrink: true,
-                          }}
-                        />
-                      </Grid>
-
+                      {user.role[0] === "CRM_SPOC" && (
+                        <Grid item xs={12} md={6}>
+                          <TextField
+                            type="file"
+                            name="newFile"
+                            //   value={values.file}
+                            fullWidth
+                            onChange={(e) => {
+                              setFieldValue("newFile", e.target.files[0]);
+                            }}
+                            label={<span>Attachments</span>}
+                            InputLabelProps={{
+                              shrink: true,
+                            }}
+                          />
+                        </Grid>
+                      )}
                       <Grid item md={12} textAlign={"center"} mt={3}>
                         <div>
                           <Button
@@ -539,53 +610,122 @@ const AdminViewRegisterComplaint = () => {
                             }}
                             color="primary"
                             variant="contained"
-                            // disabled={submit}
-                            // disabled={isSubmitting}
                             onClick={() => {
-                               setFieldValue("status", "approved");
-                               handleSubmit();
+                              setFieldValue(
+                                "status",
+                                user.role[0] === "CRM_ADMIN"
+                                  ? "approve"
+                                  : "submit"
+                              );
+                              handleSubmit();
                             }}
                           >
-                            Approve
+                            {user.role[0] === "CRM_ADMIN"
+                              ? "Approve"
+                              : "Submit"}
                           </Button>
-                          <Button
-                            sx={{
-                              position: "relative",
-                              minWidth: 100,
-                              ml: 3,
-                            }}
-                            color="secondary"
-                            variant="outlined"
-                            // disabled={isSubmitting}
-                            // disabled={submit}
-                            onClick={() => {
-                               setFieldValue("status", "rejected");
-                               handleSubmit();
-                            }}
-                          >
-                            Reject
-                          </Button>
-                          <Button
-                            sx={{
-                              position: "relative",
-                              minWidth: 100,
-                              ml: 3,
-                            }}
-                            color="info"
-                            variant="outlined"
-                            // disabled={submit}
-                            // disabled={isSubmitting}
-                            onClick={() => {
-                               setFieldValue("status", "concern");
-                               handleSubmit();
-                            }}
-                          >
-                            Return
-                          </Button>
+                          {user.role[0] === "CRM_ADMIN" && (
+                            <React.Fragment>
+                              <Button
+                                sx={{
+                                  position: "relative",
+                                  minWidth: 100,
+                                  ml: 3,
+                                }}
+                                color="secondary"
+                                variant="outlined"
+                                // disabled={isSubmitting}
+                                // disabled={submit}
+                                onClick={() => {
+                                  setFieldValue("status", "reject");
+                                  handleSubmit();
+                                }}
+                              >
+                                Reject
+                              </Button>
+                              <Button
+                                sx={{
+                                  position: "relative",
+                                  minWidth: 100,
+                                  ml: 3,
+                                }}
+                                color="info"
+                                variant="outlined"
+                                // disabled={submit}
+                                // disabled={isSubmitting}
+                                onClick={() => {
+                                  setFieldValue("status", "return");
+                                  handleSubmit();
+                                }}
+                              >
+                                Return
+                              </Button>
+                            </React.Fragment>
+                          )}
                         </div>
                       </Grid>
                     </React.Fragment>
                   )}
+
+                {user.role[0] === "CRM_HOD" && (
+                  <React.Fragment>
+                    <Grid item xs={12} md={6}>
+                      <TextField
+                        name="remarks"
+                        multiline
+                        value={values.remarks}
+                        error={errors.remarks ? true : false}
+                        helperText={errors.remarks}
+                        fullWidth
+                        onChange={(e) => {
+                          setFieldValue("remarks", e.target.value);
+                        }}
+                        label={<span>Remarks</span>}
+                        InputLabelProps={{
+                          shrink: true,
+                        }}
+                      ></TextField>
+                    </Grid>
+                    <Grid item md={12} textAlign={"center"} mt={3}>
+                      <div>
+                        <Button
+                          sx={{
+                            position: "relative",
+                            minWidth: 100,
+                            ml: 3,
+                          }}
+                          color="info"
+                          variant="outlined"
+                          // disabled={submit}
+                          // disabled={isSubmitting}
+                          onClick={() => {
+                            setFieldValue("status", "approve");
+                            handleSubmit();
+                          }}
+                        >
+                          Approve
+                        </Button>
+                        <Button
+                          sx={{
+                            position: "relative",
+                            minWidth: 100,
+                            ml: 3,
+                          }}
+                          color="warning"
+                          variant="outlined"
+                          // disabled={submit}
+                          // disabled={isSubmitting}
+                          onClick={() => {
+                            setFieldValue("status", "return");
+                            handleSubmit();
+                          }}
+                        >
+                          Return
+                        </Button>
+                      </div>
+                    </Grid>
+                  </React.Fragment>
+                )}
               </Grid>
             </Form>
           )}
