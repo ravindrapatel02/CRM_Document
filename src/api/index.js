@@ -24,7 +24,8 @@ export const API_URL = {
   ASSIGN_TASK: '/crm/workflow/updateuserloghistory', // json
   UPDATE_TASK_STATUS: '/crm/workflow/crmsubmitreqspoc', // form data
 
-  ASSIGN_TO_SPOC: '/crm/workflow/admintasklistlevelone'
+  ASSIGN_TO_SPOC: '/crm/workflow/admintasklistlevelone',
+  REPORTS: '/crm/workflow/generateReport',
 
 };
 

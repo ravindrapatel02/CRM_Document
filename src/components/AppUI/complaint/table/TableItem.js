@@ -24,28 +24,23 @@ const StyledTableCell = styled(TableCell)(() => ({
 }));
 
 const TableItem = ({ data, index }) => {
-
-  console.log(data);
-
   return (
     <>
       <StyledTableRow key={`row-${data.seatNo}`}>
         <StyledTableCell>{index + 1}</StyledTableCell>
         <StyledTableCell>
-        {/*<Link href={`/admin-view-register-complaint/${window.btoa(data.complNumb)}`}>
+          {/*<Link href={`/admin-view-register-complaint/${window.btoa(data.complNumb)}`}>
         {data.complNumb}
         </Link>*/}
-        {data.complNumb}
+          {data.complNumb}
         </StyledTableCell>
-        <StyledTableCell>
-        {data.feedbackDate}
-      </StyledTableCell>
+        <StyledTableCell>{data.feedbackDate}</StyledTableCell>
         <StyledTableCell>
           {data.firstName + " " + data.lastName}
         </StyledTableCell>
         <StyledTableCell>{data.emailId}</StyledTableCell>
         <StyledTableCell>{data.contactNo}</StyledTableCell>
- <StyledTableCell>{data.deptName}</StyledTableCell>
+        <StyledTableCell>{data.deptName}</StyledTableCell>
         <StyledTableCell>{data.complType}</StyledTableCell>
         <StyledTableCell>{data.feedbackType}</StyledTableCell>
         <StyledTableCell>{data.organization}</StyledTableCell>

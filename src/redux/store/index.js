@@ -6,23 +6,15 @@ import AreaOfConcernSlice from '@redux/slice/AreaOfConcernSlice';
 import ComplaintViewRequestSlice from '@redux/slice/ComplaintViewRequestSlice';
 import MyTaskSlice from '@redux/slice/MyTaskSlice';
 import SPOCListSlice from '@redux/slice/SPOCListSlice';
+import ReportsSlice from '@redux/slice/ReportsSlice';
 
 export const store = configureStore({
-  reducer: {
-
-    // locationData:LocationSlice, 
-    // bookedData :BookedSeatSlice,
-    // allSeat :allSeatSlice,
-    // booking :BookingDetailsSlice,
-    // questionData:QuestionSlice,
-    // // office: OfficeSlice,
-    // filter :FilterQuestionSlice,
-    // entity:EntitySlice,
-    // sector:SectorSlice
+  reducer: { 
     department:DepartmentSlice,
     areaConcern : AreaOfConcernSlice,
     complaint: ComplaintViewRequestSlice,
     taskList :MyTaskSlice,
-    spocList: SPOCListSlice
+    spocList: SPOCListSlice,
+    reports: ReportsSlice
   },
 });
