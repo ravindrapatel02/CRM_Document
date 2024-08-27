@@ -3,7 +3,13 @@ import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import PropTypes from "prop-types";
 import { styled } from "@mui/material/styles";
-import Link from "next/link";
+import { Box, Button } from "@mui/material";
+import jwtAxios from "src/services/auth";
+import AppNotification from "@components/AppNotification";
+import { useDispatch } from "react-redux";
+import { useAuthUser } from "src/hooks/AuthHooks";
+import { getComplaintViewRequest } from "@redux/slice/ComplaintViewRequestSlice";
+import { API_URL } from "src/api";
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   "&:hover": {
     backgroundColor: theme.palette.action.hover,
@@ -24,9 +30,34 @@ const StyledTableCell = styled(TableCell)(() => ({
 }));
 
 const TableItem = ({ data, index }) => {
+  const dispatch = useDispatch();
+  const { user } = useAuthUser();
+  const handleAction = (data, status) => {
+    const obj = {
+      complNumb: data.complNumb,
+      status: status,
+    };
+    jwtAxios
+      .post(API_URL.ASSIGN_TASK, obj)
+      .then((response) => {
+        const res = response.data;
+        if (res.status === "true") {
+          AppNotification(true, "Status has been changed !");
+          setTimeout(() => {
+            dispatch(getComplaintViewRequest({ custPernerNo: user?.uid }));
+          }, 2000);
+        } else {
+          AppNotification(false, "Failed to change status !");
+        }
+      })
+      .catch((error) => {
+        AppNotification(false, error.message ?? "NwtworkError");
+      });
+  };
+
   return (
     <>
-      <StyledTableRow key={`row-${data.seatNo}`}>
+      <StyledTableRow key={`row-${data.complNumb}`}>
         <StyledTableCell>{index + 1}</StyledTableCell>
         <StyledTableCell>
           {/*<Link href={`/admin-view-register-complaint/${window.btoa(data.complNumb)}`}>
@@ -47,6 +78,32 @@ const TableItem = ({ data, index }) => {
 
         <StyledTableCell>{data.areaConcern}</StyledTableCell>
         <StyledTableCell>{data.stateName}</StyledTableCell>
+
+        <StyledTableCell>
+          {data.status === "Accepted" && (
+            <Box sx={{ "& button": { m: 1 } }}>
+              <div>
+                <Button
+                  variant="contained"
+                  color="success"
+                  size="small"
+                  onClick={() => handleAction(data, "Satisfied")}
+                >
+                  Satisfied
+                </Button>
+
+                <Button
+                  variant="contained"
+                  color="error"
+                  size="small"
+                  onClick={() => handleAction(data, "Not Satisfied")}
+                >
+                  Not Satisfied
+                </Button>
+              </div>
+            </Box>
+          )}
+        </StyledTableCell>
       </StyledTableRow>
     </>
   );

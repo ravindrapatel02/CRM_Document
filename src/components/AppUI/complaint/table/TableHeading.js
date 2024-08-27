@@ -103,6 +103,14 @@ const TableHeading = () => {
       >
         Status
       </TableCell>
+      <TableCell
+        sx={{
+          background: "#f5f7f6 !important",
+        }}
+        align="left"
+      >
+        Action
+      </TableCell>
     </TableHeader>
   );
 };

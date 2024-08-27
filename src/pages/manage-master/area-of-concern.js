@@ -6,17 +6,13 @@ import AppSectionTitle from "@components/AppSectionTitle";
 import AppsPagination from "@components/AppsPagination";
 import AreaOfConcernTable from "@components/AppUI/Master/AreaOfconcern/Table";
 import AddAreaOfConcernModal from "@components/AppUI/Modal/AddAreaOfConcern";
-import UpdateAreaOfConcernModal from "@components/AppUI/Modal/UpdateAreaOfConcernModal";
-// import AreaOfConcernModal from "@components/AppUI/Modal/AreaOfConcernModal";
-// import DepartmentTable from '@components/AppUI/Master/Department/Table'
-// import BookingTable from '@components/BookingDetails/Table'
+import UpdateAreaOfConcernModal from "@components/AppUI/Modal/UpdateAreaOfConcernModal"; 
 import { Box, Button, Card, Grid, Hidden } from "@mui/material";
 import { getAreaOfConcern } from "@redux/slice/AreaOfConcernSlice";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useAuthUser } from "src/hooks/AuthHooks";
-// import { useAuthUser } from "src/hooks/AuthHooks";
 const ROW_PER_PAGE = 10;
 
 const AreaofConcern = () => {
@@ -66,10 +62,7 @@ const AreaofConcern = () => {
   };
 
   const handleCloseModal = () => {
-    setOpenModal({isAdd:false , isUpdate:false});
-    // setUpdateDetails({ isAdd:false , isUpdate:false , data:null});
-    // setopen(false);
-    // setUpdateDetails(null);
+    setOpenModal({isAdd:false , isUpdate:false}); 
   };
 
   return (
@@ -97,8 +90,7 @@ const AreaofConcern = () => {
             <Button
               onClick={() => {
                 setOpenModal({isAdd:true, isUpdate:false});
-                // setUpdateDetails({isUpdate:false, data :null ,isAdd:true ,handleCloseModal:handleCloseModal })
-                // router.push("/manage-master/add-area-of-concern");
+                 
               }}
             >
               Add concern Type

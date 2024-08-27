@@ -6,9 +6,9 @@ const TableHeading = () => {
   return (
     <TableHeader>
       <TableCell
-      sx={{
-        background: "#f5f7f6 !important",
-      }}
+        sx={{
+          background: "#f5f7f6 !important",
+        }}
         align="left"
       >
         S.No.
@@ -19,7 +19,23 @@ const TableHeading = () => {
         }}
         align="left"
       >
-        Department Name
+       Department
+      </TableCell>
+      <TableCell
+      sx={{
+        background: "#f5f7f6 !important",
+      }}
+      align="left"
+    >
+     Open
+    </TableCell>
+      <TableCell
+        sx={{
+          background: "#f5f7f6 !important",
+        }}
+        align="left"
+      >
+       Close
       </TableCell>
       <TableCell
         sx={{
@@ -27,17 +43,9 @@ const TableHeading = () => {
         }}
         align="left"
       >
-      Short Code
+        Total
       </TableCell>
-       
-      <TableCell
-        sx={{
-          background: "#f5f7f6 !important",
-        }}
-        align="left"
-      >
-        Action
-      </TableCell>
+      
     </TableHeader>
   );
 };

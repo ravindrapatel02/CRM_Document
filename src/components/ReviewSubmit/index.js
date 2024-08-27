@@ -19,7 +19,6 @@ const ReviewSubmit = () => {
               value={'Excellent'}
               label="Excellent"
 
-            //   onChange={handleReviewChange}
               id={`inline-radio-3`}
             />
             <Form.Check
@@ -28,7 +27,6 @@ const ReviewSubmit = () => {
               className='mx-2'
               value={'Very good'}
               label="Very good"
-            //   onChange={handleReviewChange}
               type={'radio'}
               id={`inline-radio-3`}
             />
@@ -38,7 +36,6 @@ const ReviewSubmit = () => {
               className='mx-2'
               value={'Fair'}
               label="Fair"
-            //   onChange={handleReviewChange}
               type={'radio'}
               id={`inline-radio-3`}
             />
@@ -49,7 +46,6 @@ const ReviewSubmit = () => {
               value={'Poor'}
               label="Poor"
               type={'radio'}
-            //   onChange={handleReviewChange}
               id={`inline-radio-3`}
             />
           </div>
@@ -64,7 +60,6 @@ const ReviewSubmit = () => {
               label="Excellent"
               value={'Excellent'}
               type={'radio'}
-            //   onChange={handleReviewChange}
               id={`inline-radio-3`}
             />
             <Form.Check
@@ -74,7 +69,6 @@ const ReviewSubmit = () => {
               value={'Very good'}
               label="Very good"
               type={'radio'}
-            //   onChange={handleReviewChange}
               id={`inline-radio-3`}
             />
             <Form.Check
@@ -84,7 +78,6 @@ const ReviewSubmit = () => {
               value={'Fair'}
               label="Fair"
               type={'radio'}
-            //   onChange={handleReviewChange}
               id={`inline-radio-3`}
             />
             <Form.Check
@@ -94,7 +87,6 @@ const ReviewSubmit = () => {
               value={'Poor'}
               label="Poor"
               type={'radio'}
-            //   onChange={handleReviewChange}
               id={`inline-radio-3`}
             />
           </div>
@@ -109,7 +101,6 @@ const ReviewSubmit = () => {
               label="Computer"
               value={'Computer'}
               type={'radio'}
-            //   onChange={handleReviewChange}
               id={`inline-radio-3`}
             />
             <Form.Check
@@ -119,7 +110,6 @@ const ReviewSubmit = () => {
               label="Mobile"
               value={'Mobile'}
               type={'radio'}
-            //   onChange={handleReviewChange}
 
               id={`inline-radio-3`}
             />

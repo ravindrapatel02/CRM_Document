@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { Form, Formik } from "formik";
 import { useAuthMethod, useAuthUser } from "src/hooks/AuthHooks";
 import { useRouter } from "next/router";
-// import Avatar from "@mui/material/Avatar";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import {
   Box,
@@ -21,29 +20,15 @@ import OTPInput from "react-otp-input";
 import TimerCount from "@components/AppUI/TimerCount";
 import AppNotification from "@components/AppNotification";
 import AppLoader from "@components/CustomLoader";
-// import { makeStyles } from "@mui/styles";
 import { API_URL } from "src/api";
 import jwtAxios from "src/services/auth";
-
-// const useStyles = makeStyles({
-//   pivottedDialog: {
-//     alignItems: "flex-start Important",
-//     justifyContent: "center !important",
-//   },
-//   dialogPaper: {
-//     margin: 0,
-//     position: "absolute !important",
-//     top: "10% !important",
-//   },
-// });
-
+ 
 export const BottomHeader = () => {
   const route = useRouter();
   const { user } = useAuthUser();
   const [show, setShow] = React.useState(false);
   const [showModal, setShowModal] = React.useState(false);
   const { signInUser, logout, verifyOTP } = useAuthMethod();
-  // const classes = useStyles();
 
   const [fieldStatus, setFieldStatus] = React.useState({
     isOTP: false,
@@ -121,26 +106,7 @@ export const BottomHeader = () => {
       otp: OTP,
     };
     verifyOTP(obj);
-    // jwtAxios
-    //   .post("pf/patient/validateotp", obj)
-    //   .then((response) => {
-    //     const res = response.data;
-    //     if (res.status === "true") {
-    //       AppNotification(true, res.message ?? "OTP verify successfully !!");
-    //       // const mobole = window.btoa(ipNo);
-    //       setTimeout(() => {
-    //         setFieldStatus({ ...fieldStatus, isSubmit: false });
-    //         setUserData(res.data);
-    //       }, 2000);
-    //     } else {
-    //       setFieldStatus({ ...fieldStatus, isSubmit: false });
-    //       AppNotification(false, res.message ?? "Please enter correct otp !!");
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     AppNotification(false, error.message ?? "Network Error !!");
-    //     setFieldStatus({ ...fieldStatus, isSubmit: false });
-    //   });
+    
   };
 
   const handleClose = (event, reason) => {
@@ -353,17 +319,13 @@ export const BottomHeader = () => {
       </div>
 
       <Dialog
-        // onClose={() => setShowModal(!showModal)}
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
         open={showModal}
         onBackdropClick={() => false}
         fullWidth
         maxWidth="sm"
-        // classes={{
-        //   scrollPaper: classes.pivottedDialog,
-        //   paper: classes.dialogPaper,
-        // }}
+         
       >
         {fieldStatus.isSubmit && <AppLoader />}
 

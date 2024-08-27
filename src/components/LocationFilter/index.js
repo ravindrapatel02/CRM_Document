@@ -75,7 +75,6 @@ const LocationFilter = ({ filter, setFilter }) => {
 
     if (name === "building") {
       setFilter({ ...filter, [name]: value });
-      // setBuildingList([]);
       setFloorlist([]);
       getFloorList(value);
     }
@@ -105,7 +104,6 @@ const LocationFilter = ({ filter, setFilter }) => {
                       id="combo-box-demo"
                       name="location"
                       options={locationList}
-                      // value={filter.location}
                       onChange={(e, value) => {
                         handleChange(value?.value, "location");
                       }}

@@ -42,14 +42,7 @@ const TableItem = ({ data , index}) => {
       {data.firstName + " " + data.lastName}
     </StyledTableCell>
     <StyledTableCell>{data.emailId}</StyledTableCell>
-    <StyledTableCell>{data.contactNo}</StyledTableCell>
-<StyledTableCell>{data.deptName}</StyledTableCell>
-    <StyledTableCell>{data.complType}</StyledTableCell>
-    <StyledTableCell>{data.feedbackType}</StyledTableCell>
-    <StyledTableCell>{data.organization}</StyledTableCell>
-
-    <StyledTableCell>{data.areaConcern}</StyledTableCell>
-    <StyledTableCell>{data.statusName}</StyledTableCell>
+     
   </StyledTableRow>
     </>
   );

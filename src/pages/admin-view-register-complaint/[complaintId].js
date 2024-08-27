@@ -93,7 +93,6 @@ const AdminViewRegisterComplaint = () => {
                 feedbackType: res.data.crmCustComplReqdtls[0].feedbackType,
                 feedbackTypeDate:
                   res.data.crmCustComplReqdtls?.[0]?.feedbackDate?.slice(0, 10),
-                // (res.data.crmCustComplReqdtls[0].feedbackTypeDate).slice(1,10),
                 areaConcern: res.data.crmCustComplReqdtls[0].areaConcern,
                 detailsDesc: res.data.crmCustComplReqdtls[0].detailsDesc,
                 statusName: userLevel,
@@ -108,7 +107,6 @@ const AdminViewRegisterComplaint = () => {
             AppNotification(false, error.message);
           });
       } else {
-        // router.push('/404')
         setIsNotFound(true);
       }
     }
@@ -133,7 +131,6 @@ const AdminViewRegisterComplaint = () => {
         } else {
           AppNotification(false, res.message ?? "Something went wrong !");
         }
-        // console.log(response.data);
       })
       .catch((error) => {
         AppNotification(false, error.message ?? "Network Error !");
@@ -167,14 +164,11 @@ const AdminViewRegisterComplaint = () => {
               values.status === "return"
             ) {
               const obj = {
-                // assignToUserId: values.assignToUserId,
                 complNumb: window.atob(complaintId),
                 userId: user.id,
                 flag: values.status,
                 logRemarks: values.remarks,
-                // complPriority:values.complPriority,
               };
-              // console.log('Hellooo2222')
               handleSubmit(obj, "level-1");
 
               return 0;
@@ -192,11 +186,9 @@ const AdminViewRegisterComplaint = () => {
               handleSubmit(obj, "level-1");
             } else {
               const formData = new FormData();
-              // formData.append('assignToUserId', values.assignToUserId)
               formData.append("complNumb", window.atob(complaintId));
               formData.append("logRemarks", values.remarks);
               formData.append("upldFile", values.newFile);
-              // formData.append("status", values.status);
               formData.append("userId", user.id);
               formData.append("flag", values.status);
               handleSubmit(formData, "ApproverLevel");
@@ -548,9 +540,7 @@ const AdminViewRegisterComplaint = () => {
                               minWidth: 100,
                             }}
                             color="primary"
-                            variant="contained"
-                            // disabled={submit}
-                            // disabled={isSubmitting}
+                            variant="contained" 
                             onClick={() => {
                               setFieldValue("status", "submit");
                               handleSubmit();
@@ -589,7 +579,6 @@ const AdminViewRegisterComplaint = () => {
                           <TextField
                             type="file"
                             name="newFile"
-                            //   value={values.file}
                             fullWidth
                             onChange={(e) => {
                               setFieldValue("newFile", e.target.files[0]);
@@ -633,9 +622,7 @@ const AdminViewRegisterComplaint = () => {
                                   ml: 3,
                                 }}
                                 color="secondary"
-                                variant="outlined"
-                                // disabled={isSubmitting}
-                                // disabled={submit}
+                                variant="outlined" 
                                 onClick={() => {
                                   setFieldValue("status", "reject");
                                   handleSubmit();
@@ -650,9 +637,7 @@ const AdminViewRegisterComplaint = () => {
                                   ml: 3,
                                 }}
                                 color="info"
-                                variant="outlined"
-                                // disabled={submit}
-                                // disabled={isSubmitting}
+                                variant="outlined" 
                                 onClick={() => {
                                   setFieldValue("status", "return");
                                   handleSubmit();
@@ -695,9 +680,7 @@ const AdminViewRegisterComplaint = () => {
                             ml: 3,
                           }}
                           color="info"
-                          variant="outlined"
-                          // disabled={submit}
-                          // disabled={isSubmitting}
+                          variant="outlined" 
                           onClick={() => {
                             setFieldValue("status", "approve");
                             handleSubmit();
@@ -712,9 +695,7 @@ const AdminViewRegisterComplaint = () => {
                             ml: 3,
                           }}
                           color="warning"
-                          variant="outlined"
-                          // disabled={submit}
-                          // disabled={isSubmitting}
+                          variant="outlined" 
                           onClick={() => {
                             setFieldValue("status", "return");
                             handleSubmit();

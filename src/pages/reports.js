@@ -5,7 +5,6 @@ import AppsHeader from "@components/AppsContainer/AppsHeader";
 import AppSearch from "@components/AppSearchBar";
 import AppSectionTitle from "@components/AppSectionTitle";
 import AppsPagination from "@components/AppsPagination";
-// import ActivityTable from '@components/AppUI/ActivityTable';
 import ComplaintTable from "@components/AppUI/complaint/table";
 import AppLoader from "@components/CustomLoader";
 import { Box, Button, Card, Grid, Hidden, TextField } from "@mui/material";
@@ -27,16 +26,25 @@ const Reports = () => {
   const dispatch = useDispatch();
   const [page, setPage] = useState(0);
   const [data, setData] = useState([]);
+  const [filter, setFilter] = useState({
+    fromDate: "",
+    toDate: "",
+    status: "",
+  });
   const { user } = useAuthUser();
 
   useEffect(() => {
     const obj = {
-      fromDate: "2024-08-05",
-      toDate: "2024-08-05",
       status: "",
+      ...(filter.fromDate.length > 0 &&
+        filter.toDate.length > 0 && {
+          fromDate: filter.fromDate,
+          toDate: filter.toDate,
+        }),
     };
+
     dispatch(getReports(obj));
-  }, []);
+  }, [filter]);
 
   useEffect(() => {
     if (!user) {
@@ -162,14 +170,26 @@ const Reports = () => {
         >
           <AppSectionTitle primaryText={"Reports"} secondaryText={""} />
         </Box>
-
+ 
         <AppPageContainer sx={{ backgroundColor: "#ffff" }}>
           <Grid container spacing={1}>
             <Grid item xs={12} md={4}>
-              <TextField type="date" fullWidth />
+              <TextField
+                type="date"
+                fullWidth
+                onChange={(e) =>
+                  setFilter({ ...filter, fromDate: e.target.value })
+                }
+              />
             </Grid>
             <Grid item xs={12} md={4}>
-              <TextField type="date" fullWidth />
+              <TextField
+                type="date"
+                fullWidth
+                onChange={(e) =>
+                  setFilter({ ...filter, toDate: e.target.value })
+                }
+              />
             </Grid>
             <Grid item xs={12} md={4}></Grid>
           </Grid>

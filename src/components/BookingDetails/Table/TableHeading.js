@@ -1,9 +1,6 @@
 import React from "react";
 import { TableCell } from "@mui/material";
 import TableHeader from "@components/AppTable/TableHeader";
-// import TableHeader from "@/src/components/AppTable/TableHeader"; 
-
- 
 
 const TableHeading = () => {
   return (

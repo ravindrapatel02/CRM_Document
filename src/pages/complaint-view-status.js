@@ -65,6 +65,7 @@ const ComplaintViewStatus = () => {
           status: item?.crmCustComplReqdtls[0]?.status,
           userLevel: item?.crmCustComplReqdtls[0]?.userLevel,
           stateName: statusArray[length].stateName,
+          status: item?.crmCustComplReqdtls[0]?.status
         });
       });
       setAllComplaintList(complaintArray);

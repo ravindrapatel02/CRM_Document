@@ -49,7 +49,6 @@ const TableItem = ({ data , index , setUpdateData , setOpenModal}) => {
         onClick={() => {
           setUpdateData(data);
           setOpenModal({isAdd:false , isUpdate:true});
-          // setUpdateDetails({});
         }}
       />
       <span className="mx-4">

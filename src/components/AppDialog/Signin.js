@@ -1,14 +1,12 @@
 import * as React from 'react'; 
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-// import WithAuthDefault from '../hoc/withAuthDefault'; 
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent'; 
 import { Avatar, Box, Checkbox, FormControlLabel, Grid, TextField, Typography } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { Button } from 'react-bootstrap';
 import Link from 'next/link';
-// import { useAuthActionContext, useAuthContext } from '@context/auth';
 
 const theme = createTheme();
 

@@ -1,9 +1,7 @@
 import * as React from "react";
 import Rating from "@mui/material/Rating";
 import Box from "@mui/material/Box";
-// import DoNotDisturbAltIcon from '@mui/icons-material/DoNotDisturbAlt';
 import { Tooltip } from "@mui/material";
-// import StarOutlineIcon from '@material-ui/icons/StarOutline';
 
 const labels = {
   0: "Not Applicable",
@@ -63,20 +61,9 @@ export default function HoverRating({
         onChangeActive={(event, newHover) => {
           setHover(newHover);
         }}
-        // emptyIcon={<StarIcon style={{ opacity: 0.55 }}  size="large" />}
       />
       <Box className="mx-2">
-        {/*  <Tooltip title="Not Applicable">
- <IconButton onClick={()=>{
        
-    setValue(0) ;
-    handleChangeAnswer( 0, 'ratingValue', questionIndex , subCategories)
-  
-}}>
-    <DoNotDisturbAltIcon color={`${data.selectedId && data.ratingValue===0 ? 'primary':""}`} />
-</IconButton>
-</Tooltip>
-*/}
       </Box>
       {value !== null && (
         <Box sx={{ ml: 2 }} className="text-nowrap">

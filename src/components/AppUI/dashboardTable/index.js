@@ -2,17 +2,17 @@ import React from 'react';
 import Table from '@mui/material/Table';
 import TableHead from '@mui/material/TableHead';
 import TableBody from '@mui/material/TableBody';
-import propTypes from 'prop-types';
+import propTypes from 'prop-types';  
+import AppTableContainer from '@components/AppTableContainer'; 
 import TableHeading from './TableHeading';
 import TableItem from './TableItem';
 import TableItemEmpty from './TableItemEmpty';
-import AppTableContainer from '@/src/components/AppTableContainer';
 
-const TaskTable = ({data , handleRemoveSelectSeat , handleChange}) => {
+const DashboardTable = ({data}) => {
   return (
     <AppTableContainer>
       <Table stickyHeader className='table'>
-        <TableHead >
+        <TableHead>
           <TableHeading />
         </TableHead>
         <TableBody>
@@ -21,9 +21,7 @@ const TaskTable = ({data , handleRemoveSelectSeat , handleChange}) => {
               <TableItem
                 data={data}
                 index={index}
-                key={index}
-                handleRemoveSelectSeat={handleRemoveSelectSeat}
-                handleChange ={handleChange}
+                key={index} 
               />
             ))
           ) : (
@@ -35,15 +33,13 @@ const TaskTable = ({data , handleRemoveSelectSeat , handleChange}) => {
   );
 };
 
-export default TaskTable;
+export default DashboardTable;
 
-TaskTable.defaultProps = {
-  data: [], 
+DashboardTable.defaultProps = {
+  data: [],  
 };
 
-TaskTable.propTypes = {
-  data: propTypes.array,
-  handleRemoveSelectSeat:propTypes.func,
-  handleChange :propTypes.func
+DashboardTable.propTypes = {
+  data: propTypes.array, 
   
 };

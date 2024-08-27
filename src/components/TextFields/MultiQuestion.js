@@ -21,7 +21,6 @@ const MultiQuestion = ({ answer, handleChangeAnswer, questionIndex }) => {
             handleChangeAnswer={handleChangeAnswer}
             questionIndex={questionIndex}
             subQIndex={index}
-              //   onChangeValue={onChangeValue}
             />
           )}
 
@@ -32,7 +31,6 @@ const MultiQuestion = ({ answer, handleChangeAnswer, questionIndex }) => {
               handleChangeAnswer={handleChangeAnswer}
               questionIndex={questionIndex}
               subQIndex={index}
-              // onChangeValue={onChangeValue}
             />
           )}
           {fields.inputType === "checkbox" && (
@@ -42,7 +40,6 @@ const MultiQuestion = ({ answer, handleChangeAnswer, questionIndex }) => {
             handleChangeAnswer={handleChangeAnswer}
             questionIndex={questionIndex}
             subQIndex={index}
-              //   questionIndex={questionIndex}
             />
           )}
           {fields.inputType === "rating" && (
@@ -52,7 +49,6 @@ const MultiQuestion = ({ answer, handleChangeAnswer, questionIndex }) => {
             handleChangeAnswer={handleChangeAnswer}
             questionIndex={questionIndex}
             subQIndex={index}
-              //   questionIndex={questionIndex}
             />
           )}
         </React.Fragment>
