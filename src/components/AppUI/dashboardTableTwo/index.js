@@ -6,7 +6,7 @@ import React, { useState } from 'react'
 import DashboardTable from './Table'
 const ROW_PER_PAGE = 10;
 
-const DashboardTableOne = ({data}) => {
+const DashboardTableTwo = ({data}) => {
     const [dataCount, setDataCount] = useState(0);
     const [page, setPage] = useState(0);
     
@@ -80,4 +80,4 @@ const DashboardTableOne = ({data}) => {
   )
 }
 
-export default DashboardTableOne
+export default DashboardTableTwo

@@ -2,8 +2,7 @@ import React from 'react';
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import PropTypes from 'prop-types';
-import { styled } from '@mui/material/styles';    
-import Link from 'next/link';
+import { styled } from '@mui/material/styles';     
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   '&:hover': {
     backgroundColor: theme.palette.action.hover,
@@ -28,20 +27,18 @@ const TableItem = ({ data , index}) => {
    console.log(data)
   return (
     <>
-    <StyledTableRow key={`row-${data.seatNo}`}>
+    <StyledTableRow key={`row-${data.deptname}`}>
     <StyledTableCell>{index + 1}</StyledTableCell>
-    <StyledTableCell>
-    <Link href={`/admin-view-register-complaint/${window.btoa(data.complNumb)}`}>
-    {data.complNumb}
-    </Link> 
+    <StyledTableCell> 
+    {data.deptname} 
     </StyledTableCell>
     <StyledTableCell>
-    {data.feedbackDate ? data.feedbackDate.substring(0,10) :''}
+    {data.open }
   </StyledTableCell>
     <StyledTableCell>
-      {data.firstName + " " + data.lastName}
+      {data.closed}
     </StyledTableCell>
-    <StyledTableCell>{data.emailId}</StyledTableCell>
+    <StyledTableCell>{data.total}</StyledTableCell>
      
   </StyledTableRow>
     </>
