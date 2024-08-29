@@ -35,23 +35,23 @@ const TableItem = ({ data, index }) => {
   const handleAction = (data, status) => {
     const obj = {
       complNumb: data.complNumb,
-      status: status,
+      flag: status,
     };
     jwtAxios
-      .post(API_URL.ASSIGN_TASK, obj)
+      .post(API_URL.USER_SATISFACTION, obj)
       .then((response) => {
         const res = response.data;
         if (res.status === "true") {
-          AppNotification(true, "Status has been changed !");
+          AppNotification(true,res.message?? "Status has been changed !");
           setTimeout(() => {
             dispatch(getComplaintViewRequest({ custPernerNo: user?.uid }));
           }, 2000);
         } else {
-          AppNotification(false, "Failed to change status !");
+          AppNotification(false, res.message ?? "Failed to change status !");
         }
       })
       .catch((error) => {
-        AppNotification(false, error.message ?? "NwtworkError");
+        AppNotification(false, error.message ?? "Nwtwork Error");
       });
   };
 
@@ -87,16 +87,17 @@ const TableItem = ({ data, index }) => {
                   variant="contained"
                   color="success"
                   size="small"
-                  onClick={() => handleAction(data, "Satisfied")}
+                  onClick={() => handleAction(data, "satisfied")}
                 >
                   Satisfied
                 </Button>
+
 
                 <Button
                   variant="contained"
                   color="error"
                   size="small"
-                  onClick={() => handleAction(data, "Not Satisfied")}
+                  onClick={() => handleAction(data, "not-satisfied")}
                 >
                   Not Satisfied
                 </Button>
