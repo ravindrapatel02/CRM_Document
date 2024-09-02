@@ -26,11 +26,12 @@ const AdminViewRegisterComplaint = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { user } = useAuthUser();
+  const [submit, setSubmit] = useState(false);
   useEffect(() => {
     if (user) {
       const obj = {
         deptname: user.deptName,
-        flag: user.role[0] === "CRM_ADMIN" ? "CRM_SPOC" : "CRM_HOD",
+        flag: user?.role[0] === "CRM_ADMIN" ? "CRM_SPOC" : "CRM_HOD",
       };
       dispatch(getSPOCList(obj));
     }
@@ -40,6 +41,7 @@ const AdminViewRegisterComplaint = () => {
   const [loading, setLoading] = useState(true);
   const [isNotFound, setIsNotFound] = useState(false);
   const [userAttachements, setUserAttachements] = useState([]);
+  const [upldFileListSpoc, setUpldFileListSpoc] = useState([]);
 
   const [initialValues, setInitialValues] = useState({
     firstName: "",
@@ -78,6 +80,7 @@ const AdminViewRegisterComplaint = () => {
               const userLevel = userAppList[userAppList.length - 1].userLevel;
 
               setUserAttachements(res.data.upldFileList);
+              setUpldFileListSpoc(res.data.upldFileListSpoc);
 
               setInitialValues({
                 firstName: res.data.firstName,
@@ -128,11 +131,13 @@ const AdminViewRegisterComplaint = () => {
             router.push("/my-activity");
           }, 3000);
         } else {
+          setSubmit(false);
           AppNotification(false, res.message ?? "Something went wrong !");
         }
       })
       .catch((error) => {
         AppNotification(false, error.message ?? "Network Error !");
+        setSubmit(false);
       });
   };
 
@@ -141,420 +146,553 @@ const AdminViewRegisterComplaint = () => {
   }
 
   return (
-    <AppSectionContainer>
-      <Box
-        sx={{
-          textAlign: "center",
-        }}
-      >
-        <AppSectionTitle
-          primaryText={"View Customer Complaint Form"}
-          secondaryText={""}
-        />
-      </Box>
-      {!loading ? (
-        <Formik
-          initialValues={initialValues}
-          validationSchema={createConsernValidation}
-          onSubmit={(values) => {
-            if (
-              values.status === "approve" ||
-              values.status === "reject" ||
-              values.status === "return"
-            ) {
-              const obj = {
-                complNumb: window.atob(complaintId),
-                userId: user.id,
-                flag: values.status,
-                logRemarks: values.remarks,
-              };
-              handleSubmit(obj, "level-1");
-
-              return 0;
-            }
-            console.log("Hellooo99999");
-
-            if (values.statusName === "level-1") {
-              const obj = {
-                assignToUserId: values.assignToUserId,
-                complNumb: window.atob(complaintId),
-                userId: user.id,
-                flag: "submit",
-                complPriority: values.complPriority,
-              };
-              handleSubmit(obj, "level-1");
-            } else {
-              const formData = new FormData();
-              formData.append("complNumb", window.atob(complaintId));
-              formData.append("logRemarks", values.remarks);
-              formData.append("upldFile", values.newFile);
-              formData.append("userId", user.id);
-              formData.append("flag", values.status);
-              handleSubmit(formData, "ApproverLevel");
-            }
+    <React.Fragment>
+      {submit && <AppLoader />}
+      <AppSectionContainer>
+        <Box
+          sx={{
+            textAlign: "center",
           }}
         >
-          {({ values, setFieldValue, errors, handleSubmit }) => (
-            <Form initialtouched={{ zip: true }}>
-              <Grid container spacing={2} mt={5}>
-                <Grid item xs={12} md={6}>
-                  <TextField
-                    name="firstName"
-                    value={values.firstName}
-                    disabled
-                    fullWidth
-                    onChange={(e) => {
-                      setFieldValue("firstName", e.target.value);
-                    }}
-                    error={errors.firstName ? true : false}
-                    helperText={errors.firstName}
-                    label={
-                      <span>
-                        First Name <span style={{ color: "#d32f2f" }}>*</span>
-                      </span>
-                    }
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                  />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                  <TextField
-                    name="lastName"
-                    value={values.lastName}
-                    disabled
-                    fullWidth
-                    onChange={(e) => {
-                      setFieldValue("lastName", e.target.value);
-                    }}
-                    label={
-                      <span>
-                        Last Name <span style={{ color: "#d32f2f" }}>*</span>
-                      </span>
-                    }
-                    error={errors.lastName ? true : false}
-                    helperText={errors.lastName}
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                  />
-                </Grid>
+          <AppSectionTitle
+            primaryText={"View Customer Complaint Form"}
+            secondaryText={""}
+          />
+          <Typography>Complaint Number: {window?.atob(complaintId)}</Typography>
+        </Box>
+        {!loading ? (
+          <Formik
+            initialValues={initialValues}
+            validationSchema={createConsernValidation}
+            onSubmit={(values) => {
+              if (
+                values.status === "approve" ||
+                values.status === "reject" ||
+                values.status === "return"
+              ) {
+                const obj = {
+                  complNumb: window.atob(complaintId),
+                  userId: user.id,
+                  flag: values.status,
+                  logRemarks: values.remarks,
+                };
+                handleSubmit(obj, "level-1");
 
-                <Grid item xs={12} md={6}>
-                  <TextField
-                    name="deptName"
-                    value={values.deptName}
-                    disabled
-                    fullWidth
-                    error={errors.deptName ? true : false}
-                    helperText={errors.deptName}
-                    onChange={(e) => {
-                      setFieldValue("deptName", e.target.value);
-                    }}
-                    label={
-                      <span>
-                        Department
-                        <span style={{ color: "#d32f2f" }}>*</span>
-                      </span>
-                    }
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                  ></TextField>
-                </Grid>
-                <Grid item xs={12} md={6}>
-                  <TextField
-                    name="complType"
-                    disabled
-                    value={values.complType}
-                    fullWidth
-                    error={errors.complType ? true : false}
-                    helperText={errors.complType}
-                    onChange={(e) => {
-                      setFieldValue("complType", e.target.value);
-                    }}
-                    label={
-                      <span>
-                        Request Type
-                        <span style={{ color: "#d32f2f" }}>*</span>
-                      </span>
-                    }
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                  ></TextField>
-                </Grid>
-                <Grid item xs={12} md={6}>
-                  <TextField
-                    name="email"
-                    value={values.emailId}
-                    disabled
-                    fullWidth
-                    error={errors.emailId ? true : false}
-                    helperText={errors.emailId}
-                    onChange={(e) => {
-                      setFieldValue("emailId", e.target.value);
-                    }}
-                    label={
-                      <span>
-                        Email Id <span style={{ color: "#d32f2f" }}>*</span>
-                      </span>
-                    }
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                  />
-                </Grid>
+                return 0;
+              }
 
-                <Grid item xs={12} md={6}>
-                  <TextField
-                    name="contactNo"
-                    value={values.contactNo}
-                    disabled
-                    fullWidth
-                    error={errors.contactNo ? true : false}
-                    helperText={errors.contactNo}
-                    onChange={(e) => {
-                      setFieldValue("contactNo", e.target.value);
-                    }}
-                    label={
-                      <span>
-                        Contact No. <span style={{ color: "#d32f2f" }}>*</span>
-                      </span>
-                    }
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                  />
-                </Grid>
-
-                <Grid item xs={12} md={6}>
-                  <TextField
-                    name="organization"
-                    value={values.organization}
-                    disabled
-                    fullWidth
-                    error={errors.organization ? true : false}
-                    helperText={errors.organization}
-                    onChange={(e) => {
-                      setFieldValue("organization", e.target.value);
-                    }}
-                    label={
-                      <span>
-                        Organization <span style={{ color: "#d32f2f" }}>*</span>
-                      </span>
-                    }
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                  />
-                </Grid>
-
-                <Grid item xs={12} md={6}>
-                  <TextField
-                    name="feedbackType"
-                    value={values.feedbackType}
-                    disabled
-                    error={errors.feedbackType ? true : false}
-                    helperText={errors.feedbackType}
-                    fullWidth
-                    onChange={(e) => {
-                      setFieldValue("feedbackType", e.target.value);
-                    }}
-                    label={
-                      <span>
-                        Feedback Type{" "}
-                        <span style={{ color: "#d32f2f" }}>*</span>
-                      </span>
-                    }
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                  ></TextField>
-                </Grid>
-
-                <Grid item xs={12} md={6}>
-                  <TextField
-                    type="date"
-                    name="feedbackTypeDate"
-                    disabled
-                    value={values.feedbackTypeDate}
-                    error={errors.feedbackTypeDate ? true : false}
-                    helperText={errors.feedbackTypeDate}
-                    fullWidth
-                    onChange={(e) => {
-                      setFieldValue("feedbackTypeDate", e.target.value);
-                    }}
-                    label={
-                      <span>
-                        Date <span style={{ color: "#d32f2f" }}>*</span>
-                      </span>
-                    }
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                  />
-                </Grid>
-
-                <Grid item xs={12} md={6}>
-                  <TextField
-                    name="areaConcern"
-                    value={values.areaConcern}
-                    disabled
-                    error={errors.areaConcern ? true : false}
-                    helperText={errors.areaConcern}
-                    fullWidth
-                    onChange={(e) => {
-                      setFieldValue("areaConcern", e.target.value);
-                    }}
-                    label={
-                      <span>
-                        Area Of Concern
-                        <span style={{ color: "#d32f2f" }}>*</span>
-                      </span>
-                    }
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                  ></TextField>
-                </Grid>
-
-                <Grid item xs={12} md={6}>
-                  <TextField
-                    name="detailsDesc"
-                    value={values.detailsDesc}
-                    fullWidth
-                    disabled
-                    error={errors.detailsDesc ? true : false}
-                    helperText={errors.detailsDesc}
-                    onChange={(e) => {
-                      setFieldValue("detailsDesc", e.target.value);
-                    }}
-                    label={
-                      <span>
-                        Details descriptions{" "}
-                        <span style={{ color: "#d32f2f" }}>*</span>
-                      </span>
-                    }
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                  />
-                </Grid>
-                {userAttachements && userAttachements.length > 0 && (
+              if (values.statusName === "level-1") {
+                const obj = {
+                  assignToUserId: values.assignToUserId,
+                  complNumb: window.atob(complaintId),
+                  userId: user.id,
+                  flag: "submit",
+                  complPriority: values.complPriority,
+                };
+                handleSubmit(obj, "level-1");
+              } else {
+                const formData = new FormData();
+                formData.append("complNumb", window.atob(complaintId));
+                formData.append("logRemarks", values.remarks);
+                formData.append("upldFile", values.newFile);
+                formData.append("userId", user.id);
+                formData.append("flag", values.status);
+                handleSubmit(formData, "ApproverLevel");
+              }
+            }}
+          >
+            {({ values, setFieldValue, errors, handleSubmit }) => (
+              <Form initialtouched={{ zip: true }}>
+                <Grid container spacing={2} mt={5}>
                   <Grid item xs={12} md={6}>
-                    <Box>
-                      <Typography variant="body1">User Attachement</Typography>
-                      <a
-                        href={
-                          BASE_URL +
-                          `/crm/workflow/displayfile?fileURL=${userAttachements[0].fileURL}`
-                        }
-                        target="_blank"
-                      >
-                        Attachement Name - ( {userAttachements[0].fileName} )
-                      </a>
-                    </Box>
+                    <TextField
+                      name="firstName"
+                      value={values.firstName}
+                      disabled
+                      fullWidth
+                      onChange={(e) => {
+                        setFieldValue("firstName", e.target.value);
+                      }}
+                      error={errors.firstName ? true : false}
+                      helperText={errors.firstName}
+                      label={
+                        <span>
+                          First Name <span style={{ color: "#d32f2f" }}>*</span>
+                        </span>
+                      }
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                    />
                   </Grid>
-                )}
-                {user.role[0] === "CRM_ADMIN" &&
-                  values.statusName === "level-1" && (
-                    <React.Fragment>
-                      <Grid item xs={12} md={6}>
-                        <TextField
-                          name="assignToUserId"
-                          select
-                          value={values.assignToUserId}
-                          error={errors.assignToUserId ? true : false}
-                          helperText={errors.assignToUserId}
-                          fullWidth
-                          onChange={(e) => {
-                            setFieldValue("assignToUserId", e.target.value);
-                          }}
-                          label={
-                            <span>
-                              Assign to user
-                              <span style={{ color: "#d32f2f" }}>*</span>
-                            </span>
+                  <Grid item xs={12} md={6}>
+                    <TextField
+                      name="lastName"
+                      value={values.lastName}
+                      disabled
+                      fullWidth
+                      onChange={(e) => {
+                        setFieldValue("lastName", e.target.value);
+                      }}
+                      label={
+                        <span>
+                          Last Name <span style={{ color: "#d32f2f" }}>*</span>
+                        </span>
+                      }
+                      error={errors.lastName ? true : false}
+                      helperText={errors.lastName}
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                    />
+                  </Grid>
+
+                  <Grid item xs={12} md={6}>
+                    <TextField
+                      name="deptName"
+                      value={values.deptName}
+                      disabled
+                      fullWidth
+                      error={errors.deptName ? true : false}
+                      helperText={errors.deptName}
+                      onChange={(e) => {
+                        setFieldValue("deptName", e.target.value);
+                      }}
+                      label={
+                        <span>
+                          Department
+                          <span style={{ color: "#d32f2f" }}>*</span>
+                        </span>
+                      }
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                    ></TextField>
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <TextField
+                      name="complType"
+                      disabled
+                      value={values.complType}
+                      fullWidth
+                      error={errors.complType ? true : false}
+                      helperText={errors.complType}
+                      onChange={(e) => {
+                        setFieldValue("complType", e.target.value);
+                      }}
+                      label={
+                        <span>
+                          Request Type
+                          <span style={{ color: "#d32f2f" }}>*</span>
+                        </span>
+                      }
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                    ></TextField>
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <TextField
+                      name="email"
+                      value={values.emailId}
+                      disabled
+                      fullWidth
+                      error={errors.emailId ? true : false}
+                      helperText={errors.emailId}
+                      onChange={(e) => {
+                        setFieldValue("emailId", e.target.value);
+                      }}
+                      label={
+                        <span>
+                          Email Id <span style={{ color: "#d32f2f" }}>*</span>
+                        </span>
+                      }
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                    />
+                  </Grid>
+
+                  <Grid item xs={12} md={6}>
+                    <TextField
+                      name="contactNo"
+                      value={values.contactNo}
+                      disabled
+                      fullWidth
+                      error={errors.contactNo ? true : false}
+                      helperText={errors.contactNo}
+                      onChange={(e) => {
+                        setFieldValue("contactNo", e.target.value);
+                      }}
+                      label={
+                        <span>
+                          Contact No.{" "}
+                          <span style={{ color: "#d32f2f" }}>*</span>
+                        </span>
+                      }
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                    />
+                  </Grid>
+
+                  <Grid item xs={12} md={6}>
+                    <TextField
+                      name="organization"
+                      value={values.organization}
+                      disabled
+                      fullWidth
+                      error={errors.organization ? true : false}
+                      helperText={errors.organization}
+                      onChange={(e) => {
+                        setFieldValue("organization", e.target.value);
+                      }}
+                      label={
+                        <span>
+                          Organization{" "}
+                          <span style={{ color: "#d32f2f" }}>*</span>
+                        </span>
+                      }
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                    />
+                  </Grid>
+
+                  <Grid item xs={12} md={6}>
+                    <TextField
+                      name="feedbackType"
+                      value={values.feedbackType}
+                      disabled
+                      error={errors.feedbackType ? true : false}
+                      helperText={errors.feedbackType}
+                      fullWidth
+                      onChange={(e) => {
+                        setFieldValue("feedbackType", e.target.value);
+                      }}
+                      label={
+                        <span>
+                          Feedback Type{" "}
+                          <span style={{ color: "#d32f2f" }}>*</span>
+                        </span>
+                      }
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                    ></TextField>
+                  </Grid>
+
+                  <Grid item xs={12} md={6}>
+                    <TextField
+                      type="date"
+                      name="feedbackTypeDate"
+                      disabled
+                      value={values.feedbackTypeDate}
+                      error={errors.feedbackTypeDate ? true : false}
+                      helperText={errors.feedbackTypeDate}
+                      fullWidth
+                      onChange={(e) => {
+                        setFieldValue("feedbackTypeDate", e.target.value);
+                      }}
+                      label={
+                        <span>
+                          Date <span style={{ color: "#d32f2f" }}>*</span>
+                        </span>
+                      }
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                    />
+                  </Grid>
+
+                  <Grid item xs={12} md={6}>
+                    <TextField
+                      name="areaConcern"
+                      value={values.areaConcern}
+                      disabled
+                      error={errors.areaConcern ? true : false}
+                      helperText={errors.areaConcern}
+                      fullWidth
+                      onChange={(e) => {
+                        setFieldValue("areaConcern", e.target.value);
+                      }}
+                      label={
+                        <span>
+                          Area Of Concern
+                          <span style={{ color: "#d32f2f" }}>*</span>
+                        </span>
+                      }
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                    ></TextField>
+                  </Grid>
+
+                  <Grid item xs={12} md={6}>
+                    <TextField
+                      name="detailsDesc"
+                      value={values.detailsDesc}
+                      fullWidth
+                      disabled
+                      error={errors.detailsDesc ? true : false}
+                      helperText={errors.detailsDesc}
+                      onChange={(e) => {
+                        setFieldValue("detailsDesc", e.target.value);
+                      }}
+                      label={
+                        <span>
+                          Details descriptions{" "}
+                          <span style={{ color: "#d32f2f" }}>*</span>
+                        </span>
+                      }
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                    />
+                  </Grid>
+                  {userAttachements && userAttachements.length > 0 && (
+                    <Grid item xs={12} md={6}>
+                      <Box>
+                        <Typography variant="body1">
+                          User Attachement
+                        </Typography>
+                        <a
+                          href={
+                            BASE_URL +
+                            `/crm/workflow/displayfile?fileURL=${userAttachements[0].fileURL}`
                           }
-                          InputLabelProps={{
-                            shrink: true,
-                          }}
+                          target="_blank"
                         >
-                          <MenuItem disabled selected>
-                            Assign to user
-                          </MenuItem>
-                          {spocData &&
-                            spocData.length > 0 &&
-                            spocData.map((item, index) => (
-                              <MenuItem
-                                value={item.userId}
-                                key={index + "_" + item.userId}
-                              >
-                                {item.userName}
-                              </MenuItem>
-                            ))}
-                        </TextField>
-                      </Grid>
-
-                      <Grid item xs={12} md={6}>
-                        <TextField
-                          name="complPriority"
-                          select
-                          value={values.complPriority}
-                          error={errors.complPriority ? true : false}
-                          helperText={errors.complPriority}
-                          fullWidth
-                          onChange={(e) => {
-                            setFieldValue("complPriority", e.target.value);
-                          }}
-                          label={
-                            <span>
-                              Complaint Priority
-                              <span style={{ color: "#d32f2f" }}>*</span>
-                            </span>
-                          }
-                          InputLabelProps={{
-                            shrink: true,
-                          }}
-                        >
-                          <MenuItem disabled selected>
-                            complaint Priority
-                          </MenuItem>
-
-                          <MenuItem value={"High-24Hrs"}> High-24Hrs </MenuItem>
-                          <MenuItem value={"Moderate-48Hrs"}>
-                            {" "}
-                            Moderate-48Hrs{" "}
-                          </MenuItem>
-                          <MenuItem value={"Low-48Hrs"}> Low-48Hrs </MenuItem>
-                        </TextField>
-                      </Grid>
-
-                      <Grid item md={12} textAlign={"center"} mt={3}>
-                        <div>
-                          <Button
-                            sx={{
-                              position: "relative",
-                              minWidth: 100,
-                            }}
-                            color="primary"
-                            variant="contained" 
-                            onClick={() => {
-                              setFieldValue("status", "submit");
-                              handleSubmit();
-                            }}
-                          >
-                            Submit
-                          </Button>
-                        </div>
-                      </Grid>
-                    </React.Fragment>
+                          Attachement Name - ( {userAttachements[0].fileName} )
+                        </a>
+                      </Box>
+                    </Grid>
                   )}
 
-                {(user.role[0] === "CRM_SPOC" ||
-                  user.role[0] === "CRM_ADMIN") &&
-                  values.statusName !== "level-1" && (
+                  {upldFileListSpoc && upldFileListSpoc.length > 0 && (
+                    <Grid item xs={12} md={6}>
+                      <Box>
+                        <Typography variant="body1">
+                          SPOC Attachement
+                        </Typography>
+                        <a
+                          href={
+                            BASE_URL +
+                            `/crm/workflow/displayfile?fileURL=${upldFileListSpoc[0].fileURL}`
+                          }
+                          target="_blank"
+                        >
+                          Attachement Name - ( {upldFileListSpoc[0].fileName} )
+                        </a>
+                      </Box>
+                    </Grid>
+                  )}
+                  {user?.role[0] === "CRM_ADMIN" &&
+                    values.statusName === "level-1" && (
+                      <React.Fragment>
+                        <Grid item xs={12} md={6}>
+                          <TextField
+                            name="assignToUserId"
+                            select
+                            value={values.assignToUserId}
+                            error={errors.assignToUserId ? true : false}
+                            helperText={errors.assignToUserId}
+                            fullWidth
+                            onChange={(e) => {
+                              setFieldValue("assignToUserId", e.target.value);
+                            }}
+                            label={
+                              <span>
+                                Assign to user
+                                <span style={{ color: "#d32f2f" }}>*</span>
+                              </span>
+                            }
+                            InputLabelProps={{
+                              shrink: true,
+                            }}
+                          >
+                            <MenuItem disabled selected>
+                              Assign to user
+                            </MenuItem>
+                            {spocData &&
+                              spocData.length > 0 &&
+                              spocData.map((item, index) => (
+                                <MenuItem
+                                  value={item.userId}
+                                  key={index + "_" + item.userId}
+                                >
+                                  {item.userName}
+                                </MenuItem>
+                              ))}
+                          </TextField>
+                        </Grid>
+
+                        <Grid item xs={12} md={6}>
+                          <TextField
+                            name="complPriority"
+                            select
+                            value={values.complPriority}
+                            error={errors.complPriority ? true : false}
+                            helperText={errors.complPriority}
+                            fullWidth
+                            onChange={(e) => {
+                              setFieldValue("complPriority", e.target.value);
+                            }}
+                            label={
+                              <span>
+                                Complaint Priority
+                                <span style={{ color: "#d32f2f" }}>*</span>
+                              </span>
+                            }
+                            InputLabelProps={{
+                              shrink: true,
+                            }}
+                          >
+                            <MenuItem disabled selected>
+                              complaint Priority
+                            </MenuItem>
+
+                            <MenuItem value={"High-24Hrs"}>
+                              {" "}
+                              High-24Hrs{" "}
+                            </MenuItem>
+                            <MenuItem value={"Moderate-48Hrs"}>
+                              {" "}
+                              Moderate-48Hrs{" "}
+                            </MenuItem>
+                            <MenuItem value={"Low-48Hrs"}> Low-48Hrs </MenuItem>
+                          </TextField>
+                        </Grid>
+
+                        <Grid item md={12} textAlign={"center"} mt={3}>
+                          <div>
+                            <Button
+                              sx={{
+                                position: "relative",
+                                minWidth: 100,
+                              }}
+                              color="primary"
+                              variant="contained"
+                              disabled={submit}
+                              onClick={() => {
+                                setFieldValue("status", "submit");
+                                handleSubmit();
+                                setSubmit(true);
+                              }}
+                            >
+                              Submit
+                            </Button>
+                          </div>
+                        </Grid>
+                      </React.Fragment>
+                    )}
+
+                  {(user?.role[0] === "CRM_SPOC" ||
+                    user?.role[0] === "CRM_ADMIN") &&
+                    values.statusName !== "level-1" && (
+                      <React.Fragment>
+                        <Grid item xs={12} md={6}>
+                          <TextField
+                            name="remarks"
+                            multiline
+                            value={values.remarks}
+                            error={errors.remarks ? true : false}
+                            helperText={errors.remarks}
+                            fullWidth
+                            onChange={(e) => {
+                              setFieldValue("remarks", e.target.value);
+                            }}
+                            label={<span>Remarks</span>}
+                            InputLabelProps={{
+                              shrink: true,
+                            }}
+                          ></TextField>
+                        </Grid>
+                        {user?.role[0] === "CRM_SPOC" && (
+                          <Grid item xs={12} md={6}>
+                            <TextField
+                              type="file"
+                              name="newFile"
+                              fullWidth
+                              onChange={(e) => {
+                                setFieldValue("newFile", e.target.files[0]);
+                              }}
+                              label={<span>Attachments</span>}
+                              InputLabelProps={{
+                                shrink: true,
+                              }}
+                            />
+                          </Grid>
+                        )}
+                        <Grid item md={12} textAlign={"center"} mt={3}>
+                          <div>
+                            <Button
+                              sx={{
+                                position: "relative",
+                                minWidth: 100,
+                              }}
+                              color="primary"
+                              variant="contained"
+                              disabled={submit}
+                              onClick={() => {
+                                setFieldValue(
+                                  "status",
+                                  user?.role[0] === "CRM_ADMIN"
+                                    ? "approve"
+                                    : "submit"
+                                );
+                                handleSubmit();
+                                setSubmit(true);
+                              }}
+                            >
+                              {user?.role[0] === "CRM_ADMIN"
+                                ? "Approve"
+                                : "Submit"}
+                            </Button>
+                            {user?.role[0] === "CRM_ADMIN" && (
+                              <React.Fragment>
+                                <Button
+                                  sx={{
+                                    position: "relative",
+                                    minWidth: 100,
+                                    ml: 3,
+                                  }}
+                                  color="secondary"
+                                  variant="outlined"
+                                  disabled={submit}
+                                  onClick={() => {
+                                    setFieldValue("status", "reject");
+                                    handleSubmit();
+                                    setSubmit(true);
+                                  }}
+                                >
+                                  Reject
+                                </Button>
+                                <Button
+                                  sx={{
+                                    position: "relative",
+                                    minWidth: 100,
+                                    ml: 3,
+                                  }}
+                                  color="info"
+                                  variant="outlined"
+                                  disabled={submit}
+                                  onClick={() => {
+                                    setFieldValue("status", "return");
+                                    handleSubmit();
+                                    setSubmit(true);
+                                  }}
+                                >
+                                  Return
+                                </Button>
+                              </React.Fragment>
+                            )}
+                          </div>
+                        </Grid>
+                      </React.Fragment>
+                    )}
+
+                  {user?.role[0] === "CRM_HOD" && (
                     <React.Fragment>
                       <Grid item xs={12} md={6}>
                         <TextField
@@ -573,147 +711,55 @@ const AdminViewRegisterComplaint = () => {
                           }}
                         ></TextField>
                       </Grid>
-                      {user.role[0] === "CRM_SPOC" && (
-                        <Grid item xs={12} md={6}>
-                          <TextField
-                            type="file"
-                            name="newFile"
-                            fullWidth
-                            onChange={(e) => {
-                              setFieldValue("newFile", e.target.files[0]);
-                            }}
-                            label={<span>Attachments</span>}
-                            InputLabelProps={{
-                              shrink: true,
-                            }}
-                          />
-                        </Grid>
-                      )}
                       <Grid item md={12} textAlign={"center"} mt={3}>
                         <div>
                           <Button
                             sx={{
                               position: "relative",
                               minWidth: 100,
+                              ml: 3,
                             }}
-                            color="primary"
-                            variant="contained"
+                            disabled={submit}
+                            color="info"
+                            variant="outlined"
                             onClick={() => {
-                              setFieldValue(
-                                "status",
-                                user.role[0] === "CRM_ADMIN"
-                                  ? "approve"
-                                  : "submit"
-                              );
+                              setFieldValue("status", "approve");
                               handleSubmit();
+                              setSubmit(true);
                             }}
                           >
-                            {user.role[0] === "CRM_ADMIN"
-                              ? "Approve"
-                              : "Submit"}
+                            Approve
                           </Button>
-                          {user.role[0] === "CRM_ADMIN" && (
-                            <React.Fragment>
-                              <Button
-                                sx={{
-                                  position: "relative",
-                                  minWidth: 100,
-                                  ml: 3,
-                                }}
-                                color="secondary"
-                                variant="outlined" 
-                                onClick={() => {
-                                  setFieldValue("status", "reject");
-                                  handleSubmit();
-                                }}
-                              >
-                                Reject
-                              </Button>
-                              <Button
-                                sx={{
-                                  position: "relative",
-                                  minWidth: 100,
-                                  ml: 3,
-                                }}
-                                color="info"
-                                variant="outlined" 
-                                onClick={() => {
-                                  setFieldValue("status", "return");
-                                  handleSubmit();
-                                }}
-                              >
-                                Return
-                              </Button>
-                            </React.Fragment>
-                          )}
+                          <Button
+                            sx={{
+                              position: "relative",
+                              minWidth: 100,
+                              ml: 3,
+                            }}
+                            color="warning"
+                            variant="outlined"
+                            disabled={submit}
+                            onClick={() => {
+                              setFieldValue("status", "return");
+                              handleSubmit();
+                              setSubmit(true);
+                            }}
+                          >
+                            Return
+                          </Button>
                         </div>
                       </Grid>
                     </React.Fragment>
                   )}
-
-                {user.role[0] === "CRM_HOD" && (
-                  <React.Fragment>
-                    <Grid item xs={12} md={6}>
-                      <TextField
-                        name="remarks"
-                        multiline
-                        value={values.remarks}
-                        error={errors.remarks ? true : false}
-                        helperText={errors.remarks}
-                        fullWidth
-                        onChange={(e) => {
-                          setFieldValue("remarks", e.target.value);
-                        }}
-                        label={<span>Remarks</span>}
-                        InputLabelProps={{
-                          shrink: true,
-                        }}
-                      ></TextField>
-                    </Grid>
-                    <Grid item md={12} textAlign={"center"} mt={3}>
-                      <div>
-                        <Button
-                          sx={{
-                            position: "relative",
-                            minWidth: 100,
-                            ml: 3,
-                          }}
-                          color="info"
-                          variant="outlined" 
-                          onClick={() => {
-                            setFieldValue("status", "approve");
-                            handleSubmit();
-                          }}
-                        >
-                          Approve
-                        </Button>
-                        <Button
-                          sx={{
-                            position: "relative",
-                            minWidth: 100,
-                            ml: 3,
-                          }}
-                          color="warning"
-                          variant="outlined" 
-                          onClick={() => {
-                            setFieldValue("status", "return");
-                            handleSubmit();
-                          }}
-                        >
-                          Return
-                        </Button>
-                      </div>
-                    </Grid>
-                  </React.Fragment>
-                )}
-              </Grid>
-            </Form>
-          )}
-        </Formik>
-      ) : (
-        <AppLoader />
-      )}
-    </AppSectionContainer>
+                </Grid>
+              </Form>
+            )}
+          </Formik>
+        ) : (
+          <AppLoader />
+        )}
+      </AppSectionContainer>
+    </React.Fragment>
   );
 };
 

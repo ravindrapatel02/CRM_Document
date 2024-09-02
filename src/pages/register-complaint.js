@@ -408,7 +408,7 @@ const RegisterComplaint = () => {
                       areaConcernData.length > 0 &&
                       areaConcernData.map((item, index) => (
                         <MenuItem
-                          value={item.concernType}
+                          value={item.shortCode}
                           key={index + "_" + item.id}
                         >
                           {item.concernType}

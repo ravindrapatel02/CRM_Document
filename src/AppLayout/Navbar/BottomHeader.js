@@ -183,7 +183,7 @@ export const BottomHeader = () => {
                           >
                             Register Complaint
                           </Link>
-                          {user && user.role[0] === "CRM_USER" && (
+                          {user && user?.role[0] === "CRM_USER" && (
                             <Link
                               className="dropdown-item"
                               href="/complaint-view-status"
@@ -211,7 +211,7 @@ export const BottomHeader = () => {
                           </Link>
                         </li>
                       )}
-                      {user && user.role[0] === "CRM_ADMIN" && (
+                      {user && user?.role[0] === "CRM_ADMIN" && (
                         <li className="nav-item dropdown">
                           <Link
                             className="nav-link dropdown-toggle"
