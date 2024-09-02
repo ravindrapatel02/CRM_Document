@@ -469,24 +469,7 @@ const AdminViewRegisterComplaint = () => {
                     </Grid>
                   )}
 
-                  {upldFileListSpoc && upldFileListSpoc.length > 0 && (
-                    <Grid item xs={12} md={6}>
-                      <Box>
-                        <Typography variant="body1">
-                          SPOC Attachement
-                        </Typography>
-                        <a
-                          href={
-                            BASE_URL +
-                            `/crm/workflow/displayfile?fileURL=${upldFileListSpoc[0].fileURL}`
-                          }
-                          target="_blank"
-                        >
-                          Attachement Name - ( {upldFileListSpoc[0].fileName} )
-                        </a>
-                      </Box>
-                    </Grid>
-                  )}
+                 
                   {user?.role[0] === "CRM_ADMIN" &&
                     values.statusName === "level-1" && (
                       <React.Fragment>
@@ -624,6 +607,24 @@ const AdminViewRegisterComplaint = () => {
                             />
                           </Grid>
                         )}
+                        {upldFileListSpoc && upldFileListSpoc.length > 0 && (
+                          <Grid item xs={12} md={6}>
+                            <Box>
+                              <Typography variant="body1">
+                                SPOC Attachement
+                              </Typography>
+                              <a
+                                href={
+                                  BASE_URL +
+                                  `/crm/workflow/displayfile?fileURL=${upldFileListSpoc[0].fileURL}`
+                                }
+                                target="_blank"
+                              >
+                                Attachement Name - ( {upldFileListSpoc[0].fileName} )
+                              </a>
+                            </Box>
+                          </Grid>
+                        )}
                         <Grid item md={12} textAlign={"center"} mt={3}>
                           <div>
                             <Button
@@ -692,6 +693,8 @@ const AdminViewRegisterComplaint = () => {
                       </React.Fragment>
                     )}
 
+                    
+
                   {user?.role[0] === "CRM_HOD" && (
                     <React.Fragment>
                       <Grid item xs={12} md={6}>
@@ -749,6 +752,7 @@ const AdminViewRegisterComplaint = () => {
                           </Button>
                         </div>
                       </Grid>
+                      
                     </React.Fragment>
                   )}
                 </Grid>
