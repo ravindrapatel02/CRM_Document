@@ -197,7 +197,7 @@ const AdminViewRegisterComplaint = () => {
                 const formData = new FormData();
                 formData.append("complNumb", window.atob(complaintId));
                 formData.append("logRemarks", values.remarks);
-                formData.append("upldFile", values.newFile);
+                values.newFile && formData.append("upldFile", values.newFile);
                 formData.append("userId", user.id);
                 formData.append("flag", values.status);
                 handleSubmit(formData, "ApproverLevel");

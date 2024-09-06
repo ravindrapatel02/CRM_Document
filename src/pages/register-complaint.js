@@ -22,10 +22,12 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { API_URL } from "src/api";
+import { useAuthUser } from "src/hooks/AuthHooks";
 import jwtAxios from "src/services/auth";
 
 const RegisterComplaint = () => {
   const dispatch = useDispatch();
+  const {user} = useAuthUser();
   const [submit , setSubmit] = useState(false);
   const router = useRouter();
   useEffect(() => {
@@ -72,7 +74,7 @@ const RegisterComplaint = () => {
       "crmCustComplReqdtls[0].feedbackDate",
       new Date(values.feedbackTypeDate)
     );
-    formData.append("crmCustComplReqdtls[0].upldFile", values.file);
+    values.file && formData.append("crmCustComplReqdtls[0].upldFile", values.file);
     formData.append("crmCustComplReqdtls[0].selConsent", values.selConsent);
 
     jwtAxios
@@ -85,7 +87,7 @@ const RegisterComplaint = () => {
             res.message ?? "Complaint submitted successfully !"
           );
           setTimeout(() => {
-            router.push("/complaint-view-status");
+            router.push(user!==null ? "/complaint-view-status" :'/');
           }, 3000);
         } else {
           setSubmit(false);

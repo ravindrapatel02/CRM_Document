@@ -33,7 +33,8 @@ export const RouteMatch = (route) => {
   const routeArray = route.split("/");
   if (routeArray.length > 1) {
     const newArray = routeArray.slice(1, routeArray.length);
-    console.log("newArray==>>", newArray);
+    return newArray;
+    // console.log("newArray==>>", newArray);
   }
 };
 

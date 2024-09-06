@@ -11,7 +11,7 @@ export const AppLayout = ({ children }) => {
   if (isLoading) {
     return <AppLoader />;
   }
-  console.log('isLoading==>>' , isLoading);
+  // console.log('isLoading==>>' , isLoading);
   if (isLoading && !user) {
     return <AppLoader />;
   }
