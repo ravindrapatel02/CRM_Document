@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useAuthUser } from "src/hooks/AuthHooks";
 import { saveAs } from "file-saver";
 import ExcelJS from "exceljs";
+import { dateTimeFromate } from "@shared/constants/AppConst";
 
 const ROW_PER_PAGE = 10;
 
@@ -55,7 +56,8 @@ const Reports = () => {
   useEffect(() => {
     if (reportData && reportData.length > 0) {
       const complaintArray = [];
-      reportData.forEach((item) => {
+      reportData.forEach((item) => { 
+
         complaintArray.push({
           complNumb: item.complNumb,
           complType: item.complType,
@@ -71,7 +73,8 @@ const Reports = () => {
           feedbackType: item.feedbackType,
           organization: item.organization,
           areaConcern: item.areaConcern,
-          feedbackDate: item.feedbackDate?.substring(0, 10),
+          feedbackDate: dateTimeFromate(item.feedbackDate),
+          // feedbackDate:,
           status: item.status,
           userLevel: item.status,
           stateName: item.status,
@@ -120,7 +123,8 @@ const Reports = () => {
 
     // Add rows
     allComplaintList.forEach((item) => {
-      const obj = {};
+     
+
       obj.complNumb = item.complNumb;
       (obj.feedbackDate = item.feedbackDate),
         (obj.name = item.firstName + " " + item.lastName);

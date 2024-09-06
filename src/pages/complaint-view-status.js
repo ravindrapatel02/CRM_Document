@@ -10,6 +10,7 @@ import ComplaintTable from "@components/AppUI/complaint/table";
 import AppLoader from "@components/CustomLoader";
 import { Box, Button, Card, Grid, Hidden } from "@mui/material";
 import { getComplaintViewRequest } from "@redux/slice/ComplaintViewRequestSlice";
+import { dateTimeFromate } from "@shared/constants/AppConst";
 import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -41,11 +42,10 @@ const ComplaintViewStatus = () => {
   useEffect(() => {
     if (complaintList.length > 0) {
       const complaintArray = [];
-      complaintList.forEach((item) => {
+      complaintList.forEach((item , index) => {
         const statusArray = item.logHistoryCustIdVal;
         const length = statusArray.length - 1;
-      
-
+       
         complaintArray.push({
           complNumb: item.complNumb,
           complType: item.complType,
@@ -58,14 +58,15 @@ const ComplaintViewStatus = () => {
           id: item.id,
           lastName: item.lastName,
           deptName:item.deptName,
-          feedbackType: item?.crmCustComplReqdtls[0].feedbackType,
+          feedbackType: item?.crmCustComplReqdtls[0]?.feedbackType,
           organization: item?.crmCustComplReqdtls[0]?.organization,
           areaConcern: item?.crmCustComplReqdtls[0]?.areaConcern,
-          feedbackDate: (item?.crmCustComplReqdtls[0]?.feedbackDate)?.substring(0,10),
+          feedbackDate: dateTimeFromate(item?.crmCustComplReqdtls[0]?.feedbackDate),
           status: item?.crmCustComplReqdtls[0]?.status,
           userLevel: item?.crmCustComplReqdtls[0]?.userLevel,
-          stateName: statusArray[length].stateName,
-          status: item?.crmCustComplReqdtls[0]?.status
+          stateName:statusArray&& statusArray.length>0 ? statusArray[length].stateName:"",
+          // status: item?.crmCustComplReqdtls[0]?.status
+          currentStateId:statusArray&& statusArray.length>0 ? statusArray[length].currentStateId:"",
         });
       });
       setAllComplaintList(complaintArray);

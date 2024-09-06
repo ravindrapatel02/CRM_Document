@@ -22,6 +22,13 @@ export function isValidBase64(str) {
   }
 }
 
+export const dateTimeFromate =(date)=>{
+  const dateUTC = new Date(date);
+  const options = { timeZone: 'Asia/Kolkata', hour12: false };
+  const dateIST = dateUTC.toLocaleString('en-IN', options);
+  return dateIST;
+}
+
 export const RouteMatch = (route) => {
   const routeArray = route.split("/");
   if (routeArray.length > 1) {

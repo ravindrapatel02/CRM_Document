@@ -21,12 +21,14 @@ import { API_URL } from "src/api";
 import { useAuthUser } from "src/hooks/AuthHooks";
 import jwtAxios from "src/services/auth";
 import PageNotFound from "../404";
+import { getDepartment } from "@redux/slice/DepartmentSlice";
 
 const AdminViewRegisterComplaint = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { user } = useAuthUser();
   const [submit, setSubmit] = useState(false);
+  const { deptData } = useSelector((state) => state.department);
   useEffect(() => {
     if (user) {
       const obj = {
@@ -34,6 +36,7 @@ const AdminViewRegisterComplaint = () => {
         flag: user?.role[0] === "CRM_ADMIN" ? "CRM_SPOC" : "CRM_HOD",
       };
       dispatch(getSPOCList(obj));
+      dispatch(getDepartment());
     }
   }, []);
   const { complaintId } = router.query;
@@ -247,7 +250,7 @@ const AdminViewRegisterComplaint = () => {
                     />
                   </Grid>
 
-                  <Grid item xs={12} md={6}>
+                  {/*<Grid item xs={12} md={6}>
                     <TextField
                       name="deptName"
                       value={values.deptName}
@@ -268,7 +271,7 @@ const AdminViewRegisterComplaint = () => {
                         shrink: true,
                       }}
                     ></TextField>
-                  </Grid>
+                  </Grid>*/}
                   <Grid item xs={12} md={6}>
                     <TextField
                       name="complType"
@@ -473,6 +476,43 @@ const AdminViewRegisterComplaint = () => {
                   {user?.role[0] === "CRM_ADMIN" &&
                     values.statusName === "level-1" && (
                       <React.Fragment>
+                      <Grid item xs={12} md={6}>
+                  <TextField
+                    name="deptName"
+                    select
+                    value={values.deptName}
+                    fullWidth
+                    error={errors.deptName ? true : false}
+                    helperText={errors.deptName}
+                    onChange={(e) => {
+                      setFieldValue("deptName", e.target.value);
+                    }}
+                    label={
+                      <span>
+                        Department
+                        <span style={{ color: "#d32f2f" }}>*</span>
+                      </span>
+                    }
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                  >
+                    <MenuItem disabled selected>
+                      Department
+                    </MenuItem>
+                    {deptData &&
+                      deptData.length > 0 &&
+                      deptData.map((item, index) => (
+                        <MenuItem
+                          value={item.deptCode}
+                          key={index + "_" + item.id}
+                        >
+                          {item.deptName}
+                        </MenuItem>
+                      ))}
+                  </TextField>
+                </Grid>
+
                         <Grid item xs={12} md={6}>
                           <TextField
                             name="assignToUserId"

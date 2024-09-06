@@ -19,13 +19,14 @@ import { getDepartment } from "@redux/slice/DepartmentSlice";
 import { createConsernValidation } from "@shared/formValidation/FormValidation";
 import { Form, Formik } from "formik";
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { API_URL } from "src/api";
 import jwtAxios from "src/services/auth";
 
 const RegisterComplaint = () => {
   const dispatch = useDispatch();
+  const [submit , setSubmit] = useState(false);
   const router = useRouter();
   useEffect(() => {
     dispatch(getAreaOfConcern());
@@ -54,6 +55,7 @@ const RegisterComplaint = () => {
 
   const handleSubmit = (values) => {
     const formData = new FormData();
+    setSubmit(true);
     formData.append("firstName", values.firstName);
 
     formData.append("lastName", values.lastName);
@@ -86,16 +88,19 @@ const RegisterComplaint = () => {
             router.push("/complaint-view-status");
           }, 3000);
         } else {
+          setSubmit(false);
           AppNotification(false, res.message ?? "Something went wrong !");
         }
       })
       .catch((error) => {
+        setSubmit(false);
         AppNotification(false, error.message ?? "Network Error !");
       });
   };
 
   return (
     <AppSectionContainer>
+    {submit && <AppLoader/>}
       <Box
         sx={{
           textAlign: "center",
@@ -150,7 +155,7 @@ const RegisterComplaint = () => {
                     }}
                     label={
                       <span>
-                        Last Name <span style={{ color: "#d32f2f" }}>*</span>
+                        Last Name  
                       </span>
                     }
                     error={errors.lastName ? true : false}
@@ -190,7 +195,7 @@ const RegisterComplaint = () => {
                 <MenuItem value="Non-GMR">Non-GMR</MenuItem>
                
               </TextField>
-            </Grid>*/}
+            </Grid>
                 <Grid item xs={12} md={6}>
                   <TextField
                     name="deptName"
@@ -227,6 +232,7 @@ const RegisterComplaint = () => {
                       ))}
                   </TextField>
                 </Grid>
+                */}
                 <Grid item xs={12} md={6}>
                   <TextField
                     name="complType"
@@ -498,7 +504,7 @@ const RegisterComplaint = () => {
                       position: "relative",
                       minWidth: 100,
                     }}
-                    //   disabled={submited}
+                      disabled={submit}
                     color="primary"
                     variant="contained"
                     type="submit"
