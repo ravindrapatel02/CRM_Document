@@ -8,6 +8,7 @@ import MyTaskSlice from '@redux/slice/MyTaskSlice';
 import SPOCListSlice from '@redux/slice/SPOCListSlice';
 import ReportsSlice from '@redux/slice/ReportsSlice';
 import DashboardSlice from '@redux/slice/DashboardSlice';
+import ProgressStatusSlice from '@redux/slice/ProgressStatusSlice';
 
 export const store = configureStore({
   reducer: { 
@@ -17,6 +18,7 @@ export const store = configureStore({
     taskList :MyTaskSlice,
     spocList: SPOCListSlice,
     reports: ReportsSlice,
-    dashboard: DashboardSlice
+    dashboard: DashboardSlice,
+    progessStatus:ProgressStatusSlice,
   },
 });

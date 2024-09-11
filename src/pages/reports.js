@@ -123,7 +123,7 @@ const Reports = () => {
 
     // Add rows
     allComplaintList.forEach((item) => {
-     
+     let obj={};
 
       obj.complNumb = item.complNumb;
       (obj.feedbackDate = item.feedbackDate),

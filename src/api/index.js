@@ -19,7 +19,8 @@ export const API_URL = {
   ASSIGN_TO_SPOC: '/crm/workflow/admintasklistlevelone',
   REPORTS: '/crm/workflow/generateReport',
   DASHBOARD: '/crm/workflow/dashboard',
-  USER_SATISFACTION: '/crm/workflow/updatereqstatus'
+  USER_SATISFACTION: '/crm/workflow/updatereqstatus',
+  GET_PROGRESS_STATUS: '/crm/workflow/getreqstatusdetails'
 
 };
 

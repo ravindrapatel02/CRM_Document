@@ -22,6 +22,9 @@ import { useAuthUser } from "src/hooks/AuthHooks";
 import jwtAxios from "src/services/auth";
 import PageNotFound from "../404";
 import { getDepartment } from "@redux/slice/DepartmentSlice";
+import { getProgressStatus } from "@redux/slice/ProgressStatusSlice";
+import ApprovalTimeline from "@components/AppUI/ApprovalTimeline";
+
 
 const AdminViewRegisterComplaint = () => {
   const dispatch = useDispatch();
@@ -66,11 +69,14 @@ const AdminViewRegisterComplaint = () => {
 
   useEffect(() => {
     if (complaintId) {
+      dispatch(getProgressStatus({id:window?.atob(complaintId)}));
+      
       if (
         typeof window !== "undefined" &&
         isValidBase64(complaintId) &&
-        user &&
-        user?.role[0] !== "CRM_USER"
+        user
+        //  &&
+        // user?.role[0] !== "CRM_USER"
       ) {
         jwtAxios
           .post(API_URL.GET_COMPLAINT_DETAILS, {
@@ -78,7 +84,9 @@ const AdminViewRegisterComplaint = () => {
           })
           .then((response) => {
             const res = response.data;
-            if (res.status === "true" && user.role[0] !== "CRM_USER") {
+            if (res.status === "true" 
+              // && user.role[0] !== "CRM_USER"
+            ) {
               const userAppList = res.data.logHistoryCustIdVal;
               const userLevel = userAppList[userAppList.length - 1].userLevel;
 
@@ -111,9 +119,10 @@ const AdminViewRegisterComplaint = () => {
           .catch((error) => {
             AppNotification(false, error.message);
           });
-      } else {
-        setIsNotFound(true);
-      }
+      } 
+      // else {
+      //   setIsNotFound(true);
+      // }
     }
   }, [complaintId]);
 
@@ -163,6 +172,7 @@ const AdminViewRegisterComplaint = () => {
           />
           <Typography>Complaint Number: {window?.atob(complaintId)}</Typography>
         </Box>
+        <ApprovalTimeline/>
         {!loading ? (
           <Formik
             initialValues={initialValues}
@@ -191,6 +201,7 @@ const AdminViewRegisterComplaint = () => {
                   userId: user.id,
                   flag: "submit",
                   complPriority: values.complPriority,
+                  logRemarks:values.remarks,
                 };
                 handleSubmit(obj, "level-1");
               } else {

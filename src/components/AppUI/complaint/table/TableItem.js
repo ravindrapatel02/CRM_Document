@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import { useAuthUser } from "src/hooks/AuthHooks";
 import { getComplaintViewRequest } from "@redux/slice/ComplaintViewRequestSlice";
 import { API_URL } from "src/api";
+import Link from "next/link";
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   "&:hover": {
     backgroundColor: theme.palette.action.hover,
@@ -60,10 +61,10 @@ const TableItem = ({ data, index }) => {
       <StyledTableRow key={`row-${data.complNumb}`}>
         <StyledTableCell>{index + 1}</StyledTableCell>
         <StyledTableCell>
-          {/*<Link href={`/admin-view-register-complaint/${window.btoa(data.complNumb)}`}>
+      <Link href={`/admin-view-register-complaint/${window.btoa(data.complNumb)}`}>
         {data.complNumb}
-        </Link>*/}
-          {data.complNumb}
+        </Link> 
+           
         </StyledTableCell>
         <StyledTableCell>{data.feedbackDate}</StyledTableCell>
         <StyledTableCell>
