@@ -25,7 +25,6 @@ import { getDepartment } from "@redux/slice/DepartmentSlice";
 import { getProgressStatus } from "@redux/slice/ProgressStatusSlice";
 import ApprovalTimeline from "@components/AppUI/ApprovalTimeline";
 
-
 const AdminViewRegisterComplaint = () => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -69,7 +68,6 @@ const AdminViewRegisterComplaint = () => {
 
   useEffect(() => {
     if (complaintId) {
-      dispatch(getProgressStatus({id:window?.atob(complaintId)}));
       
       if (
         typeof window !== "undefined" &&
@@ -78,6 +76,7 @@ const AdminViewRegisterComplaint = () => {
         //  &&
         // user?.role[0] !== "CRM_USER"
       ) {
+        dispatch(getProgressStatus({id:window?.atob(complaintId)}));
         jwtAxios
           .post(API_URL.GET_COMPLAINT_DETAILS, {
             complNumb: window?.atob(complaintId),
