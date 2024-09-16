@@ -242,6 +242,13 @@ export const BottomHeader = () => {
                             >
                               Area Of Concern
                             </Link>
+                            <Link
+                            className="dropdown-item"
+                            href="/manage-master/user-management"
+                            title=" User Management"
+                          >
+                           User Management
+                          </Link>
                           </div>
                         </li>
                       )}

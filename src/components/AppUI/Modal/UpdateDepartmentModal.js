@@ -24,9 +24,9 @@ const UpdateDepartmentModal = (props) => {
   const [initialValues, setInitialValues] = useState({
     deptName: "",
     deptCode: "",
-    spocName: "",
-    spocPernerNo: "",
-    spocEmail: "",
+    // spocName: "",
+    // spocPernerNo: "",
+    // spocEmail: "",
     id: "",
     flag: "update",
   });
@@ -37,9 +37,9 @@ const UpdateDepartmentModal = (props) => {
         deptName: updateDetails.deptName,
         deptCode: updateDetails.deptCode,
         id: updateDetails.id,
-        spocName: updateDetails.spocName,
-        spocPernerNo: updateDetails.spocPernerNo,
-        spocEmail: updateDetails.spocEmail,
+        // spocName: updateDetails.spocName,
+        // spocPernerNo: updateDetails.spocPernerNo,
+        // spocEmail: updateDetails.spocEmail,
         flag: "update",
       });
 
@@ -134,7 +134,7 @@ const UpdateDepartmentModal = (props) => {
                     />
                   </Grid>
 
-                  <Grid item xs={12} md={6}>
+                  {/*<Grid item xs={12} md={6}>
                   <TextField
                     name="spocName"
                     fullWidth
@@ -172,7 +172,7 @@ const UpdateDepartmentModal = (props) => {
                 }}
                 placeholder="Enter spoc email"
               />
-            </Grid>
+            </Grid>*/}
                   <Grid
                     item
                     xs={12}

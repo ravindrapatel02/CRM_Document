@@ -9,6 +9,8 @@ import SPOCListSlice from '@redux/slice/SPOCListSlice';
 import ReportsSlice from '@redux/slice/ReportsSlice';
 import DashboardSlice from '@redux/slice/DashboardSlice';
 import ProgressStatusSlice from '@redux/slice/ProgressStatusSlice';
+import UserSlice from '@redux/slice/UserSlice';
+import LocationSlice from '@redux/slice/LocationSlice';
 
 export const store = configureStore({
   reducer: { 
@@ -20,5 +22,7 @@ export const store = configureStore({
     reports: ReportsSlice,
     dashboard: DashboardSlice,
     progessStatus:ProgressStatusSlice,
+    user: UserSlice,
+    location :LocationSlice,
   },
 });

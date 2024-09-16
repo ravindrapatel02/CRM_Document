@@ -72,9 +72,9 @@ router.push('/manage-master/department');
           setTouched({
             deptName: true,
             deptCode: true,
-            spocName:true,
-    spocPernerNo:true,
-    spocEmail:true,
+    //         spocName:true,
+    // spocPernerNo:true,
+    // spocEmail:true,
           });
           setSubmitting(false);
         }}
@@ -124,7 +124,7 @@ router.push('/manage-master/department');
                 />
               </Grid>
 
-              <Grid item xs={12} md={6}>
+              {/*<Grid item xs={12} md={6}>
                 <TextField
                   name="spocName"
                   value={values.spocName}
@@ -183,7 +183,7 @@ router.push('/manage-master/department');
                     shrink: true,
                   }}
                 />
-              </Grid>
+              </Grid>*/}
 
               <Grid item md={12} textAlign={"center"} mt={3}>
                 <Button

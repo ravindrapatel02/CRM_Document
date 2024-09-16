@@ -19,12 +19,12 @@ export const createConsernValidation = yup.object({
 export const departmentValidation = yup.object({
   deptName: yup.string().required("Please enter department name."),
   deptCode: yup.string().required("Please enter department short name."),
-  spocName: yup.string().required("Please enter SPOC name."),
-  spocPernerNo: yup.string().required("Please enter spoc perner no."),
-  spocEmail: yup
-    .string()
-    .required("Please enter spoc email")
-    .email("Please enter valid email"),
+  // spocName: yup.string().required("Please enter SPOC name."),
+  // spocPernerNo: yup.string().required("Please enter spoc perner no."),
+  // spocEmail: yup
+  //   .string()
+  //   .required("Please enter spoc email")
+  //   .email("Please enter valid email"),
 });
 
 export const areaOfConcernValidation = yup.object({
@@ -45,4 +45,29 @@ export const otpValidation = yup.object({
         // Check if the value is either a valid email or a valid phone number
         yup.string().email().isValidSync(value) || phoneRegExp.test(value)
     ),
+});
+
+export const userValidation = yup.object({
+  userPernerNo: yup.string().required("Please enter userID."),
+  userName: yup.string().required("Please enter name."),
+  location: yup.string().required("Please enter SPOC name."),
+  deptName: yup.string().required("Please select depertment"),
+  roleName: yup.string().required("Please select role."),
+  userEmailId: yup
+    .string()
+    .required("Please enter spoc email")
+    .email("Please enter valid email"),
+  userMobileNo: yup
+    .string()
+    .required("Please enter phone")
+    .test("is-valid-phone", "Invalid phone number", (value) =>
+      // Check if the value is either a valid email or a valid phone number
+      phoneRegExp.test(value)
+    ),
+    "managerPernNo":yup.string().required("Please enter maanager perner no."),
+    "managerName": yup.string().required("Please manager name."),
+    "managerEmailId":yup
+    .string()
+    .required("Please enter spoc email")
+    .email("Please enter valid email"),
 });
