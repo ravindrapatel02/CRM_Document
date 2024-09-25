@@ -26,7 +26,7 @@ const StyledTableCell = styled(TableCell)(() => ({
  
 
 const TableItem = ({ data , index}) => { 
-   console.log(data)
+
   return (
     <>
     <StyledTableRow key={`row-${data.seatNo}`}>
