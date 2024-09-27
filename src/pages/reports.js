@@ -115,7 +115,7 @@ const Reports = () => {
       { header: "Contact No", key: "contactNo", width: 20 },
       { header: "Department", key: "deptName", width: 20 },
       { header: "Complaint Type", key: "complType", width: 20 },
-      { header: "Feedback Type", key: "feedbackType", width: 20 },
+      { header: "Service Type", key: "feedbackType", width: 20 },
       { header: "Organization", key: "organization", width: 20 },
       { header: "Area fo Concern", key: "areaConcern", width: 20 },
       { header: "Status", key: "stateName", width: 20 },

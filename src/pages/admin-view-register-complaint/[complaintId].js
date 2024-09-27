@@ -295,7 +295,7 @@ const AdminViewRegisterComplaint = () => {
                       }}
                       label={
                         <span>
-                          Request Type
+                        Customer Type
                           <span style={{ color: "#d32f2f" }}>*</span>
                         </span>
                       }
@@ -385,7 +385,7 @@ const AdminViewRegisterComplaint = () => {
                       }}
                       label={
                         <span>
-                          Feedback Type{" "}
+                         Service Type
                           <span style={{ color: "#d32f2f" }}>*</span>
                         </span>
                       }

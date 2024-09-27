@@ -75,7 +75,7 @@ const TableHeading = () => {
         }}
         align="left"
       >
-        Feedback Type
+       Service Type
       </TableCell>
 
       <TableCell

@@ -4,7 +4,7 @@ import * as yup from "yup";
 export const createConsernValidation = yup.object({
   firstName: yup.string().required("Please enter first name"),
   // lastName: yup.string().required("Please enter last name"),
-  complType: yup.string().required("Please select request type"),
+  complType: yup.string().required("Please select customer type"),
   emailId: yup.string().required("Please enter email"),
   // deptName: yup.string().required("Please select the department"),
   contactNo: yup.string().required("Please enter contact number"),

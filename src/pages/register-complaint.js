@@ -27,8 +27,8 @@ import jwtAxios from "src/services/auth";
 
 const RegisterComplaint = () => {
   const dispatch = useDispatch();
-  const {user} = useAuthUser();
-  const [submit , setSubmit] = useState(false);
+  const { user } = useAuthUser();
+  const [submit, setSubmit] = useState(false);
   const router = useRouter();
   useEffect(() => {
     dispatch(getAreaOfConcern());
@@ -87,7 +87,7 @@ const RegisterComplaint = () => {
             res.message ?? "Complaint submitted successfully !"
           );
           setTimeout(() => {
-            router.push(user!==null ? "/complaint-view-status" :'/');
+            router.push(user !== null ? "/complaint-view-status" : '/');
           }, 3000);
         } else {
           setSubmit(false);
@@ -102,7 +102,7 @@ const RegisterComplaint = () => {
 
   return (
     <AppSectionContainer>
-    {submit && <AppLoader/>}
+      {submit && <AppLoader />}
       <Box
         sx={{
           textAlign: "center",
@@ -114,9 +114,9 @@ const RegisterComplaint = () => {
         />
       </Box>
       {deptData &&
-      deptData.length > 0 &&
-      areaConcernData &&
-      areaConcernData.length > 0 ? (
+        deptData.length > 0 &&
+        areaConcernData &&
+        areaConcernData.length > 0 ? (
         <Formik
           initialValues={initialValues}
           validationSchema={createConsernValidation}
@@ -157,7 +157,7 @@ const RegisterComplaint = () => {
                     }}
                     label={
                       <span>
-                        Last Name  
+                        Last Name
                       </span>
                     }
                     error={errors.lastName ? true : false}
@@ -248,7 +248,7 @@ const RegisterComplaint = () => {
                     }}
                     label={
                       <span>
-                        Request Type
+                        Customer Type
                         <span style={{ color: "#d32f2f" }}>*</span>
                       </span>
                     }
@@ -257,7 +257,7 @@ const RegisterComplaint = () => {
                     }}
                   >
                     <MenuItem disabled selected>
-                      Request Type
+                      Customer Type
                     </MenuItem>
                     <MenuItem value="Airlines">Airlines</MenuItem>
                     <MenuItem value="Agents">Agents</MenuItem>
@@ -341,7 +341,7 @@ const RegisterComplaint = () => {
                     }}
                     label={
                       <span>
-                        Feedback Type{" "}
+                        Service Type
                         <span style={{ color: "#d32f2f" }}>*</span>
                       </span>
                     }
@@ -350,7 +350,7 @@ const RegisterComplaint = () => {
                     }}
                   >
                     <MenuItem disabled selected>
-                      Feedback Type
+                      Service Type
                     </MenuItem>
                     <MenuItem value="Domestic Outbound">
                       Domestic Outbound
@@ -475,20 +475,8 @@ const RegisterComplaint = () => {
                         value="yes"
                         control={<Radio />}
                         label=<div>
-                          I <b>{values.firstName + values.lastName},</b> hereby
-                          voluntarily agree that may collect, use, process and
-                          store my <b>“Personal Information”</b> . I understand
-                          that the purpose of collection, usage, processing
-                          and/or storage of my Personal Information is to use it
-                          for compliance with the security procedures (such as
-                          regulated access to the office premises by issue of
-                          complaint) practiced by the Company by itself and/or
-                          through third party vendors/agencies for the overall
-                          security of its buildings, premises, installations and
-                          people. I further acknowledge and agree that my
-                          Personal Information may be shared by the Company with
-                          third party Vendors/agencies engaged by the Company in
-                          connection with the Purpose.
+                          I <b>{values.firstName + values.lastName}</b>, hereby voluntarily agree that you may collect, use, process and store my “Personal Information” . I understand that the purpose of collection, usage, processing and/or storage of my Personal Information is to use it for compliance with the security procedures (such as regulated access to the office premises by issue of complaint) practiced by the Company by itself and/or through third party vendors/agencies for the overall security of its buildings, premises, installations and people. I further acknowledge and agree that my Personal Information may be shared by the Company with third party Vendors/agencies engaged by the Company in connection with the Purpose"
+
                         </div>
                       />
                       {errors.selConsent && errors.selConsent.length > 3 && (
@@ -506,7 +494,7 @@ const RegisterComplaint = () => {
                       position: "relative",
                       minWidth: 100,
                     }}
-                      disabled={submit}
+                    disabled={submit}
                     color="primary"
                     variant="contained"
                     type="submit"
