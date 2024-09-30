@@ -57,7 +57,6 @@ const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
   }));
   function ColorlibStepIcon(props) {
     const { active, completed, error, className } = props;
-    console.log('color===>>' , active, completed, error, className)
     return (
       <ColorlibStepIconRoot ownerState={{ completed, active, error }} className={className}>
         {error === 'REJECTED' ? <ErrorOutlineOutlinedIcon /> : error === 'RETURNED' ? <MdOutlineBackHand style={{ fontSize: '22' }} /> : (active ? <HistoryOutlinedIcon /> : (active && completed) ? <TaskAltOutlinedIcon/> : (completed ? <TaskAltOutlinedIcon /> : <HourglassEmptyOutlinedIcon />))}

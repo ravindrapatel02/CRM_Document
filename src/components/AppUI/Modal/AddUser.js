@@ -14,16 +14,19 @@ import { useDispatch, useSelector } from "react-redux";
 import AppNotification from "@components/AppNotification";
 import { getLocation } from "@redux/slice/LocationSlice";
 import { getUserList } from "@redux/slice/UserSlice";
+import { getDepartment } from "@redux/slice/DepartmentSlice";
 
 const AddUser = (props) => {
   const { open, handleCloseModal } = props;
   const { locationData } = useSelector((state) => state.location);
+  const {deptData} = useSelector((state)=>state.department)
   const dispatch = useDispatch();
   const [submit, setSubmit] = useState(false); 
   useEffect(() => {
     dispatch(getLocation());
+    dispatch(getDepartment());
   }, []);
-
+ 
   const initialValues = {
     userPernerNo: "",
     userName: "",
@@ -150,7 +153,7 @@ const AddUser = (props) => {
                     </MenuItem>
                     {locationData &&
                       locationData.map((item) => (
-                        <MenuItem value={item.locationName}>
+                        <MenuItem value={item.locationName} key={item.id}>
                           {item.locationName}
                         </MenuItem>
                       ))}
@@ -159,6 +162,7 @@ const AddUser = (props) => {
 
                 <Grid item xs={12} md={6}>
                   <TextField
+                  select
                     name="deptName"
                     fullWidth
                     value={values.deptName}
@@ -168,7 +172,17 @@ const AddUser = (props) => {
                       setFieldValue("deptName", e.target.value);
                     }}
                     label="Enter department name"
-                  />
+                    >
+                    <MenuItem disabled value="">
+                    Department
+                  </MenuItem>
+                  {deptData &&
+                    deptData.map((item) => (
+                      <MenuItem value={item.id} key={item.id}>
+                        {item.deptName}
+                      </MenuItem>
+                    ))}
+                </TextField>
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <TextField

@@ -86,7 +86,6 @@ const AddAreaOfConcernModal = ({ open, handleCloseModal }) => {
             initialValues={initialValues}
             validationSchema={areaOfConcernValidation}
             onSubmit={(values) => {
-              // console.log(values);
               handleUpdate(values);
             }}
           >

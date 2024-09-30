@@ -7,6 +7,7 @@ import AppsPagination from "@components/AppsPagination";
 import UserTable from "@components/AppUI/Master/User/Table";
 import AddUser from "@components/AppUI/Modal/AddUser";
 import UpdateUser from "@components/AppUI/Modal/UpdateUser";
+import AppLoader from "@components/CustomLoader";
 import { Box, Button, Card, Grid, Hidden } from "@mui/material";
 import { getUserList } from "@redux/slice/UserSlice";
 import { useRouter } from "next/router";
@@ -17,7 +18,7 @@ const ROW_PER_PAGE = 10;
 
 const UserManagement = () => {
   const [dataCount, setDataCount] = useState(50);
-  const { userData } = useSelector((state) => state.user);
+  const { userData , loading } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [page, setPage] = useState(0);
   const [data, setData] = useState([]);
@@ -32,7 +33,6 @@ const UserManagement = () => {
   useEffect(() => {
     dispatch(getUserList());
   }, []);
-  console.log('userData-->>' , userData);
 
   useEffect(() => {
     let newAllApprovedList = [...userData];
@@ -82,6 +82,7 @@ const UserManagement = () => {
 
   return (
     <AppSectionContainer>
+      {loading && <AppLoader/>}
       <Box
         sx={{
           textAlign: "center",

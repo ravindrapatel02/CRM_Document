@@ -34,7 +34,6 @@ export const RouteMatch = (route) => {
   if (routeArray.length > 1) {
     const newArray = routeArray.slice(1, routeArray.length);
     return newArray;
-    // console.log("newArray==>>", newArray);
   }
 };
 
