@@ -68,8 +68,8 @@ const TableItem = ({ data, setUpdateDetails, handleUpdateModal, index }) => {
         <StyledTableCell>{data.roleName}</StyledTableCell>
         <StyledTableCell>{data.deptName}</StyledTableCell>
         <StyledTableCell>{data.location}</StyledTableCell>
-        <StyledTableCell>{data.managerPernNo}</StyledTableCell>
-        <StyledTableCell>{data.managerName}</StyledTableCell>
+        {/* <StyledTableCell>{data.managerPernNo}</StyledTableCell>
+        <StyledTableCell>{data.managerName}</StyledTableCell> */}
         <StyledTableCell>{data.userEmailId}</StyledTableCell>
         <StyledTableCell>
           <BorderColorIcon

@@ -38,7 +38,6 @@ const RegisterComplaint = () => {
   const { deptData } = useSelector((state) => state.department);
   const { areaConcernData } = useSelector((state) => state.areaConcern);
 
-
   const initialValues = {
     firstName: "",
     lastName: "",
@@ -167,74 +166,7 @@ const RegisterComplaint = () => {
                     }}
                   />
                 </Grid>
-                {/*<Grid item xs={12} md={6}>
-              <TextField
-                name="custType"
-                select
-                value={values.custType}
-                fullWidth
-                error={errors.custType}
-                helperText={errors.custType}
-                onChange={(e) => {
-                  setFieldValue("custType", e.target.value);
-                }}
-                label={
-                  <span>
-                     Customer Type
-                    <span style={{ color: "#d32f2f" }}>*</span>
-                  </span>
-                }
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              >
-                <MenuItem disabled selected>
-                  Customer Type
-                </MenuItem>
-                <MenuItem value="GMR">
-                  GMR
-                </MenuItem>
-                <MenuItem value="Non-GMR">Non-GMR</MenuItem>
-               
-              </TextField>
-            </Grid>
-                <Grid item xs={12} md={6}>
-                  <TextField
-                    name="deptName"
-                    select
-                    value={values.deptName}
-                    fullWidth
-                    error={errors.deptName ? true : false}
-                    helperText={errors.deptName}
-                    onChange={(e) => {
-                      setFieldValue("deptName", e.target.value);
-                    }}
-                    label={
-                      <span>
-                        Department
-                        <span style={{ color: "#d32f2f" }}>*</span>
-                      </span>
-                    }
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                  >
-                    <MenuItem disabled selected>
-                      Department
-                    </MenuItem>
-                    {deptData &&
-                      deptData.length > 0 &&
-                      deptData.map((item, index) => (
-                        <MenuItem
-                          value={item.deptCode}
-                          key={index + "_" + item.id}
-                        >
-                          {item.deptName}
-                        </MenuItem>
-                      ))}
-                  </TextField>
-                </Grid>
-                */}
+
                 <Grid item xs={12} md={6}>
                   <TextField
                     name="complType"

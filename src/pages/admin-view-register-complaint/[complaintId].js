@@ -42,11 +42,13 @@ const AdminViewRegisterComplaint = () => {
     }
   }, []);
   const { complaintId } = router.query;
-  const { spocData } = useSelector((state) => state.spocList);
+  // const { spocData } = useSelector((state) => state.spocList);
   const [loading, setLoading] = useState(true);
   const [isNotFound, setIsNotFound] = useState(false);
   const [userAttachements, setUserAttachements] = useState([]);
   const [upldFileListSpoc, setUpldFileListSpoc] = useState([]);
+
+const [userList , setUserList] = useState([]);
 
   const [initialValues, setInitialValues] = useState({
     firstName: "",
@@ -64,11 +66,14 @@ const AdminViewRegisterComplaint = () => {
     file: "",
     statusName: "",
     newFile: null,
+    spocRemarks: '',
+    hodRemarks: '',
+    adminRemarks: '',
   });
 
   useEffect(() => {
     if (complaintId) {
-      
+
       if (
         typeof window !== "undefined" &&
         isValidBase64(complaintId) &&
@@ -76,14 +81,14 @@ const AdminViewRegisterComplaint = () => {
         //  &&
         // user?.role[0] !== "CRM_USER"
       ) {
-        dispatch(getProgressStatus({id:window?.atob(complaintId)}));
+        dispatch(getProgressStatus({ id: window?.atob(complaintId) }));
         jwtAxios
           .post(API_URL.GET_COMPLAINT_DETAILS, {
             complNumb: window?.atob(complaintId),
           })
           .then((response) => {
             const res = response.data;
-            if (res.status === "true" 
+            if (res.status === "true"
               // && user.role[0] !== "CRM_USER"
             ) {
               const userAppList = res.data.logHistoryCustIdVal;
@@ -109,6 +114,9 @@ const AdminViewRegisterComplaint = () => {
                 detailsDesc: res.data.crmCustComplReqdtls[0].detailsDesc,
                 statusName: userLevel,
                 newFile: null,
+                spocRemarks: res.data?.remarksList?.spoc ?? '',
+                hodRemarks: res.data?.remarksList?.HOD ?? "",
+                adminRemarks: res.data?.remarksList?.admin ?? "",
               });
               setLoading(false);
             } else {
@@ -118,7 +126,7 @@ const AdminViewRegisterComplaint = () => {
           .catch((error) => {
             AppNotification(false, error.message);
           });
-      } 
+      }
       // else {
       //   setIsNotFound(true);
       // }
@@ -156,6 +164,11 @@ const AdminViewRegisterComplaint = () => {
     return <PageNotFound />;
   }
 
+  const getUserList =(dept)=>{
+    const filterUser = deptData.filter((item)=>item.deptCode ===dept)[0]?.list ?? [];
+    setUserList(filterUser);
+  }
+
   return (
     <React.Fragment>
       {submit && <AppLoader />}
@@ -171,7 +184,7 @@ const AdminViewRegisterComplaint = () => {
           />
           <Typography>Complaint Number: {window?.atob(complaintId)}</Typography>
         </Box>
-        <ApprovalTimeline/>
+        <ApprovalTimeline />
         {!loading ? (
           <Formik
             initialValues={initialValues}
@@ -200,7 +213,7 @@ const AdminViewRegisterComplaint = () => {
                   userId: user.id,
                   flag: "submit",
                   complPriority: values.complPriority,
-                  logRemarks:values.remarks,
+                  logRemarks: values.remarks,
                 };
                 handleSubmit(obj, "level-1");
               } else {
@@ -295,7 +308,7 @@ const AdminViewRegisterComplaint = () => {
                       }}
                       label={
                         <span>
-                        Customer Type
+                          Customer Type
                           <span style={{ color: "#d32f2f" }}>*</span>
                         </span>
                       }
@@ -385,7 +398,7 @@ const AdminViewRegisterComplaint = () => {
                       }}
                       label={
                         <span>
-                         Service Type
+                          Service Type
                           <span style={{ color: "#d32f2f" }}>*</span>
                         </span>
                       }
@@ -481,47 +494,112 @@ const AdminViewRegisterComplaint = () => {
                       </Box>
                     </Grid>
                   )}
+                  {upldFileListSpoc && upldFileListSpoc.length > 0 && (
+                    <Grid item xs={12} md={6}>
+                      <Box>
+                        <Typography variant="body1">
+                          SPOC Attachement
+                        </Typography>
+                        <a
+                          href={
+                            BASE_URL +
+                            `/crm/workflow/displayfile?fileURL=${upldFileListSpoc[0].fileURL}`
+                          }
+                          target="_blank"
+                        >
+                          Attachement Name - ( {upldFileListSpoc[0].fileName} )
+                        </a>
+                      </Box>
+                    </Grid>
+                  )}
+                  {values.spocRemarks && values.spocRemarks.length > 0 &&
+                    <Grid item xs={12} md={6}>
+                      <TextField
+                        name="remarks"
+                        multiline
+                        disabled
+                        value={values.spocRemarks}
+                        fullWidth
+                        label={<span>SPOC Remarks</span>}
+                        InputLabelProps={{
+                          shrink: true,
+                        }}
+                      />
+                    </Grid>
+                  }
+                  {values.adminRemarks && values.adminRemarks.length > 0 &&
+                    <Grid item xs={12} md={6}>
+                      <TextField
+                        name="remarks"
+                        multiline
+                        disabled
+                        value={values.adminRemarks}
+                        fullWidth
+                        label={<span>Admin Remarks</span>}
+                        InputLabelProps={{
+                          shrink: true,
+                        }}
+                      />
+                    </Grid>
+                  }
+                  {values.hodRemarks && values.hodRemarks.length > 0 &&
+                    <Grid item xs={12} md={6}>
+                      <TextField
+                        name="remarks"
+                        multiline
+                        disabled
+                        value={values.hodRemarks}
+                        fullWidth
+                        label={<span>HOD Remarks</span>}
+                        InputLabelProps={{
+                          shrink: true,
+                        }}
+                      />
+                    </Grid>
+                  }
 
-                 
                   {user?.role[0] === "CRM_ADMIN" &&
                     values.statusName === "level-1" && (
                       <React.Fragment>
-                      <Grid item xs={12} md={6}>
-                  <TextField
-                    name="deptName"
-                    select
-                    value={values.deptName}
-                    fullWidth
-                    error={errors.deptName ? true : false}
-                    helperText={errors.deptName}
-                    onChange={(e) => {
-                      setFieldValue("deptName", e.target.value);
-                    }}
-                    label={
-                      <span>
-                        Department
-                        <span style={{ color: "#d32f2f" }}>*</span>
-                      </span>
-                    }
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                  >
-                    <MenuItem disabled selected>
-                      Department
-                    </MenuItem>
-                    {deptData &&
-                      deptData.length > 0 &&
-                      deptData.map((item, index) => (
-                        <MenuItem
-                          value={item.deptCode}
-                          key={index + "_" + item.id}
-                        >
-                          {item.deptName}
-                        </MenuItem>
-                      ))}
-                  </TextField>
-                </Grid>
+                        <Grid item xs={12} md={6}>
+                          <TextField
+                            name="deptName"
+                            select
+                            value={values.deptName}
+                            fullWidth
+                            error={errors.deptName ? true : false}
+                            helperText={errors.deptName}
+                            onChange={(e) => {
+                              const value = e.target.value;
+                              setUserList([]);
+                              setFieldValue("deptName",value);
+                              getUserList(value);
+                            }}
+                            label={
+                              <span>
+                                Department
+                                <span style={{ color: "#d32f2f" }}>*</span>
+                              </span>
+                            }
+                            InputLabelProps={{
+                              shrink: true,
+                            }}
+                          >
+                            <MenuItem disabled selected>
+                              Department
+                            </MenuItem>
+                            {deptData &&
+                              deptData.length > 0 &&
+                              deptData.map((item, index) => (
+                                <MenuItem
+                                  value={item.deptCode}
+                                  key={index + "_" + item.id}
+                                >
+                                  {item.deptName}
+                                </MenuItem>
+                              ))}
+                          </TextField>
+                        </Grid>
 
                         <Grid item xs={12} md={6}>
                           <TextField
@@ -547,9 +625,9 @@ const AdminViewRegisterComplaint = () => {
                             <MenuItem disabled selected>
                               Assign to user
                             </MenuItem>
-                            {spocData &&
-                              spocData.length > 0 &&
-                              spocData.map((item, index) => (
+                            {userList &&
+                              userList.length > 0 &&
+                              userList.map((item, index) => (
                                 <MenuItem
                                   value={item.userId}
                                   key={index + "_" + item.userId}
@@ -584,16 +662,15 @@ const AdminViewRegisterComplaint = () => {
                             <MenuItem disabled selected>
                               complaint Priority
                             </MenuItem>
-
-                            <MenuItem value={"High-24Hrs"}>
+                            <MenuItem value={"Low"}> Low</MenuItem>
+                            <MenuItem value={"Moderate"}>
                               {" "}
-                              High-24Hrs{" "}
+                              Moderate
                             </MenuItem>
-                            <MenuItem value={"Moderate-48Hrs"}>
+                            <MenuItem value={"High"}>
                               {" "}
-                              Moderate-48Hrs{" "}
+                              High
                             </MenuItem>
-                            <MenuItem value={"Low-48Hrs"}> Low-48Hrs </MenuItem>
                           </TextField>
                         </Grid>
 
@@ -657,24 +734,7 @@ const AdminViewRegisterComplaint = () => {
                             />
                           </Grid>
                         )}
-                        {upldFileListSpoc && upldFileListSpoc.length > 0 && (
-                          <Grid item xs={12} md={6}>
-                            <Box>
-                              <Typography variant="body1">
-                                SPOC Attachement
-                              </Typography>
-                              <a
-                                href={
-                                  BASE_URL +
-                                  `/crm/workflow/displayfile?fileURL=${upldFileListSpoc[0].fileURL}`
-                                }
-                                target="_blank"
-                              >
-                                Attachement Name - ( {upldFileListSpoc[0].fileName} )
-                              </a>
-                            </Box>
-                          </Grid>
-                        )}
+
                         <Grid item md={12} textAlign={"center"} mt={3}>
                           <div>
                             <Button
@@ -742,9 +802,6 @@ const AdminViewRegisterComplaint = () => {
                         </Grid>
                       </React.Fragment>
                     )}
-
-                    
-
                   {user?.role[0] === "CRM_HOD" && (
                     <React.Fragment>
                       <Grid item xs={12} md={6}>
@@ -802,7 +859,7 @@ const AdminViewRegisterComplaint = () => {
                           </Button>
                         </div>
                       </Grid>
-                      
+
                     </React.Fragment>
                   )}
                 </Grid>

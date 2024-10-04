@@ -18,15 +18,15 @@ const ROW_PER_PAGE = 10;
 
 const UserManagement = () => {
   const [dataCount, setDataCount] = useState(50);
-  const { userData , loading } = useSelector((state) => state.user);
+  const { userData, loading } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [page, setPage] = useState(0);
   const [data, setData] = useState([]);
   const { user } = useAuthUser();
   const router = useRouter();
   const [open, setopen] = useState({
-    add:false,
-    update:false,
+    add: false,
+    update: false,
   });
   const [updateDetails, setUpdateDetails] = useState(null);
 
@@ -78,11 +78,11 @@ const UserManagement = () => {
     });
     setUpdateDetails(null);
   };
-  
+
 
   return (
     <AppSectionContainer>
-      {loading && <AppLoader/>}
+      {loading && <AppLoader />}
       <Box
         sx={{
           textAlign: "center",
@@ -174,7 +174,7 @@ const UserManagement = () => {
       </Card>
       {open.add && (
         <AddUser
-          open={open.add} 
+          open={open.add}
           handleCloseModal={handleCloseModal}
         />
       )}

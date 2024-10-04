@@ -38,17 +38,17 @@ const TableHeading = () => {
         {" "}
         Location
       </TableCell>
-      <TableCell sx={{ background: "#f5f7f6 !important" }} align="left">
+      {/* <TableCell sx={{ background: "#f5f7f6 !important" }} align="left">
         {" "}
         Manager perner no.
       </TableCell>
       <TableCell sx={{ background: "#f5f7f6 !important" }} align="left">
         {" "}
         Manager name
-      </TableCell>
+      </TableCell> */}
       <TableCell sx={{ background: "#f5f7f6 !important" }} align="left">
         {" "}
-       manager email-ID
+       User email-ID
       </TableCell>
       <TableCell
         sx={{

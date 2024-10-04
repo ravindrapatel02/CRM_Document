@@ -64,10 +64,10 @@ export const userValidation = yup.object({
       // Check if the value is either a valid email or a valid phone number
       phoneRegExp.test(value)
     ),
-    "managerPernNo":yup.string().required("Please enter maanager perner no."),
-    "managerName": yup.string().required("Please manager name."),
-    "managerEmailId":yup
-    .string()
-    .required("Please enter spoc email")
-    .email("Please enter valid email"),
+    // "managerPernNo":yup.string().required("Please enter maanager perner no."),
+    // "managerName": yup.string().required("Please manager name."),
+    // "managerEmailId":yup
+    // .string()
+    // .required("Please enter spoc email")
+    // .email("Please enter valid email"),
 });

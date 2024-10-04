@@ -28,7 +28,7 @@ const AddUser = (props) => {
   }, []);
  
   const initialValues = {
-    userPernerNo: "",
+    // userPernerNo: "",
     userName: "",
     location: "",
     userPernerNo: "",
@@ -100,7 +100,7 @@ const AddUser = (props) => {
           {({ values, errors, setFieldValue }) => (
             <Form initialtouched={{ zip: true }}>
               <Grid container spacing={2}>
-                <Grid item xs={12} md={6}>
+                {/* <Grid item xs={12} md={6}>
                   <TextField
                     name="userPernerNo"
                     fullWidth
@@ -112,7 +112,7 @@ const AddUser = (props) => {
                       setFieldValue("userPernerNo", e.target.value);
                     }}
                   />
-                </Grid>
+                </Grid> */}
                 <Grid item xs={12} md={6}>
                   <TextField
                     name="userName"
@@ -178,12 +178,13 @@ const AddUser = (props) => {
                   </MenuItem>
                   {deptData &&
                     deptData.map((item) => (
-                      <MenuItem value={item.id} key={item.id}>
+                      <MenuItem value={item.deptId} key={item.deptId}>
                         {item.deptName}
                       </MenuItem>
                     ))}
                 </TextField>
                 </Grid>
+
                 <Grid item xs={12} md={6}>
                   <TextField
                     name="userMobileNo"
@@ -193,6 +194,7 @@ const AddUser = (props) => {
                     helperText={errors.userMobileNo && errors.userMobileNo}
                     onChange={(e) => {
                       setFieldValue("userMobileNo", e.target.value);
+                      setFieldValue("userPernerNo", e.target.value);
                     }}
                     label="Enter mobile number"
                   />
@@ -240,7 +242,7 @@ const AddUser = (props) => {
                     <MenuItem value={"CRM_HOD"}>CRM HOD</MenuItem>
                   </TextField>
                 </Grid>
-                <Grid item xs={12} md={6}>
+                {/* <Grid item xs={12} md={6}>
                 <TextField
                   name="managerPernNo"
                   fullWidth
@@ -278,7 +280,7 @@ const AddUser = (props) => {
               }}
               label="Enter manager email id"
             />
-          </Grid>
+          </Grid> */}
                  
                 
                 

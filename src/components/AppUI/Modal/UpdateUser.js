@@ -15,6 +15,7 @@ import { useDispatch , useSelector } from "react-redux";
 import AppNotification from "@components/AppNotification";
 import { getLocation } from "@redux/slice/LocationSlice";
 import { getUserList } from "@redux/slice/UserSlice";
+import { getDepartment } from "@redux/slice/DepartmentSlice";
 
 const UpdateUser = (props) => {
   const { open, updateDetails, handleCloseModal } = props;
@@ -22,6 +23,7 @@ const UpdateUser = (props) => {
   const [isSubmit , setIsSubmit] = useState(false);
   const dispatch = useDispatch();
   const { locationData } = useSelector((state) => state.location);
+  const {deptData} = useSelector((state)=>state.department)
   const [initialValues, setInitialValues] = useState({
     userPernerNo: "",
     userName: "",
@@ -38,8 +40,8 @@ const UpdateUser = (props) => {
   });
   useEffect(() => {
     dispatch(getLocation());
-  }, []);
-
+    dispatch(getDepartment());
+  }, []); 
   useEffect(() => {
     if (updateDetails) {
       setInitialValues({
@@ -120,7 +122,7 @@ const UpdateUser = (props) => {
           {({ values, errors, setFieldValue }) => (
             <Form initialtouched={{ zip: true }}>
               <Grid container spacing={2}>
-                <Grid item xs={12} md={6}>
+                {/* <Grid item xs={12} md={6}>
                   <TextField
                     name="userPernerNo"
                     fullWidth
@@ -132,7 +134,7 @@ const UpdateUser = (props) => {
                       setFieldValue("userPernerNo", e.target.value);
                     }}
                   />
-                </Grid>
+                </Grid> */}
                 <Grid item xs={12} md={6}>
                   <TextField
                     name="userName"
@@ -179,9 +181,10 @@ const UpdateUser = (props) => {
                       ))}
                   </TextField>
                 </Grid>
-
+ 
                 <Grid item xs={12} md={6}>
                   <TextField
+                  select
                     name="deptName"
                     fullWidth
                     value={values.deptName}
@@ -191,7 +194,17 @@ const UpdateUser = (props) => {
                       setFieldValue("deptName", e.target.value);
                     }}
                     label="Enter department name"
-                  />
+                    >
+                    <MenuItem disabled value="">
+                    Department
+                  </MenuItem> 
+                  {deptData &&
+                    deptData.map((item) => (
+                      <MenuItem value={item.deptId} key={item.deptId}>
+                        {item.deptName}
+                      </MenuItem>
+                    ))}
+                </TextField>
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <TextField
@@ -246,7 +259,7 @@ const UpdateUser = (props) => {
                     <MenuItem value={"CRM_HOD"}>CRM HOD</MenuItem>
                   </TextField>
                 </Grid>
-                <Grid item xs={12} md={6}>
+                {/* <Grid item xs={12} md={6}>
                 <TextField
                   name="managerPernNo"
                   fullWidth
@@ -284,7 +297,7 @@ const UpdateUser = (props) => {
               }}
               label="Enter manager email id"
             />
-          </Grid>
+          </Grid> */}
                 <Grid
                   item
                   xs={12}
