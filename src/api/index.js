@@ -12,10 +12,8 @@ export const API_URL = {
   SPOC_LIST: '/crm/master/getmasterdropdownlist',
   GET_COMPLAINT_DETAILS: '/crm/workflow/getdetailsbycomplnumb',
   GET_USER_LIST: '/crm/master/getmasterdropdownlist',
-
   ASSIGN_TASK: '/crm/workflow/updateuserloghistory', // json
   UPDATE_TASK_STATUS: '/crm/workflow/crmsubmitreqspoc', // form data
-
   ASSIGN_TO_SPOC: '/crm/workflow/admintasklistlevelone',
   REPORTS: '/crm/workflow/generateReport',
   DASHBOARD: '/crm/workflow/dashboard',
@@ -26,4 +24,4 @@ export const API_URL = {
   GET_LOCATION: '/crm/master/locationdet',
 
 };
-
+ 

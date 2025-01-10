@@ -29,6 +29,14 @@ const TableHeading = () => {
     >
      Complaint Date
     </TableCell>
+    <TableCell
+      sx={{
+        background: "#f5f7f6 !important",
+      }}
+      align="left"
+    >
+     Register Date & Time
+    </TableCell>
       <TableCell
         sx={{
           background: "#f5f7f6 !important",

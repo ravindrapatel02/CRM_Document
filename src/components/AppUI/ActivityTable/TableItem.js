@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';    
 import Link from 'next/link';
 import { dateTimeFromate } from '@shared/constants/AppConst';
+import { DateTimeFormate, OnlyDateFormate } from 'src/utils';
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   '&:hover': {
     backgroundColor: theme.palette.action.hover,
@@ -37,7 +38,10 @@ const TableItem = ({ data , index}) => {
     </Link> 
     </StyledTableCell>
     <StyledTableCell>
-    {dateTimeFromate(data.feedbackDate)}
+    { OnlyDateFormate(data.feedbackDate)}
+  </StyledTableCell>
+  <StyledTableCell>
+    {data.createdOn ?DateTimeFormate(data.createdOn) :''}
   </StyledTableCell>
     <StyledTableCell>
       {data.firstName + " " + data.lastName}

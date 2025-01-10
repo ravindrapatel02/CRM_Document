@@ -195,6 +195,7 @@ const RegisterComplaint = () => {
                     <MenuItem value="Agents">Agents</MenuItem>
                     <MenuItem value="CHA">CHA</MenuItem>
                     <MenuItem value="Direct Customer">Direct Customer</MenuItem>
+                    <MenuItem value="Freight Forwarder">Freight Forwarder</MenuItem>
                   </TextField>
                 </Grid>
                 <Grid item xs={12} md={6}>

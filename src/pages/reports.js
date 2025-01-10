@@ -77,7 +77,8 @@ const Reports = () => {
           // feedbackDate:,
           status: item.status,
           userLevel: item.status,
-          stateName: item.status,
+          statusName: item.statusName,
+          
         });
       });
       setAllComplaintList(complaintArray);
@@ -135,7 +136,7 @@ const Reports = () => {
       obj.feedbackType = item.feedbackType;
       obj.organization = item.organization;
       obj.areaConcern = item.areaConcern;
-      obj.stateName = item.stateName;
+      obj.stateName = item.statusName;
       worksheet.addRow(obj);
     });
 

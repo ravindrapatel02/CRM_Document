@@ -61,7 +61,7 @@ const ComplaintViewStatus = () => {
           feedbackType: item?.crmCustComplReqdtls[0]?.feedbackType,
           organization: item?.crmCustComplReqdtls[0]?.organization,
           areaConcern: item?.crmCustComplReqdtls[0]?.areaConcern,
-          feedbackDate: dateTimeFromate(item?.crmCustComplReqdtls[0]?.feedbackDate),
+          feedbackDate: (item?.crmCustComplReqdtls[0]?.feedbackDate),
           status: item?.crmCustComplReqdtls[0]?.status,
           userLevel: item?.crmCustComplReqdtls[0]?.userLevel,
           stateName:statusArray&& statusArray.length>0 ? statusArray[length].stateName:"",

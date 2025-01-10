@@ -11,6 +11,7 @@ import { useAuthUser } from "src/hooks/AuthHooks";
 import { getComplaintViewRequest } from "@redux/slice/ComplaintViewRequestSlice";
 import { API_URL } from "src/api";
 import Link from "next/link";
+import { DateTimeFormate, OnlyDateFormate } from "src/utils";
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   "&:hover": {
     backgroundColor: theme.palette.action.hover,
@@ -66,7 +67,11 @@ const TableItem = ({ data, index }) => {
         </Link> 
            
         </StyledTableCell>
-        <StyledTableCell>{data.feedbackDate}</StyledTableCell>
+        <StyledTableCell>{
+        OnlyDateFormate(data.feedbackDate)
+        }</StyledTableCell>
+        <StyledTableCell>{DateTimeFormate(data.createdOn)}</StyledTableCell>
+        
         <StyledTableCell>
           {data.firstName + " " + data.lastName}
         </StyledTableCell>
@@ -78,7 +83,7 @@ const TableItem = ({ data, index }) => {
         <StyledTableCell>{data.organization}</StyledTableCell>
 
         <StyledTableCell>{data.areaConcern}</StyledTableCell>
-        <StyledTableCell>{data.stateName}</StyledTableCell>
+        <StyledTableCell>{data.statusName}</StyledTableCell>
 
         <StyledTableCell>
           {data.status === "Accepted" && (

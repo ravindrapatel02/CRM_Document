@@ -31,6 +31,7 @@ const AdminViewRegisterComplaint = () => {
   const { user } = useAuthUser();
   const [submit, setSubmit] = useState(false);
   const { deptData } = useSelector((state) => state.department);
+  
   useEffect(() => {
     if (user) {
       const obj = {
