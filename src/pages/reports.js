@@ -110,7 +110,7 @@ const Reports = () => {
     // Add header row
     worksheet.columns = [
       { header: "Complaint No", key: "complNumb", width: 10 },
-      { header: "Complaint Date", key: "feedbackDate", width: 20 },
+      { header: "Date of Resolution", key: "feedbackDate", width: 20 },
       { header: "Name", key: "name", width: 20 },
       { header: "Email", key: "emailId", width: 20 },
       { header: "Contact No", key: "contactNo", width: 20 },

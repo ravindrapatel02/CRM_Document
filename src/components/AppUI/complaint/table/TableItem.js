@@ -12,6 +12,7 @@ import { getComplaintViewRequest } from "@redux/slice/ComplaintViewRequestSlice"
 import { API_URL } from "src/api";
 import Link from "next/link";
 import { DateTimeFormate, OnlyDateFormate } from "src/utils";
+import { firstUpperCase } from "@shared/constants/AppConst";
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   "&:hover": {
     backgroundColor: theme.palette.action.hover,
@@ -31,9 +32,10 @@ const StyledTableCell = styled(TableCell)(() => ({
   },
 }));
 
-const TableItem = ({ data, index }) => {
+const TableItem = ({ data, index , handleOpenModal }) => {
   const dispatch = useDispatch();
   const { user } = useAuthUser();
+  
   const handleAction = (data, status) => {
     const obj = {
       complNumb: data.complNumb,
@@ -83,7 +85,7 @@ const TableItem = ({ data, index }) => {
         <StyledTableCell>{data.organization}</StyledTableCell>
 
         <StyledTableCell>{data.areaConcern}</StyledTableCell>
-        <StyledTableCell>{data.statusName}</StyledTableCell>
+        <StyledTableCell>{firstUpperCase(data.status)}</StyledTableCell>
 
         <StyledTableCell>
           {data.status === "Accepted" && (
@@ -103,7 +105,8 @@ const TableItem = ({ data, index }) => {
                   variant="contained"
                   color="error"
                   size="small"
-                  onClick={() => handleAction(data, "not-satisfied")}
+                  // onClick={() => handleAction(data, "not-satisfied")}
+                  onClick={() => handleOpenModal(data)}
                 >
                   Not Satisfied
                 </Button>

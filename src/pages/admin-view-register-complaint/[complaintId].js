@@ -36,7 +36,7 @@ const AdminViewRegisterComplaint = () => {
     if (user) {
       const obj = {
         deptname: user.deptName,
-        flag: user?.role[0] === "CRM_ADMIN" ? "CRM_SPOC" : "CRM_HOD",
+        flag: user?.role[0] === "CRM_ADMIN" ? "CRM_DEPT_SPOC" : "CRM_HOD",
       };
       dispatch(getSPOCList(obj));
       dispatch(getDepartment());
@@ -66,10 +66,12 @@ const [userList , setUserList] = useState([]);
     detailsDesc: "",
     file: "",
     statusName: "",
+    pendingBy:'',
     newFile: null,
     spocRemarks: '',
     hodRemarks: '',
     adminRemarks: '',
+    status:'',
   });
 
   useEffect(() => {
@@ -94,6 +96,7 @@ const [userList , setUserList] = useState([]);
             ) {
               const userAppList = res.data.logHistoryCustIdVal;
               const userLevel = userAppList[userAppList.length - 1].userLevel;
+              
 
               setUserAttachements(res.data.upldFileList);
               setUpldFileListSpoc(res.data.upldFileListSpoc);
@@ -113,11 +116,13 @@ const [userList , setUserList] = useState([]);
                   res.data.crmCustComplReqdtls?.[0]?.feedbackDate?.slice(0, 10),
                 areaConcern: res.data.crmCustComplReqdtls[0].areaConcern,
                 detailsDesc: res.data.crmCustComplReqdtls[0].detailsDesc,
+                status: res.data.crmCustComplReqdtls[0].status,
                 statusName: userLevel,
                 newFile: null,
                 spocRemarks: res.data?.remarksList?.spoc ?? '',
                 hodRemarks: res.data?.remarksList?.HOD ?? "",
                 adminRemarks: res.data?.remarksList?.admin ?? "",
+                pendingBy:res.data?.remarksList?.pendingBy??'',
               });
               setLoading(false);
             } else {
@@ -423,7 +428,7 @@ const [userList , setUserList] = useState([]);
                       }}
                       label={
                         <span>
-                          Date <span style={{ color: "#d32f2f" }}>*</span>
+                          Date of Resolution <span style={{ color: "#d32f2f" }}>*</span>
                         </span>
                       }
                       InputLabelProps={{
@@ -698,9 +703,9 @@ const [userList , setUserList] = useState([]);
                       </React.Fragment>
                     )}
 
-                  {(user?.role[0] === "CRM_SPOC" ||
+                  {(user?.role[0] === "CRM_DEPT_SPOC" ||
                     user?.role[0] === "CRM_ADMIN") &&
-                    values.statusName !== "level-1" && (
+                    values.pendingBy === user.displayName && (
                       <React.Fragment>
                         <Grid item xs={12} md={6}>
                           <TextField
@@ -719,7 +724,7 @@ const [userList , setUserList] = useState([]);
                             }}
                           ></TextField>
                         </Grid>
-                        {user?.role[0] === "CRM_SPOC" && (
+                        {user?.role[0] === "CRM_DEPT_SPOC" && (
                           <Grid item xs={12} md={6}>
                             <TextField
                               type="file"
@@ -803,7 +808,7 @@ const [userList , setUserList] = useState([]);
                         </Grid>
                       </React.Fragment>
                     )}
-                  {user?.role[0] === "CRM_HOD" && (
+                  {user?.role[0] === "CRM_HOD" && values.status==='pending' &&  (
                     <React.Fragment>
                       <Grid item xs={12} md={6}>
                         <TextField

@@ -9,6 +9,7 @@ import ActivityTable from "@components/AppUI/ActivityTable";
 import AppLoader from "@components/CustomLoader";
 import { Box, Button, Card, Grid, Hidden } from "@mui/material";
 import { getMyTaskList } from "@redux/slice/MyTaskSlice";
+import { resetMyProgressstatusSlice } from "@redux/slice/ProgressStatusSlice";
 import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -33,7 +34,9 @@ const MyActivity = () => {
         userId: user.id,
       };
       dispatch(getMyTaskList(obj));
+      dispatch(resetMyProgressstatusSlice.resetState());
     }
+
   }, []);
 
   useEffect(() => {

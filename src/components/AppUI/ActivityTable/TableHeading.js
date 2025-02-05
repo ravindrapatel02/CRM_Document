@@ -27,7 +27,7 @@ const TableHeading = () => {
       }}
       align="left"
     >
-     Complaint Date
+      Date of Resolution
     </TableCell>
     <TableCell
       sx={{

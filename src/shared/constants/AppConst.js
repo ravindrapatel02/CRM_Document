@@ -28,6 +28,10 @@ export const dateTimeFromate =(date)=>{
   const dateIST = dateUTC.toLocaleString('en-IN', options);
   return dateIST;
 }
+export const firstUpperCase =(str)=>{
+
+  return str ? str.charAt(0).toUpperCase()+str.slice(1) :"";
+}
 
 export const RouteMatch = (route) => {
   const routeArray = route.split("/");

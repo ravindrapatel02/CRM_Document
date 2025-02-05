@@ -4,7 +4,7 @@ import TableRow from '@mui/material/TableRow';
 import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';    
 import Link from 'next/link';
-import { dateTimeFromate } from '@shared/constants/AppConst';
+import { dateTimeFromate, firstUpperCase } from '@shared/constants/AppConst';
 import { DateTimeFormate, OnlyDateFormate } from 'src/utils';
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   '&:hover': {
@@ -54,7 +54,7 @@ const TableItem = ({ data , index}) => {
     <StyledTableCell>{data.organization}</StyledTableCell>
 
     <StyledTableCell>{data.areaConcern}</StyledTableCell>
-    <StyledTableCell>{data.statusName}</StyledTableCell>
+    <StyledTableCell>{firstUpperCase(data.statusName)}</StyledTableCell>
   </StyledTableRow>
     </>
   );

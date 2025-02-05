@@ -10,7 +10,17 @@ export const getComplaintViewRequest = createAsyncThunk(
       //open when api create in post method
 
       const response = await jwtAxios.post(API_URL.GET_COMPLAINT_REQUEST , data);
+      // const result = response.data;
       const result = response.data;
+      const newArray = result.data;
+
+      const newList = newArray.sort((a, b) =>
+        parseInt(b.complNumb.substring(4)) - parseInt(a.complNumb.substring(4))
+      );
+      return {
+        ...result,
+        data: newList
+      };
       return result;
     } catch (error) {
       const message = error.message;

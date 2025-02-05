@@ -238,7 +238,7 @@ const AddUser = (props) => {
                       User role{" "}
                     </MenuItem>
                     <MenuItem value={"CRM_ADMIN"}>CRM ADMIN</MenuItem>
-                    <MenuItem value={"CRM_SPOC"}>CRM SPOC</MenuItem>
+                    <MenuItem value={"CRM_DEPT_SPOC"}> CRM DEPT SPOC</MenuItem>
                     <MenuItem value={"CRM_HOD"}>CRM HOD</MenuItem>
                   </TextField>
                 </Grid>

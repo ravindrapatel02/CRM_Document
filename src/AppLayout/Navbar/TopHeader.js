@@ -49,7 +49,7 @@ export const TopHeader = () => {
               ) : (
                 <ul className="list-inline text-right d-grid">
                   <li className="list-inline-item bdrNone topNavBar fw-bold">
-                   {getUserAvatar()} ( {user.role[0]==="CRM_SPOC" ? 'CRM_Dept_SPOC' :user.role[0]} )
+                   {getUserAvatar()} ( {user.role[0]} )
                   </li>
                   <li className="list-inline-item bdrNone topNavBar">
                     <i className="fa fa-clock-o mr-2"> <TimeCountDown/>  </i>

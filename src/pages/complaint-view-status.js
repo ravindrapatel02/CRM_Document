@@ -7,9 +7,11 @@ import AppSectionTitle from "@components/AppSectionTitle";
 import AppsPagination from "@components/AppsPagination";
 // import ActivityTable from '@components/AppUI/ActivityTable';
 import ComplaintTable from "@components/AppUI/complaint/table";
+import UnsatisfiedModal from "@components/AppUI/Modal/Unsatisfiedmodal";
 import AppLoader from "@components/CustomLoader";
 import { Box, Button, Card, Grid, Hidden } from "@mui/material";
 import { getComplaintViewRequest } from "@redux/slice/ComplaintViewRequestSlice";
+import { resetMyProgressstatusSlice } from "@redux/slice/ProgressStatusSlice";
 import { dateTimeFromate } from "@shared/constants/AppConst";
 import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
@@ -28,9 +30,12 @@ const ComplaintViewStatus = () => {
   const [page, setPage] = useState(0);
   const [data, setData] = useState([]);
   const { user } = useAuthUser();
+  const [open , setOpen] = useState(false);
+  const [update , setUpdate] = useState(null);
 
   useEffect(() => {
     dispatch(getComplaintViewRequest({ custPernerNo: user?.uid }));
+    dispatch(resetMyProgressstatusSlice.resetState());
   }, []);
 
   useEffect(() => {
@@ -89,6 +94,16 @@ const ComplaintViewStatus = () => {
       ROW_PER_PAGE
     );
     setData(paginatedData);
+  };
+
+  const handleCloseModal = () => {
+    setOpen( false);
+    setUpdate(null);
+  };
+
+  const handleOpenModal = (data) => {
+    setOpen(true);
+    setUpdate(data);
   };
 
   return (
@@ -165,7 +180,7 @@ const ComplaintViewStatus = () => {
                 paddingBottom: 2.5,
               }}
             >
-              <ComplaintTable data={data} />
+              <ComplaintTable data={data} handleOpenModal={handleOpenModal}/>
             </AppsContent>
             <Hidden smUp>
               <AppsPagination
@@ -178,6 +193,13 @@ const ComplaintViewStatus = () => {
           </Card>
         </AppPageContainer>
       </AppSectionContainer>
+      { open && (
+        <UnsatisfiedModal
+        open={open}
+          handleCloseModal={handleCloseModal}
+          data={update}
+        />
+      )} 
     </React.Fragment>
   );
 };

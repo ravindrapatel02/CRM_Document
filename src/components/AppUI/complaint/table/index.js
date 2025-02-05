@@ -8,7 +8,7 @@ import TableItemEmpty from './TableItemEmpty';
 import AppTableContainer from '@components/AppTableContainer';
 import TableItem from './TableItem';
 
-const ComplaintTable = ({data}) => {
+const ComplaintTable = ({data , handleOpenModal}) => {
   return (
     <AppTableContainer>
       <Table stickyHeader className='table'>
@@ -22,6 +22,7 @@ const ComplaintTable = ({data}) => {
                 data={data}
                 index={index}
                 key={index} 
+                handleOpenModal={handleOpenModal}
               />
             ))
           ) : (
@@ -41,5 +42,6 @@ ComplaintTable.defaultProps = {
 
 ComplaintTable.propTypes = {
   data: propTypes.array, 
+  handleOpenModal: propTypes.func
   
 };

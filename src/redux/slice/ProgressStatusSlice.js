@@ -25,8 +25,18 @@ const InitialValue = {
 };
 
 const myProgressstatusSlice = createSlice({
-  name: "progressStatus",
+  name: "myProgressStatus",
   initialState: InitialValue,
+  reducers: {
+    // Reset function to set the state back to the initial value
+    resetState: (state) => {
+      state.progressData = InitialValue.progressData;
+      state.loading = InitialValue.loading;
+      state.error = InitialValue.error;
+      state.message = InitialValue.message;
+    },
+  },
+
   extraReducers: (builder) => {
     builder.addCase(getProgressStatus.pending, (state, action) => {
       state.loading = true;
@@ -44,5 +54,5 @@ const myProgressstatusSlice = createSlice({
     });
   },
 });
-
+export const resetMyProgressstatusSlice = myProgressstatusSlice.actions;
 export default myProgressstatusSlice.reducer;

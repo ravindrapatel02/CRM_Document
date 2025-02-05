@@ -312,7 +312,7 @@ const RegisterComplaint = () => {
                     }}
                     label={
                       <span>
-                        Date <span style={{ color: "#d32f2f" }}>*</span>
+                        Date of Resolution <span style={{ color: "#d32f2f" }}>*</span>
                       </span>
                     }
                     InputLabelProps={{
