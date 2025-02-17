@@ -45,7 +45,7 @@ const UserDashboard = () => {
 
   const [chartData, setChartData] = useState([]);
   const [barData, setBarData] = useState([]);
- 
+
   const { user } = useAuthUser();
   const [filter, setFilter] = useState({
     deptName: user?.deptName,
@@ -62,13 +62,23 @@ const UserDashboard = () => {
     if (dashboardData) {
       if (areaConList) {
         let list = [];
-        areaConList.forEach((item) => {
-          list.push({
-            name: item.name,
-            value: item.count,
-          });
-        });
-        setChartData(list);
+        // areaConList.forEach((item) => {
+        //   list.push({
+        //     name: item.name,
+        //     value: item.count,
+        //   });
+        // });
+        // setChartData(list);
+        setChartData([
+          {
+            name: "HR Dept",
+            value: 34,
+          },
+          {
+            name: "Finance Dept",
+            value: 40,
+          },
+        ]);
       } else {
         setChartData([]);
       }

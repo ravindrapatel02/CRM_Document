@@ -65,6 +65,28 @@ const AreaofConcern = () => {
     setOpenModal({isAdd:false , isUpdate:false}); 
   };
 
+  const onSearchCustomer = (value) => {
+    if (value) {
+      setPage(0);
+      let searchData = [...areaConcernData];
+      const filterData = [];
+      searchData.length > 0 &&
+        searchData.map((item) => {
+          if (
+            item.concernType?.toUpperCase().includes(value.toUpperCase())  ||
+            item.shortCode?.toUpperCase().includes(value.toUpperCase())  
+          ) {
+            filterData.push(item);
+          }
+        });
+      setData(filterData);
+      setDataCount(filterData.length);
+    } else {
+      setData(areaConcernData);
+      setDataCount(areaConcernData.length);
+    }
+  };
+
   return (
     <AppSectionContainer>
       <Box

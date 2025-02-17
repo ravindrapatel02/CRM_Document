@@ -31,7 +31,7 @@ const AdminViewRegisterComplaint = () => {
   const { user } = useAuthUser();
   const [submit, setSubmit] = useState(false);
   const { deptData } = useSelector((state) => state.department);
-  
+
   useEffect(() => {
     if (user) {
       const obj = {
@@ -49,7 +49,7 @@ const AdminViewRegisterComplaint = () => {
   const [userAttachements, setUserAttachements] = useState([]);
   const [upldFileListSpoc, setUpldFileListSpoc] = useState([]);
 
-const [userList , setUserList] = useState([]);
+  const [userList, setUserList] = useState([]);
 
   const [initialValues, setInitialValues] = useState({
     firstName: "",
@@ -66,17 +66,16 @@ const [userList , setUserList] = useState([]);
     detailsDesc: "",
     file: "",
     statusName: "",
-    pendingBy:'',
+    pendingBy: "",
     newFile: null,
-    spocRemarks: '',
-    hodRemarks: '',
-    adminRemarks: '',
-    status:'',
+    spocRemarks: "",
+    hodRemarks: "",
+    adminRemarks: "",
+    status: "",
   });
 
   useEffect(() => {
     if (complaintId) {
-
       if (
         typeof window !== "undefined" &&
         isValidBase64(complaintId) &&
@@ -91,12 +90,12 @@ const [userList , setUserList] = useState([]);
           })
           .then((response) => {
             const res = response.data;
-            if (res.status === "true"
+            if (
+              res.status === "true"
               // && user.role[0] !== "CRM_USER"
             ) {
               const userAppList = res.data.logHistoryCustIdVal;
               const userLevel = userAppList[userAppList.length - 1].userLevel;
-              
 
               setUserAttachements(res.data.upldFileList);
               setUpldFileListSpoc(res.data.upldFileListSpoc);
@@ -119,10 +118,10 @@ const [userList , setUserList] = useState([]);
                 status: res.data.crmCustComplReqdtls[0].status,
                 statusName: userLevel,
                 newFile: null,
-                spocRemarks: res.data?.remarksList?.spoc ?? '',
+                spocRemarks: res.data?.remarksList?.spoc ?? "",
                 hodRemarks: res.data?.remarksList?.HOD ?? "",
                 adminRemarks: res.data?.remarksList?.admin ?? "",
-                pendingBy:res.data?.remarksList?.pendingBy??'',
+                pendingBy: res.data?.remarksList?.pendingBy ?? "",
               });
               setLoading(false);
             } else {
@@ -170,10 +169,11 @@ const [userList , setUserList] = useState([]);
     return <PageNotFound />;
   }
 
-  const getUserList =(dept)=>{
-    const filterUser = deptData.filter((item)=>item.deptCode ===dept)[0]?.list ?? [];
+  const getUserList = (dept) => {
+    const filterUser =
+      deptData.filter((item) => item.deptCode === dept)[0]?.list ?? [];
     setUserList(filterUser);
-  }
+  };
 
   return (
     <React.Fragment>
@@ -428,7 +428,8 @@ const [userList , setUserList] = useState([]);
                       }}
                       label={
                         <span>
-                          Date of Resolution <span style={{ color: "#d32f2f" }}>*</span>
+                          Expected Date of Resolution{" "}
+                          <span style={{ color: "#d32f2f" }}>*</span>
                         </span>
                       }
                       InputLabelProps={{
@@ -518,7 +519,7 @@ const [userList , setUserList] = useState([]);
                       </Box>
                     </Grid>
                   )}
-                  {values.spocRemarks && values.spocRemarks.length > 0 &&
+                  {values.spocRemarks && values.spocRemarks.length > 0 && (
                     <Grid item xs={12} md={6}>
                       <TextField
                         name="remarks"
@@ -532,8 +533,8 @@ const [userList , setUserList] = useState([]);
                         }}
                       />
                     </Grid>
-                  }
-                  {values.adminRemarks && values.adminRemarks.length > 0 &&
+                  )}
+                  {values.adminRemarks && values.adminRemarks.length > 0 && (
                     <Grid item xs={12} md={6}>
                       <TextField
                         name="remarks"
@@ -547,8 +548,8 @@ const [userList , setUserList] = useState([]);
                         }}
                       />
                     </Grid>
-                  }
-                  {values.hodRemarks && values.hodRemarks.length > 0 &&
+                  )}
+                  {values.hodRemarks && values.hodRemarks.length > 0 && (
                     <Grid item xs={12} md={6}>
                       <TextField
                         name="remarks"
@@ -562,7 +563,7 @@ const [userList , setUserList] = useState([]);
                         }}
                       />
                     </Grid>
-                  }
+                  )}
 
                   {user?.role[0] === "CRM_ADMIN" &&
                     values.statusName === "level-1" && (
@@ -578,7 +579,7 @@ const [userList , setUserList] = useState([]);
                             onChange={(e) => {
                               const value = e.target.value;
                               setUserList([]);
-                              setFieldValue("deptName",value);
+                              setFieldValue("deptName", value);
                               getUserList(value);
                             }}
                             label={
@@ -669,14 +670,8 @@ const [userList , setUserList] = useState([]);
                               complaint Priority
                             </MenuItem>
                             <MenuItem value={"Low"}> Low</MenuItem>
-                            <MenuItem value={"Moderate"}>
-                              {" "}
-                              Moderate
-                            </MenuItem>
-                            <MenuItem value={"High"}>
-                              {" "}
-                              High
-                            </MenuItem>
+                            <MenuItem value={"Moderate"}> Moderate</MenuItem>
+                            <MenuItem value={"High"}> High</MenuItem>
                           </TextField>
                         </Grid>
 
@@ -808,66 +803,66 @@ const [userList , setUserList] = useState([]);
                         </Grid>
                       </React.Fragment>
                     )}
-                  {user?.role[0] === "CRM_HOD" && values.status==='pending' &&  (
-                    <React.Fragment>
-                      <Grid item xs={12} md={6}>
-                        <TextField
-                          name="remarks"
-                          multiline
-                          value={values.remarks}
-                          error={errors.remarks ? true : false}
-                          helperText={errors.remarks}
-                          fullWidth
-                          onChange={(e) => {
-                            setFieldValue("remarks", e.target.value);
-                          }}
-                          label={<span>Remarks</span>}
-                          InputLabelProps={{
-                            shrink: true,
-                          }}
-                        ></TextField>
-                      </Grid>
-                      <Grid item md={12} textAlign={"center"} mt={3}>
-                        <div>
-                          <Button
-                            sx={{
-                              position: "relative",
-                              minWidth: 100,
-                              ml: 3,
+                  {user?.role[0] === "CRM_HOD" &&
+                    values.status === "pending" && (
+                      <React.Fragment>
+                        <Grid item xs={12} md={6}>
+                          <TextField
+                            name="remarks"
+                            multiline
+                            value={values.remarks}
+                            error={errors.remarks ? true : false}
+                            helperText={errors.remarks}
+                            fullWidth
+                            onChange={(e) => {
+                              setFieldValue("remarks", e.target.value);
                             }}
-                            disabled={submit}
-                            color="info"
-                            variant="outlined"
-                            onClick={() => {
-                              setFieldValue("status", "approve");
-                              handleSubmit();
-                              setSubmit(true);
+                            label={<span>Remarks</span>}
+                            InputLabelProps={{
+                              shrink: true,
                             }}
-                          >
-                            Approve
-                          </Button>
-                          <Button
-                            sx={{
-                              position: "relative",
-                              minWidth: 100,
-                              ml: 3,
-                            }}
-                            color="warning"
-                            variant="outlined"
-                            disabled={submit}
-                            onClick={() => {
-                              setFieldValue("status", "return");
-                              handleSubmit();
-                              setSubmit(true);
-                            }}
-                          >
-                            Return
-                          </Button>
-                        </div>
-                      </Grid>
-
-                    </React.Fragment>
-                  )}
+                          ></TextField>
+                        </Grid>
+                        <Grid item md={12} textAlign={"center"} mt={3}>
+                          <div>
+                            <Button
+                              sx={{
+                                position: "relative",
+                                minWidth: 100,
+                                ml: 3,
+                              }}
+                              disabled={submit}
+                              color="info"
+                              variant="outlined"
+                              onClick={() => {
+                                setFieldValue("status", "approve");
+                                handleSubmit();
+                                setSubmit(true);
+                              }}
+                            >
+                              Approve
+                            </Button>
+                            <Button
+                              sx={{
+                                position: "relative",
+                                minWidth: 100,
+                                ml: 3,
+                              }}
+                              color="warning"
+                              variant="outlined"
+                              disabled={submit}
+                              onClick={() => {
+                                setFieldValue("status", "return");
+                                handleSubmit();
+                                setSubmit(true);
+                              }}
+                            >
+                              Return
+                            </Button>
+                          </div>
+                        </Grid>
+                      </React.Fragment>
+                    )}
                 </Grid>
               </Form>
             )}

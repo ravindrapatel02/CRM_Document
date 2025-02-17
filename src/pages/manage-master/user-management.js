@@ -79,6 +79,30 @@ const UserManagement = () => {
     setUpdateDetails(null);
   };
 
+  const onSearchCustomer = (value) => {
+    if (value) {
+      setPage(0);
+      let searchData = [...userData];
+      const filterData = [];
+      searchData.length > 0 &&
+        searchData.map((item) => {
+          if (
+            item.userEmailId?.toUpperCase().includes(value.toUpperCase())  ||
+            item.userMobileNo?.toUpperCase().includes(value.toUpperCase()) ||
+            item.userName?.toUpperCase().includes(value.toUpperCase()) ||
+            item.userPernerNo?.toUpperCase().includes(value.toUpperCase())  
+          ) {
+            filterData.push(item);
+          }
+        });
+      setData(filterData);
+      setDataCount(filterData.length);
+    } else {
+      setData(userData);
+      setDataCount(userData.length);
+    }
+  };
+
 
   return (
     <AppSectionContainer>

@@ -98,7 +98,7 @@ const AddAreaOfConcernModal = ({ open, handleCloseModal }) => {
                       name="concernType"
                       fullWidth
                       value={values.concernType}
-                      placeholder="Enter department name"
+                      placeholder="Enter area of concern"
                       error={!!errors.concernType}
                       helperText={errors.concernType}
                       onChange={(e) =>
@@ -111,7 +111,7 @@ const AddAreaOfConcernModal = ({ open, handleCloseModal }) => {
                       name="shortCode"
                       fullWidth
                       value={values.shortCode}
-                      placeholder="Enter department code"
+                      placeholder="Enter area of concern code"
                       error={!!errors.shortCode}
                       helperText={errors.shortCode}
                       onChange={(e) =>

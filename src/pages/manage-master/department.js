@@ -61,6 +61,27 @@ const DepartmentMaster = () => {
     setUpdateDetails(null);
   };
   
+  const onSearchCustomer = (value) => {
+    if (value) {
+      setPage(0);
+      let searchData = [...deptData];
+      const filterData = [];
+      searchData.length > 0 &&
+        searchData.map((item) => {
+          if (
+            item.deptCode?.toUpperCase().includes(value.toUpperCase())  ||
+            item.deptName?.toUpperCase().includes(value.toUpperCase())  
+          ) {
+            filterData.push(item);
+          }
+        });
+      setData(filterData);
+      setDataCount(filterData.length);
+    } else {
+      setData(deptData);
+      setDataCount(deptData.length);
+    }
+  };
 
   return (
     <AppSectionContainer>

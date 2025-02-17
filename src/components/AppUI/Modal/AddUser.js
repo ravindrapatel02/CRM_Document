@@ -19,14 +19,14 @@ import { getDepartment } from "@redux/slice/DepartmentSlice";
 const AddUser = (props) => {
   const { open, handleCloseModal } = props;
   const { locationData } = useSelector((state) => state.location);
-  const {deptData} = useSelector((state)=>state.department)
+  const { deptData } = useSelector((state) => state.department);
   const dispatch = useDispatch();
-  const [submit, setSubmit] = useState(false); 
+  const [submit, setSubmit] = useState(false);
   useEffect(() => {
     dispatch(getLocation());
     dispatch(getDepartment());
   }, []);
- 
+
   const initialValues = {
     // userPernerNo: "",
     userName: "",
@@ -94,7 +94,11 @@ const AddUser = (props) => {
           initialValues={initialValues}
           validationSchema={userValidation}
           onSubmit={(values) => {
-            handleUpdate(values);
+            let reqObj = {
+              ...values,
+              userPernerNo: values.userMobileNo.toString(),
+            };
+            handleUpdate(reqObj);
           }}
         >
           {({ values, errors, setFieldValue }) => (
@@ -162,7 +166,7 @@ const AddUser = (props) => {
 
                 <Grid item xs={12} md={6}>
                   <TextField
-                  select
+                    select
                     name="deptName"
                     fullWidth
                     value={values.deptName}
@@ -172,17 +176,17 @@ const AddUser = (props) => {
                       setFieldValue("deptName", e.target.value);
                     }}
                     label="Enter department name"
-                    >
+                  >
                     <MenuItem disabled value="">
-                    Department
-                  </MenuItem>
-                  {deptData &&
-                    deptData.map((item) => (
-                      <MenuItem value={item.deptId} key={item.deptId}>
-                        {item.deptName}
-                      </MenuItem>
-                    ))}
-                </TextField>
+                      Department
+                    </MenuItem>
+                    {deptData &&
+                      deptData.map((item) => (
+                        <MenuItem value={item.deptId} key={item.deptId}>
+                          {item.deptName}
+                        </MenuItem>
+                      ))}
+                  </TextField>
                 </Grid>
 
                 <Grid item xs={12} md={6}>
@@ -194,7 +198,7 @@ const AddUser = (props) => {
                     helperText={errors.userMobileNo && errors.userMobileNo}
                     onChange={(e) => {
                       setFieldValue("userMobileNo", e.target.value);
-                      setFieldValue("userPernerNo", e.target.value);
+                      // setFieldValue("userPernerNo", e.target.value);
                     }}
                     label="Enter mobile number"
                   />
@@ -281,9 +285,7 @@ const AddUser = (props) => {
               label="Enter manager email id"
             />
           </Grid> */}
-                 
-                
-                
+
                 <Grid
                   item
                   xs={12}

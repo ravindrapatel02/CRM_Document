@@ -34,7 +34,7 @@ const TableItem = ({ data, setUpdateDetails, handleUpdateModal, index }) => {
 
   const handleDelete = (data) => {
     const obj = {
-      deptId: data.id,
+      deptId: data.userId,
       flag: "delete", 
     };
 

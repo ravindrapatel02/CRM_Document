@@ -163,6 +163,32 @@ const Reports = () => {
     });
     saveAs(dataBlob, `crm-report-${new Date().toDateString()}.xlsx`);
   };
+  const onSearchCustomer = (value) => {
+    if (value) {
+      setPage(0);
+      let searchData = [...allComplaintList];
+      const filterData = [];
+      searchData.length > 0 &&
+        searchData.map((item) => {
+          if (
+            item.complNumb?.toUpperCase().includes(value.toUpperCase())  ||
+            item.complType?.toUpperCase().includes(value.toUpperCase()) ||
+            item.contactNo?.toUpperCase().includes(value.toUpperCase()) ||
+            item.emailId?.toUpperCase().includes(value.toUpperCase())  ||
+            item.firstName?.toUpperCase().includes(value.toUpperCase())  ||
+            item.organization?.toUpperCase().includes(value.toUpperCase())  ||
+            item.feedbackDate?.toUpperCase().includes(value.toUpperCase())   
+          ) {
+            filterData.push(item);
+          }
+        });
+      setData(filterData);
+      setDataCount(filterData.length);
+    } else {
+      setData(allComplaintList);
+      setDataCount(allComplaintList.length);
+    }
+  };
 
   return (
     <React.Fragment>

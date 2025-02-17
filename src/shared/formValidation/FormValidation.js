@@ -48,7 +48,7 @@ export const otpValidation = yup.object({
 });
 
 export const userValidation = yup.object({
-  userPernerNo: yup.string().required("Please enter userID."),
+  // userPernerNo: yup.string().required("Please enter userID."),
   userName: yup.string().required("Please enter name."),
   location: yup.string().required("Please enter SPOC name."),
   deptName: yup.string().required("Please select depertment"),
@@ -57,17 +57,11 @@ export const userValidation = yup.object({
     .string()
     .required("Please enter spoc email")
     .email("Please enter valid email"),
+ 
   userMobileNo: yup
-    .string()
-    .required("Please enter phone")
-    .test("is-valid-phone", "Invalid phone number", (value) =>
-      // Check if the value is either a valid email or a valid phone number
-      phoneRegExp.test(value)
-    ),
-    // "managerPernNo":yup.string().required("Please enter maanager perner no."),
-    // "managerName": yup.string().required("Please manager name."),
-    // "managerEmailId":yup
-    // .string()
-    // .required("Please enter spoc email")
-    // .email("Please enter valid email"),
+  .string()
+  .required("Please enter phone number")
+  .matches(phoneRegExp, "Invalid phone number") // Using matches to check phone number format
+  .min(10, "Phone number should be 10 digits long") // Ensure it is 10 digits long
+  .max(10, "Phone number should be 10 digits long"), 
 });

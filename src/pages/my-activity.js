@@ -36,7 +36,6 @@ const MyActivity = () => {
       dispatch(getMyTaskList(obj));
       dispatch(resetMyProgressstatusSlice.resetState());
     }
-
   }, []);
 
   useEffect(() => {
@@ -44,13 +43,15 @@ const MyActivity = () => {
       router.push("/");
     }
   });
- 
+
   useEffect(() => {
-    let newAllApprovedList = [...taskData];
-    let paginatedData = newAllApprovedList.splice(0, ROW_PER_PAGE);
-    setData(paginatedData);
-    setDataCount(taskData.length);
-    setPage(0);
+    // if (taskData && taskData.length > 0) {
+      let newAllApprovedList = [...taskData];
+      let paginatedData = newAllApprovedList.splice(0, ROW_PER_PAGE);
+      setData(paginatedData);
+      setDataCount(taskData.length);
+      setPage(0);
+    // }
   }, [taskData]);
 
   const onPageChange = (event, value) => {
@@ -61,6 +62,33 @@ const MyActivity = () => {
       ROW_PER_PAGE
     );
     setData(paginatedData);
+  };
+
+  const onSearchCustomer = (value) => {
+    if (value) {
+      setPage(0);
+      let searchData = [...taskData];
+      const filterData = [];
+      searchData.length > 0 &&
+        searchData.map((item) => {
+          if (
+            item.complNumb?.toUpperCase().includes(value.toUpperCase()) ||
+            item.complType?.toUpperCase().includes(value.toUpperCase()) ||
+            item.contactNo?.toUpperCase().includes(value.toUpperCase()) ||
+            item.emailId?.toUpperCase().includes(value.toUpperCase()) ||
+            item.firstName?.toUpperCase().includes(value.toUpperCase()) ||
+            item.organization?.toUpperCase().includes(value.toUpperCase()) ||
+            item.feedbackDate?.toUpperCase().includes(value.toUpperCase())
+          ) {
+            filterData.push(item);
+          }
+        });
+      setData(filterData);
+      setDataCount(filterData.length);
+    } else {
+      setData(taskData);
+      setDataCount(taskData.length);
+    }
   };
 
   return (

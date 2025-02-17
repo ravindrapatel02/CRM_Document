@@ -34,7 +34,7 @@ const TableItem = ({ data, setUpdateDetails, handleOpenModal, index }) => {
 
   const handleDelete = (data) => {
     const obj = {
-      deptId: data.id,
+      deptId: data.deptId,
       flag: "delete",
 //       deptCode: data.deptCode,
 // deptName:data.deptName
@@ -51,7 +51,8 @@ const TableItem = ({ data, setUpdateDetails, handleOpenModal, index }) => {
             res.message ?? "Department deleted successfully !"
           );
           setTimeout(() => {
-            dispatch(getDepartment());
+            
+                dispatch(getDepartment());
           }, 3000);
         } else {
           AppNotification(false, res.message ?? "Something went wrong !");

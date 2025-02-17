@@ -27,7 +27,7 @@ const UpdateDepartmentModal = (props) => {
     // spocName: "",
     // spocPernerNo: "",
     // spocEmail: "",
-    id: "",
+    deptId: "",
     flag: "update",
   });
 
@@ -36,7 +36,7 @@ const UpdateDepartmentModal = (props) => {
       setInitialValues({
         deptName: updateDetails.deptName,
         deptCode: updateDetails.deptCode,
-        id: updateDetails.id,
+        deptId: updateDetails.deptId,
         // spocName: updateDetails.spocName,
         // spocPernerNo: updateDetails.spocPernerNo,
         // spocEmail: updateDetails.spocEmail,

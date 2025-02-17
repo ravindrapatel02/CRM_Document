@@ -8,7 +8,7 @@ export const getMyTaskList = createAsyncThunk(
   async (data, thunkApi) => {
     try {
       //open when api create in post method
-      const response = await jwtAxios.post(API_URL.MY_TASK_LIST , data);
+      const response = await jwtAxios.post(API_URL.MY_TASK_LIST, data);
       const result = response.data;
       return result;
     } catch (error) {
@@ -17,6 +17,7 @@ export const getMyTaskList = createAsyncThunk(
     }
   }
 );
+
 const InitialValue = {
   taskData: [],
   loading: true,
@@ -33,7 +34,7 @@ const myTaskSlice = createSlice({
     });
     builder.addCase(getMyTaskList.fulfilled, (state, action) => {
       state.loading = false;
-      (state.taskData = action.payload.data),
+      (state.taskData = action.payload.data ?? []),
         (state.message = action.payload.message);
     });
     builder.addCase(getMyTaskList.rejected, (state, action) => {
