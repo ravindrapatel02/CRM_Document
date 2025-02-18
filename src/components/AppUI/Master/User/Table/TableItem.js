@@ -34,12 +34,12 @@ const TableItem = ({ data, setUpdateDetails, handleUpdateModal, index }) => {
 
   const handleDelete = (data) => {
     const obj = {
-      deptId: data.userId,
+      userId: data.userId,
       flag: "delete", 
     };
 
     jwtAxios
-      .post(API_URL.CREATE_DEPARTMENT, obj)
+      .post(API_URL.ADD_USER, obj)
       .then((response) => {
         const res = response.data;
         if (res.status === "true") {

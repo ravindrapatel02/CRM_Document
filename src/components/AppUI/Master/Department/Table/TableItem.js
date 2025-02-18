@@ -35,10 +35,7 @@ const TableItem = ({ data, setUpdateDetails, handleOpenModal, index }) => {
   const handleDelete = (data) => {
     const obj = {
       deptId: data.deptId,
-      flag: "delete",
-//       deptCode: data.deptCode,
-// deptName:data.deptName
-
+      flag: "delete", 
     };
 
     jwtAxios

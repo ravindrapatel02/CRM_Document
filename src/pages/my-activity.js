@@ -91,6 +91,72 @@ const MyActivity = () => {
     }
   };
 
+  const exportToExcel = async () => {
+      const workbook = new ExcelJS.Workbook();
+      const worksheet = workbook.addWorksheet("Sheet1");
+  
+      // Add header row
+      worksheet.columns = [
+        { header: "Complaint No", key: "complNumb", width: 10 },
+        { header: "Date of Resolution", key: "feedbackDate", width: 20 },
+        { header: "Register Date", key: "createdOn", width: 20 },
+        { header: "Requester Name", key: "name", width: 20 },
+        { header: "Email", key: "emailId", width: 20 },
+        { header: "Contact No", key: "contactNo", width: 20 },
+        { header: "Department", key: "deptName", width: 20 },
+        { header: "Complaint Type", key: "complType", width: 20 },
+        { header: "Service Type", key: "feedbackType", width: 20 },
+        { header: "Organization", key: "organization", width: 20 },
+        { header: "Area fo Concern", key: "areaConcern", width: 20 },
+        { header:'Description' , key :"detailsDesc" , width:20},
+        { header: "Status", key: "stateName", width: 20 },
+      ];
+  
+      // Add rows
+      taskData.forEach((item) => {
+       let obj={};
+  
+        obj.complNumb = item.complNumb;
+        (obj.feedbackDate = item.feedbackDate),
+          (obj.name = item.firstName + " " + item.lastName);
+        obj.emailId = item.emailId;
+        obj.contactNo = item.contactNo;
+        obj.deptName = item.deptName;
+        obj.complType = item.complType;
+        obj.feedbackType = item.feedbackType;
+        obj.organization = item.organization;
+        obj.areaConcern = item.areaConcern;
+        obj.stateName = item.statusName;
+        obj.createdOn = item.createdOn;
+        obj.detailsDesc = item.detailsDesc
+        worksheet.addRow(obj);
+      });
+  
+      // Apply styles to header row
+      worksheet.getRow(1).eachCell((cell) => {
+        cell.font = { bold: true };
+        cell.fill = {
+          type: "pattern",
+          pattern: "solid",
+          // fgColor: { argb: 'FFFF00' }, // Yellow background
+        };
+        cell.border = {
+          top: { style: "thin" },
+          left: { style: "thin" },
+          bottom: { style: "thin" },
+          right: { style: "thin" },
+        };
+      });
+  
+      // Create Excel file and save it
+      const buffer = await workbook.xlsx.writeBuffer();
+      const dataBlob = new Blob([buffer], {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      });
+      saveAs(dataBlob, `my-activity-report-${new Date().toDateString()}.xlsx`);
+    };
+    
+
   return (
     <React.Fragment>
       {loading && <AppLoader />}
@@ -115,7 +181,7 @@ const MyActivity = () => {
               }}
             >
               <Box mx={2}>
-                <Button>Export</Button>
+                <Button onClick={exportToExcel}>Export</Button>
               </Box>
             </Box>
           </Grid>

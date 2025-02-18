@@ -123,68 +123,7 @@ router.push('/manage-master/department');
                   }}
                 />
               </Grid>
-
-              {/*<Grid item xs={12} md={6}>
-                <TextField
-                  name="spocName"
-                  value={values.spocName}
-                  fullWidth
-                  onChange={(e) => {
-                    setFieldValue("spocName", e.target.value);
-                  }}
-                  error={errors.spocName && touched.spocName ? true : false}
-                  helperText={touched.spocName && errors.spocName}
-                  label={
-                    <span>
-                   SPOC Name<span style={{ color: "#d32f2f" }}>*</span>
-                    </span>
-                  }
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                />
-              </Grid>
-              <Grid item xs={12} md={6}>
-                <TextField
-                  name="spocPernerNo"
-                  value={values.spocPernerNo}
-                  fullWidth
-                  onChange={(e) => {
-                    setFieldValue("spocPernerNo", e.target.value);
-                  }}
-                  error={errors.spocPernerNo && touched.spocPernerNo ? true : false}
-                  helperText={touched.spocPernerNo && errors.spocPernerNo}
-                  label={
-                    <span>
-                    SPOC Perner No.<span style={{ color: "#d32f2f" }}>*</span>
-                    </span>
-                  }
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                />
-              </Grid>
-              <Grid item xs={12} md={6}>
-                <TextField
-                  name="spocEmail"
-                  value={values.spocEmail}
-                  fullWidth
-                  onChange={(e) => {
-                    setFieldValue("spocEmail", e.target.value);
-                  }}
-                  error={errors.spocEmail && touched.spocEmail ? true : false}
-                  helperText={touched.spocEmail && errors.spocEmail}
-                  label={
-                    <span>
-                    SPOC Email<span style={{ color: "#d32f2f" }}>*</span>
-                    </span>
-                  }
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                />
-              </Grid>*/}
-
+ 
               <Grid item md={12} textAlign={"center"} mt={3}>
                 <Button
                   sx={{

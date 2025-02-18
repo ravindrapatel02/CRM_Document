@@ -27,7 +27,6 @@ const UnsatisfiedModal = ({ open, data, handleCloseModal }) => {
         compNumber:'',
         // flag: 'not-satisfied'
     });
-console.log(data);
 
     useEffect(() => {
 
@@ -62,7 +61,6 @@ console.log(data);
             AppNotification(false, error.message ?? "Nwtwork Error");
           });
       };
-console.log(initialValues);
 
     return (
         <React.Fragment>
@@ -98,7 +96,6 @@ console.log(initialValues);
                             initialValues={initialValues}
                             // validationSchema={sectorValidation}
                             onSubmit={async (values) => {
-                                console.log('values' , values);
                                 
                                 handleAction(values);
                             }}

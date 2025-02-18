@@ -54,14 +54,8 @@ const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
     alignItems: 'center',
     boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)',
     ...(ownerState.active && {
-      // backgroundColor: '#f2a718'
     }),
-    // ...(ownerState.completed && {
-    //   backgroundColor: '#3ad99f'
-    // }),
-    // ...(ownerState.error && {
-    //   backgroundColor: '#f44336'
-    // }),
+    
   }));
   function ColorlibStepIcon(props) {
     const { active, completed, error, className } = props;
@@ -216,13 +210,7 @@ export default function ApprovalTimeline() {
                 StepIconComponent={ColorlibStepIcon} 
                 // StepIconComponent={'HEllo'}
                 {...labelProps}>
-                  {/*<Typography sx={{ fontSize: '15px', fontWeight: '500' }}>
-                    {label.description ? label.description.length > 50 ? label.description.substring(0, 50) + '...' : label.description : ""}
-                  </Typography>*/}
-                   
-                     {/* <Typography sx={{ fontSize: '13px' }}>
-                        { label.currentStateId && label.currentStateId }
-                      </Typography>*/}
+                  
                       <Typography sx={{ fontSize: '13px' }}>
                         { label.stateName  }
                       </Typography>
@@ -234,10 +222,7 @@ export default function ApprovalTimeline() {
                        { label.logRemarks && `Remarks: ${label.logRemarks}` }
                     </Typography>
                   <Typography>
-                  {
-                  'Ravindra'
-                    //   label.approvers.length > 0 ? (label.status !== null ? `( ${label.approvers.map((approver) => approver.approverName)} )` : `( ${label.approvers.map((approver) => ' ' + approver.approverName)} )`) : ''
-                    }
+                  
                   </Typography>
                   <Typography sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, mt: 2 }}>
                     {label.approvedDate && <EventOutlinedIcon sx={{ fontSize: 14, mr: 1 }} />}

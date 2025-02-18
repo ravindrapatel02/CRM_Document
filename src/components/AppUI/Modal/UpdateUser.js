@@ -33,6 +33,7 @@ const UpdateUser = (props) => {
     userEmailId: "",
     managerPernNo: "",
     managerName: "",
+    userId:"",
     managerEmailId: "",
     deptName:"",
     roleName: "",
@@ -54,7 +55,8 @@ const UpdateUser = (props) => {
         managerName: updateDetails.managerName,
         managerEmailId: updateDetails.managerEmailId,
         roleName: updateDetails.roleName,
-        deptName:updateDetails.deptName,
+        deptName:updateDetails.deptId,
+        userId: updateDetails.userId,
         flag: "update",
       });
       setLoading(false);
@@ -116,25 +118,18 @@ const UpdateUser = (props) => {
           initialValues={initialValues}
           validationSchema={userValidation}
           onSubmit={(values) => {
-            handleUpdate(values);
+            const obj={
+              ...values,
+              userPernerNo: values.userMobileNo,
+            
+            }
+            handleUpdate(obj);
           }}
         >
           {({ values, errors, setFieldValue }) => (
             <Form initialtouched={{ zip: true }}>
               <Grid container spacing={2}>
-                {/* <Grid item xs={12} md={6}>
-                  <TextField
-                    name="userPernerNo"
-                    fullWidth
-                    value={values.userPernerNo} 
-                    // label="Enter user perner no."
-                    error={errors.userPernerNo ? true : false}
-                    helperText={errors.userPernerNo && errors.userPernerNo}
-                    onChange={(e) => {
-                      setFieldValue("userPernerNo", e.target.value);
-                    }}
-                  />
-                </Grid> */}
+                 
                 <Grid item xs={12} md={6}>
                   <TextField
                     name="userName"
@@ -188,6 +183,7 @@ const UpdateUser = (props) => {
                     name="deptName"
                     fullWidth
                     value={values.deptName}
+                    disabled
                     error={errors.deptName ? true : false}
                     helperText={errors.deptName && errors.deptName}
                     onChange={(e) => {
@@ -237,6 +233,7 @@ const UpdateUser = (props) => {
                     name="roleName"
                     select
                     fullWidth
+                    disabled
                     value={values.roleName}
                     error={errors.roleName ? true : false}
                     helperText={errors.roleName && errors.roleName}
@@ -259,45 +256,7 @@ const UpdateUser = (props) => {
                     <MenuItem value={"CRM_HOD"}>CRM HOD</MenuItem>
                   </TextField>
                 </Grid>
-                {/* <Grid item xs={12} md={6}>
-                <TextField
-                  name="managerPernNo"
-                  fullWidth
-                  value={values.managerPernNo}
-                  error={errors.managerPernNo ? true : false}
-                  helperText={errors.managerPernNo && errors.managerPernNo}
-                  onChange={(e) => {
-                    setFieldValue("managerPernNo", e.target.value);
-                  }}
-                  label="Enter manager perner no."
-                />
-              </Grid>
-              <Grid item xs={12} md={6}>
-              <TextField
-                name="managerName"
-                fullWidth
-                value={values.managerName}
-                error={errors.managerName ? true : false}
-                helperText={errors.managerName && errors.managerName}
-                onChange={(e) => {
-                  setFieldValue("managerName", e.target.value);
-                }}
-                label="Enter manager name"
-              />
-            </Grid>
-            <Grid item xs={12} md={6}>
-            <TextField
-              name="managerEmailId"
-              fullWidth
-              value={values.managerEmailId}
-              error={errors.managerEmailId ? true : false}
-              helperText={errors.managerEmailId && errors.managerEmailId}
-              onChange={(e) => {
-                setFieldValue("managerEmailId", e.target.value);
-              }}
-              label="Enter manager email id"
-            />
-          </Grid> */}
+                
                 <Grid
                   item
                   xs={12}
@@ -324,11 +283,7 @@ const UpdateUser = (props) => {
         </Formik>
       </DialogContent>
         }
-      {/*<DialogActions>
-        <Button autoFocus onClick={handleCloseModal}>
-          Save changes
-        </Button>
-      </DialogActions>*/}
+       
     </Dialog>
   );
 };

@@ -1,22 +1,9 @@
 import AppPageContainer from "@components/AppContainers/AppPageContainer";
 import AppSectionContainer from "@components/AppContainers/AppSectionContainer";
-// import AppsContent from "@components/AppsContainer/AppsContent";
-// import AppsHeader from "@components/AppsContainer/AppsHeader";
-// import AppSearch from "@components/AppSearchBar";
 import AppSectionTitle from "@components/AppSectionTitle";
-// import AppsPagination from "@components/AppsPagination";
 import DashboardTableOne from "@components/AppUI/dashboardTable";
-// import DashboardTable from "@components/AppUI/dashboardTable";
 import DashboardTableTwo from "@components/AppUI/dashboardTableTwo";
-import {
-  Box,
-  // Button,
-  // Card,
-  Grid,
-  // Hidden,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Grid, TextField, Typography } from "@mui/material";
 import { getDashboard } from "@redux/slice/DashboardSlice";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -34,12 +21,9 @@ import {
 } from "recharts";
 import { useAuthUser } from "src/hooks/AuthHooks";
 
-// const ROW_PER_PAGE = 10;
-
 const UserDashboard = () => {
   const dispatch = useDispatch();
   const [data, setData] = useState([]);
-  // const [dataCount, setDataCount] = useState(0);
   const { dashboardData } = useSelector((state) => state.dashboard);
   const { areaConList, deptCountList, satisfactionIndex } = dashboardData;
 
@@ -54,6 +38,12 @@ const UserDashboard = () => {
   });
   useEffect(() => {
     dispatch(getDashboard(filter));
+  }, []);
+
+  useEffect(() => {
+    if (filter.fromDate.length > 0 && filter.toDate.length > 0) {
+      dispatch(getDashboard(filter));
+    }
   }, [filter]);
 
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
@@ -62,23 +52,13 @@ const UserDashboard = () => {
     if (dashboardData) {
       if (areaConList) {
         let list = [];
-        // areaConList.forEach((item) => {
-        //   list.push({
-        //     name: item.name,
-        //     value: item.count,
-        //   });
-        // });
-        // setChartData(list);
-        setChartData([
-          {
-            name: "HR Dept",
-            value: 34,
-          },
-          {
-            name: "Finance Dept",
-            value: 40,
-          },
-        ]);
+        areaConList.forEach((item) => {
+          list.push({
+            name: item.name,
+            value: item.count,
+          });
+        });
+        setChartData(list);
       } else {
         setChartData([]);
       }
@@ -144,6 +124,10 @@ const UserDashboard = () => {
                 <TextField
                   type="date"
                   fullWidth
+                  disabled={filter.fromDate.length === 0}
+                  inputProps={{
+                    min: filter.fromDate,
+                  }}
                   onChange={(e) =>
                     setFilter({ ...filter, toDate: e.target.value })
                   }
@@ -152,56 +136,6 @@ const UserDashboard = () => {
               <Grid item xs={12} md={4}></Grid>
             </Grid>
 
-            {/* <Card sx={{ borderTop: 1 }}>
-              <AppsHeader>
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
-                    width: 1,
-                  }}
-                >
-                  
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "row",
-                      alignItems: "center",
-                      ml: "auto",
-                    }}
-                  >
-                    <Hidden smDown>
-                      <AppsPagination
-                        rowsPerPage={ROW_PER_PAGE}
-                        count={dataCount}
-                        page={page}
-                        onPageChange={onPageChange}
-                      />
-                    </Hidden>
-                  </Box>
-                </Box>
-              </AppsHeader>
-
-              <AppsContent
-                sx={{
-                  paddingTop: 2.5,
-                  paddingBottom: 2.5,
-                }}
-              >
-                <DashboardTable data={data} />
-              </AppsContent> 
-             
-              <Hidden smUp>
-                <AppsPagination
-                  rowsPerPage={ROW_PER_PAGE}
-                  count={dataCount}
-                  page={page}
-                  onPageChange={onPageChange}
-                />
-              </Hidden>
-            </Card>
-*/}
             <Box>
               <DashboardTableOne data={data} />
             </Box>
@@ -244,71 +178,30 @@ const UserDashboard = () => {
           </Box>
           <Box>
             <Grid container spacing={2}>
-              <Grid
-                item
-                xs={6}
-                md={3}
-                sx={{ display: "flex", alignItems: "center" }}
-              >
-                <Typography
-                  style={{
-                    height: "10px",
-                    width: "10px",
-                    backgroundColor: `${COLORS[0]}`,
-                  }}
-                ></Typography>
-                <span style={{ marginLeft: 5 }}>Temp. Ex.</span>
-              </Grid>
-              <Grid
-                item
-                xs={6}
-                md={3}
-                sx={{ display: "flex", alignItems: "center" }}
-              >
-                <Typography
-                  style={{
-                    height: "10px",
-                    width: "10px",
-                    backgroundColor: `${COLORS[1]}`,
-                  }}
-                ></Typography>
-                <span style={{ marginLeft: 5 }}>Trackdock</span>
-              </Grid>
-              <Grid
-                item
-                xs={6}
-                md={3}
-                sx={{ display: "flex", alignItems: "center" }}
-              >
-                <Typography
-                  style={{
-                    height: "10px",
-                    width: "10px",
-                    backgroundColor: `${COLORS[2]}`,
-                  }}
-                ></Typography>
-                <span style={{ marginLeft: 5 }}>Manpower</span>
-              </Grid>
-              <Grid
-                item
-                xs={6}
-                md={3}
-                sx={{ display: "flex", alignItems: "center" }}
-              >
-                <Typography
-                  style={{
-                    height: "10px",
-                    width: "10px",
-                    backgroundColor: `${COLORS[3]}`,
-                  }}
-                ></Typography>
-                <span style={{ marginLeft: 5 }}>Other</span>
-              </Grid>
+              {areaConList &&
+                areaConList.length > 0 &&
+                areaConList.map((item, index) => (
+                  <Grid
+                    item
+                    xs={6}
+                    md={3}
+                    sx={{ display: "flex", alignItems: "center" }}
+                    key={index + 1}
+                  >
+                    <Typography
+                      style={{
+                        height: "10px",
+                        width: "10px",
+                        backgroundColor: `${COLORS[index]}`,
+                      }}
+                    ></Typography>
+                    <span style={{ marginLeft: 5 }}>{item.name}</span>
+                  </Grid>
+                ))}
             </Grid>
           </Box>
 
           <Box
-            // display="flex"
             mt={2}
             flexDirection="column"
             alignItems="center"
@@ -324,8 +217,6 @@ const UserDashboard = () => {
                 >
                   <XAxis dataKey="name" />
                   <CartesianGrid strokeDasharray="3 3" />
-                  {/*<Tooltip />*/}
-
                   <Bar dataKey="value" fill="#FFBB28" barSize={20}>
                     <LabelList dataKey="value" position="top" />
                   </Bar>

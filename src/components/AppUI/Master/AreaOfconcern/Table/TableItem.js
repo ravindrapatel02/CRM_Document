@@ -5,6 +5,10 @@ import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';   
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import { API_URL } from 'src/api';
+import AppNotification from '@components/AppNotification';
+import { getAreaOfConcern } from '@redux/slice/AreaOfConcernSlice';
+import jwtAxios from 'src/services/auth';
  
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   '&:hover': {
@@ -27,11 +31,37 @@ const StyledTableCell = styled(TableCell)(() => ({
  
 
 const TableItem = ({ data , index , setUpdateData , setOpenModal}) => { 
-   
+  const handleDelete = (data) => {
+    const obj = {
+      concernId: data.id,
+      flag: "delete", 
+    };
+
+    jwtAxios
+      .post(API_URL.ADD_AREA_OF_CONCERN, obj)
+      .then((response) => {
+        const res = response.data;
+        if (res.status === "true") {
+          AppNotification(
+            true,
+            res.message ?? "Area concern deleted successfully !"
+          );
+          setTimeout(() => {
+            
+                dispatch(getAreaOfConcern());
+          }, 3000);
+        } else {
+          AppNotification(false, res.message ?? "Something went wrong !");
+        }
+      })
+      .catch((error) => {
+        AppNotification(false, error.message ?? "Network Error !");
+      });
+  };
   return (
     <>
       <StyledTableRow
-        key={`row-${data.seatNo}`}
+        key={`row-${data.id}`}
          >
         <StyledTableCell  >
            

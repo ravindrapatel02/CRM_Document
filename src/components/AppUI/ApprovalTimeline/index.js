@@ -183,9 +183,7 @@ export default function ApprovalTimeline() {
               if (returnedStep === index) {
                 labelProps.error = "RETURNED";
               }
-              {
-                console.log("progressData", label.nextStateId);
-              }
+              
               const isCompleted =
                 label.status === "forward" ||
                 label.status === "created" ||

@@ -306,6 +306,9 @@ const RegisterComplaint = () => {
                     value={values.feedbackTypeDate}
                     error={errors.feedbackTypeDate ? true : false}
                     helperText={errors.feedbackTypeDate}
+                    inputProps={{
+                      min: new Date().toISOString().split('T')[0],
+                    }}
                     fullWidth
                     onChange={(e) => {
                       setFieldValue("feedbackTypeDate", e.target.value);

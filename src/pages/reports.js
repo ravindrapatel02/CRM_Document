@@ -34,7 +34,12 @@ const Reports = () => {
   });
   const { user } = useAuthUser();
 
+  useEffect(()=>{
+    dispatch(getReports({}));
+  },[]);
+
   useEffect(() => {
+    if(filter.fromDate.length>0 && filter.toDate.length>0){
     const obj = {
       status: "",
       ...(filter.fromDate.length > 0 &&
@@ -45,6 +50,7 @@ const Reports = () => {
     };
 
     dispatch(getReports(obj));
+  }
   }, [filter]);
 
   useEffect(() => {
@@ -119,6 +125,7 @@ const Reports = () => {
       { header: "Service Type", key: "feedbackType", width: 20 },
       { header: "Organization", key: "organization", width: 20 },
       { header: "Area fo Concern", key: "areaConcern", width: 20 },
+      { header:'Description' , key :"detailsDesc" , width:20},
       { header: "Status", key: "stateName", width: 20 },
     ];
 
@@ -137,6 +144,7 @@ const Reports = () => {
       obj.organization = item.organization;
       obj.areaConcern = item.areaConcern;
       obj.stateName = item.statusName;
+      obj.detailsDesc = item.detailsDesc;
       worksheet.addRow(obj);
     });
 
@@ -163,6 +171,7 @@ const Reports = () => {
     });
     saveAs(dataBlob, `crm-report-${new Date().toDateString()}.xlsx`);
   };
+
   const onSearchCustomer = (value) => {
     if (value) {
       setPage(0);
@@ -217,6 +226,10 @@ const Reports = () => {
               <TextField
                 type="date"
                 fullWidth
+                disabled={filter.fromDate.length === 0}
+                inputProps={{
+                  min: filter.fromDate,
+                }}
                 onChange={(e) =>
                   setFilter({ ...filter, toDate: e.target.value })
                 }

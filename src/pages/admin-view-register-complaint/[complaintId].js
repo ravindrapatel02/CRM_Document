@@ -697,7 +697,7 @@ const AdminViewRegisterComplaint = () => {
                         </Grid>
                       </React.Fragment>
                     )}
-
+ 
                   {(user?.role[0] === "CRM_DEPT_SPOC" ||
                     user?.role[0] === "CRM_ADMIN") &&
                     values.pendingBy === user.displayName && (
@@ -719,6 +719,7 @@ const AdminViewRegisterComplaint = () => {
                             }}
                           ></TextField>
                         </Grid>
+
                         {user?.role[0] === "CRM_DEPT_SPOC" && (
                           <Grid item xs={12} md={6}>
                             <TextField
@@ -803,6 +804,7 @@ const AdminViewRegisterComplaint = () => {
                         </Grid>
                       </React.Fragment>
                     )}
+                    
                   {user?.role[0] === "CRM_HOD" &&
                     values.status === "pending" && (
                       <React.Fragment>

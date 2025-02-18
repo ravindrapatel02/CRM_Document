@@ -24,9 +24,6 @@ const UpdateDepartmentModal = (props) => {
   const [initialValues, setInitialValues] = useState({
     deptName: "",
     deptCode: "",
-    // spocName: "",
-    // spocPernerNo: "",
-    // spocEmail: "",
     deptId: "",
     flag: "update",
   });
@@ -37,9 +34,6 @@ const UpdateDepartmentModal = (props) => {
         deptName: updateDetails.deptName,
         deptCode: updateDetails.deptCode,
         deptId: updateDetails.deptId,
-        // spocName: updateDetails.spocName,
-        // spocPernerNo: updateDetails.spocPernerNo,
-        // spocEmail: updateDetails.spocEmail,
         flag: "update",
       });
 
@@ -134,45 +128,6 @@ const UpdateDepartmentModal = (props) => {
                     />
                   </Grid>
 
-                  {/*<Grid item xs={12} md={6}>
-                  <TextField
-                    name="spocName"
-                    fullWidth
-                    value={values.spocName}
-                    error={errors.spocName ? true : false}
-                    helperText={errors.spocName && errors.spocName}
-                    onChange={(e) => {
-                      setFieldValue("spocName", e.target.value);
-                    }}
-                    placeholder="Enter spoc name"
-                  />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                <TextField
-                  name="spocPernerNo"
-                  fullWidth
-                  value={values.spocPernerNo}
-                  error={errors.spocPernerNo ? true : false}
-                  helperText={errors.spocPernerNo && errors.spocPernerNo}
-                  onChange={(e) => {
-                    setFieldValue("spocPernerNo", e.target.value);
-                  }}
-                  placeholder="Enter spoc perner no."
-                />
-              </Grid>
-              <Grid item xs={12} md={6}>
-              <TextField
-                name="spocEmail"
-                fullWidth
-                value={values.spocEmail}
-                error={errors.spocEmail ? true : false}
-                helperText={errors.spocEmail && errors.spocEmail}
-                onChange={(e) => {
-                  setFieldValue("spocEmail", e.target.value);
-                }}
-                placeholder="Enter spoc email"
-              />
-            </Grid>*/}
                   <Grid
                     item
                     xs={12}
@@ -201,11 +156,6 @@ const UpdateDepartmentModal = (props) => {
           <AppLoader />
         )}
       </DialogContent>
-      {/*<DialogActions>
-        <Button autoFocus onClick={handleCloseModal}>
-          Save changes
-        </Button>
-      </DialogActions>*/}
     </Dialog>
   );
 };

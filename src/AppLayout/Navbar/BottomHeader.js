@@ -28,7 +28,7 @@ export const BottomHeader = () => {
   const { user } = useAuthUser();
   const [show, setShow] = React.useState(false);
   const [showModal, setShowModal] = React.useState(false);
-  const { signInUser, logout, verifyOTP } = useAuthMethod();
+  const {  logout, verifyOTP } = useAuthMethod();
 
   const [fieldStatus, setFieldStatus] = React.useState({
     isOTP: false,
@@ -46,11 +46,7 @@ export const BottomHeader = () => {
       setShowModal(!setShowModal);
     }
   }, [user]);
-
-  const handleUserLogin = async (value) => {
-    signInUser(value);
-  };
-
+ 
   useEffect(() => {
     if (showModal === false) {
       setFieldStatus({
